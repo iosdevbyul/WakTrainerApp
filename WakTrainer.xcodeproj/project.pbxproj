@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1C7B08EC301CF7E90085A763 /* WakTrainerFeatureWorkout in Frameworks */ = {isa = PBXBuildFile; productRef = 1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1C7B08CE301CF6B60085A763 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C7B08EC301CF7E90085A763 /* WakTrainerFeatureWorkout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = WakTrainer;
 			packageProductDependencies = (
+				1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */,
 			);
 			productName = WakTrainer;
 			productReference = 1C7B08C0301CF6B10085A763 /* WakTrainer.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 1C7B08B7301CF6B00085A763;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1C7B08EA301CF7E90085A763 /* XCLocalSwiftPackageReference "../WakTrainerFeatureWorkout" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
 			projectDirPath = "";
@@ -570,6 +579,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		1C7B08EA301CF7E90085A763 /* XCLocalSwiftPackageReference "../WakTrainerFeatureWorkout" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../WakTrainerFeatureWorkout;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WakTrainerFeatureWorkout;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1C7B08B8301CF6B10085A763 /* Project object */;
 }
