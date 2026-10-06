@@ -13,6 +13,7 @@
 		A10000000000000000000003 /* TrisLocationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000003 /* TrisLocationKit */; };
 		A10000000000000000000004 /* TrisNotificationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000004 /* TrisNotificationKit */; };
 		A10000000000000000000005 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
+		A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 				A10000000000000000000003 /* TrisLocationKit in Frameworks */,
 				A10000000000000000000004 /* TrisNotificationKit in Frameworks */,
 				A10000000000000000000005 /* AuthenticationKit in Frameworks */,
+				A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +135,7 @@
 				A20000000000000000000003 /* TrisLocationKit */,
 				A20000000000000000000004 /* TrisNotificationKit */,
 				A20000000000000000000005 /* AuthenticationKit */,
+				A20000000000000000000006 /* WakTrainerCoreModels */,
 			);
 			productName = WakTrainer;
 			productReference = 1C7B08C0301CF6B10085A763 /* WakTrainer.app */;
@@ -223,6 +226,7 @@
 				A30000000000000000000004 /* XCRemoteSwiftPackageReference "TrisLocationKit" */,
 				A30000000000000000000005 /* XCRemoteSwiftPackageReference "TrisNotificationKit" */,
 				A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */,
+				A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
@@ -659,6 +663,14 @@
 				kind = branch;
 			};
 		};
+		A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/WakTrainerCoreModels";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -691,6 +703,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */;
 			productName = AuthenticationKit;
+		};
+		A20000000000000000000006 /* WakTrainerCoreModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */;
+			productName = WakTrainerCoreModels;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

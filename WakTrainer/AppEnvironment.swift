@@ -4,6 +4,7 @@ import TrisLocationKit
 import TrisNotificationKit
 import TrisPlaceRecognitionKit
 import UserProfileFeature
+import WakTrainerCoreModels
 import WakTrainerFeatureWorkout
 
 @MainActor
@@ -179,19 +180,24 @@ final class AppEnvironment: ObservableObject {
         placeErrorMessage = nil
     }
 
-    func recordWorkout(_ result: WorkoutFeatureResult) {
-        let endedAt = Date()
-        let startedAt = endedAt.addingTimeInterval(-result.duration)
+    func recordWorkout(_ session: WorkoutSession) {
+        let endedAt =
+            session.timing.endDate
+            ?? Date()
+
+        let summary =
+            session.health.summary
 
         let record = WorkoutSummaryRecord(
-            workoutID: result.workoutID,
-            workoutName: result.workoutName,
-            startedAt: startedAt,
+            id: session.id,
+            workoutID: session.workout.workoutID,
+            workoutName: session.workout.name,
+            startedAt: session.timing.startDate,
             endedAt: endedAt,
-            duration: result.duration,
-            distanceMeters: result.distanceMeters,
-            activeCalories: result.activeCalories,
-            stepCount: result.stepCount
+            duration: session.timing.activeDuration,
+            distanceMeters: summary.distanceMeters ?? 0,
+            activeCalories: summary.activeCalories ?? 0,
+            stepCount: summary.stepCount ?? 0
         )
 
         workoutHistory.insert(record, at: 0)

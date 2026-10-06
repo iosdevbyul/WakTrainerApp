@@ -118,7 +118,7 @@ private struct WorkoutReportDetailView: View {
                         .font(.headline)
 
                     Text(
-                        "심박수와 칼로리의 시계열 데이터가 WorkoutFeatureResult에 포함되면 WakTrainerChart를 사용해 실제 운동 그래프를 표시합니다."
+                        "WorkoutSession에 수집된 심박수와 운동 시계열 데이터를 기반으로 다음 단계에서 WakTrainerChart 그래프를 표시합니다."
                     )
                     .font(.footnote)
                     .foregroundStyle(.secondary)
