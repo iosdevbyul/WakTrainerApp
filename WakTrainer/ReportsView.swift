@@ -4,8 +4,7 @@ struct ReportsView: View {
     @ObservedObject var environment: AppEnvironment
 
     var body: some View {
-        NavigationStack {
-            Group {
+        Group {
                 if environment.workoutHistory.isEmpty {
                     ContentUnavailableView(
                         "아직 운동 기록이 없습니다",
@@ -58,9 +57,9 @@ struct ReportsView: View {
                         }
                     }
                 }
-            }
-            .navigationTitle("운동 리포트")
         }
+        .navigationTitle("운동 리포트")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func durationText(

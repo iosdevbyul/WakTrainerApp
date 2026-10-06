@@ -2,19 +2,22 @@ import SwiftUI
 import TrisPlaceRecognitionKit
 import UserProfileFeature
 
-struct PlacesTabView: View {
+struct PlacesView: View {
     @ObservedObject var environment: AppEnvironment
 
     var body: some View {
         Group {
             if
                 let store = environment.placeStore,
-                let visitManager = environment.visitManager
+                let visitManager =
+                    environment.visitManager
             {
                 PlaceManagementView(
                     placeStore: store,
-                    locationProvider: environment.locationProvider,
-                    wifiProvider: environment.wifiProvider,
+                    locationProvider:
+                        environment.locationProvider,
+                    wifiProvider:
+                        environment.wifiProvider,
                     visitManager: visitManager
                 )
             } else if environment.isPreparingPlaces {
@@ -29,36 +32,40 @@ struct PlacesTabView: View {
                     )
                 )
                 .task {
-                    await environment.preparePlaceServices()
+                    await environment
+                        .preparePlaceServices()
                 }
             }
         }
+        .navigationTitle("장소")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct ProfileTabView: View {
+struct ProfileView: View {
     @ObservedObject var environment: AppEnvironment
 
-    @State private var isShowingProfileSetup = false
+    @State
+    private var isShowingProfileSetup = false
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section("개인화") {
-                    Label(
-                        "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다.",
-                        systemImage: "person.text.rectangle"
-                    )
-                }
+        List {
+            Section("개인화") {
+                Label(
+                    "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다.",
+                    systemImage:
+                        "person.text.rectangle"
+                )
+            }
 
-                Section {
-                    Button("신체 정보 수정") {
-                        isShowingProfileSetup = true
-                    }
+            Section {
+                Button("신체 정보 수정") {
+                    isShowingProfileSetup = true
                 }
             }
-            .navigationTitle("프로필")
         }
+        .navigationTitle("프로필")
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(
             isPresented: $isShowingProfileSetup,
             onDismiss: {

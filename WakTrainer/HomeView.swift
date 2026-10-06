@@ -1,37 +1,49 @@
 import SwiftUI
 import TrisPlaceRecognitionKit
-import WakTrainerFeatureWorkout
 
 struct HomeView: View {
     @ObservedObject var environment: AppEnvironment
 
-    @State private var isShowingWorkout = false
+    let onShowReports: () -> Void
+    let onShowPlaces: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    placeCard
-                    workoutCard
-                    latestWorkoutCard
-                }
-                .padding()
+        ScrollView {
+            VStack(spacing: 20) {
+                introCard
+                placeCard
+                reportCard
             }
-            .navigationTitle("오늘")
+            .padding()
         }
-        .fullScreenCover(
-            isPresented: $isShowingWorkout
+        .navigationTitle("오늘")
+    }
+
+    private var introCard: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 8
         ) {
-            WorkoutFeatureView { result in
-                environment.recordWorkout(result)
-                isShowingWorkout = false
-            }
+            Text("오늘의 운동")
+                .font(.title2.bold())
+
+            Text(
+                "화면 아래 운동 버튼을 눌러 원하는 운동을 바로 시작할 수 있습니다."
+            )
+            .foregroundStyle(.secondary)
         }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
     }
 
     @ViewBuilder
     private var placeCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(
+            alignment: .leading,
+            spacing: 14
+        ) {
             Label(
                 "헬스장 자동 감지",
                 systemImage: "location.fill"
@@ -45,65 +57,61 @@ struct HomeView: View {
             } else if environment.isPreparingPlaces {
                 ProgressView("장소 인식 준비 중")
             } else {
-                Text("장소 인식 서비스를 준비하고 있습니다.")
-                    .foregroundStyle(.secondary)
+                Text(
+                    "장소 인식 서비스를 준비하고 있습니다."
+                )
+                .foregroundStyle(.secondary)
             }
 
-            if let message = environment.placeStatusMessage {
+            if let message =
+                environment.placeStatusMessage
+            {
                 Text(message)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
 
-            if let error = environment.placeErrorMessage {
+            if let error =
+                environment.placeErrorMessage
+            {
                 Text(error)
                     .font(.footnote)
                     .foregroundStyle(.red)
             }
 
-            if environment.isPlaceRecognitionRequested {
-                Button("자동 감지 끄기") {
-                    Task {
-                        await environment.disablePlaceRecognition()
+            HStack {
+                if environment
+                    .isPlaceRecognitionRequested
+                {
+                    Button("자동 감지 끄기") {
+                        Task {
+                            await environment
+                                .disablePlaceRecognition()
+                        }
                     }
+                    .buttonStyle(.bordered)
+                } else {
+                    Button("헬스장 감지 켜기") {
+                        Task {
+                            await environment
+                                .enablePlaceRecognition()
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+
+                Spacer()
+
+                Button("장소 관리") {
+                    onShowPlaces()
                 }
                 .buttonStyle(.bordered)
-            } else {
-                Button("헬스장 감지 켜기") {
-                    Task {
-                        await environment.enablePlaceRecognition()
-                    }
-                }
-                .buttonStyle(.borderedProminent)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.regularMaterial)
-        .clipShape(
-            RoundedRectangle(cornerRadius: 18)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
         )
-    }
-
-    private var workoutCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Label(
-                "운동",
-                systemImage: "figure.run"
-            )
-            .font(.headline)
-
-            Text(
-                "운동을 선택하면 타이머와 HealthKit 수집이 함께 시작됩니다."
-            )
-            .foregroundStyle(.secondary)
-
-            Button("운동 시작") {
-                isShowingWorkout = true
-            }
-            .buttonStyle(.borderedProminent)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(.regularMaterial)
         .clipShape(
@@ -112,44 +120,86 @@ struct HomeView: View {
     }
 
     @ViewBuilder
-    private var latestWorkoutCard: some View {
-        if let latest = environment.workoutHistory.first {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("최근 운동")
-                    .font(.headline)
+    private var reportCard: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 14
+        ) {
+            HStack {
+                Label(
+                    "운동 기록",
+                    systemImage: "chart.xyaxis.line"
+                )
+                .font(.headline)
 
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(latest.workoutName)
-                            .font(.title3.bold())
+                Spacer()
+
+                Button("전체 보기") {
+                    onShowReports()
+                }
+                .font(.subheadline)
+            }
+
+            if let latest =
+                environment.workoutHistory.first
+            {
+                Button {
+                    onShowReports()
+                } label: {
+                    HStack {
+                        VStack(
+                            alignment: .leading,
+                            spacing: 4
+                        ) {
+                            Text(latest.workoutName)
+                                .font(.title3.bold())
+                                .foregroundStyle(
+                                    .primary
+                                )
+
+                            Text(
+                                latest.endedAt.formatted(
+                                    date: .abbreviated,
+                                    time: .shortened
+                                )
+                            )
+                            .font(.footnote)
+                            .foregroundStyle(
+                                .secondary
+                            )
+                        }
+
+                        Spacer()
 
                         Text(
-                            latest.endedAt.formatted(
-                                date: .abbreviated,
-                                time: .shortened
+                            formattedDuration(
+                                latest.duration
                             )
                         )
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                    }
-
-                    Spacer()
-
-                    Text(
-                        formattedDuration(
-                            latest.duration
+                        .font(
+                            .title3
+                                .monospacedDigit()
                         )
-                    )
-                    .font(.title3.monospacedDigit())
+                        .foregroundStyle(.primary)
+                    }
                 }
+                .buttonStyle(.plain)
+            } else {
+                Text(
+                    "아직 완료한 운동이 없습니다. 첫 운동을 시작해 보세요."
+                )
+                .foregroundStyle(.secondary)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
-            .background(.regularMaterial)
-            .clipShape(
-                RoundedRectangle(cornerRadius: 18)
-            )
         }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 18)
+        )
     }
 
     private func formattedDuration(
@@ -157,7 +207,8 @@ struct HomeView: View {
     ) -> String {
         let totalSeconds = Int(duration)
         let hours = totalSeconds / 3600
-        let minutes = (totalSeconds % 3600) / 60
+        let minutes =
+            (totalSeconds % 3600) / 60
 
         if hours > 0 {
             return "\(hours)시간 \(minutes)분"
@@ -171,21 +222,27 @@ private struct PlaceRecognitionStatusView: View {
     @ObservedObject var visitManager: PlaceVisitManager
 
     var body: some View {
-        if let place = visitManager.recognizedPlaces.first?.place {
+        if let place =
+            visitManager.recognizedPlaces.first?.place
+        {
             Label(
                 "\(place.name.value)에 있습니다.",
-                systemImage: "checkmark.circle.fill"
+                systemImage:
+                    "checkmark.circle.fill"
             )
             .font(.title3.bold())
         } else if !visitManager.activeVisits.isEmpty {
             Label(
                 "등록된 장소에 있습니다.",
-                systemImage: "checkmark.circle.fill"
+                systemImage:
+                    "checkmark.circle.fill"
             )
             .font(.title3.bold())
         } else {
-            Text("현재 등록된 장소에 있지 않습니다.")
-                .foregroundStyle(.secondary)
+            Text(
+                "현재 등록된 장소에 있지 않습니다."
+            )
+            .foregroundStyle(.secondary)
         }
     }
 }
