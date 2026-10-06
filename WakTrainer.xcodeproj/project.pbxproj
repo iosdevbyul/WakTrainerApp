@@ -438,7 +438,6 @@
 				MARKETING_VERSION = 1.0;
 				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "운동 중 심박수, 걸음 수, 활동 에너지와 이동 거리를 읽어 운동 리포트를 만듭니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "헬스장 도착과 이탈을 백그라운드에서도 감지하기 위해 위치를 사용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "운동 경로와 등록한 헬스장 위치를 확인하기 위해 위치를 사용합니다.";
@@ -474,6 +473,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "운동 중 심박수, 걸음 수, 활동 에너지와 이동 거리를 읽어 운동 리포트를 만듭니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "헬스장 도착과 이탈을 백그라운드에서도 감지하기 위해 위치를 사용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "운동 경로와 등록한 헬스장 위치를 확인하기 위해 위치를 사용합니다.";
