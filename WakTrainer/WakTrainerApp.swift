@@ -9,19 +9,22 @@ struct WakTrainerApp: App {
     private var appDelegate
 
     init() {
-        guard
-            let baseURLString = Bundle.main.object(
+        let configuredBaseURL =
+            (Bundle.main.object(
                 forInfoDictionaryKey: "API_BASE_URL"
-            ) as? String,
-            let baseURL = URL(string: baseURLString)
-        else {
-            fatalError(
-                "API_BASE_URL is missing or invalid."
-            )
-        }
+            ) as? String)
+            .flatMap(URL.init(string:))
+
+        let productionBaseURL =
+            URL(
+                string:
+                    "https://waktrainerserver-production.up.railway.app"
+            )!
 
         AuthenticationConfiguration.shared.configure(
-            baseURL: baseURL
+            baseURL:
+                configuredBaseURL
+                ?? productionBaseURL
         )
     }
 
