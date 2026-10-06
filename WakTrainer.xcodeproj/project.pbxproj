@@ -12,6 +12,7 @@
 		A10000000000000000000002 /* TrisPlaceRecognitionKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000002 /* TrisPlaceRecognitionKit */; };
 		A10000000000000000000003 /* TrisLocationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000003 /* TrisLocationKit */; };
 		A10000000000000000000004 /* TrisNotificationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000004 /* TrisNotificationKit */; };
+		A10000000000000000000005 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 				A10000000000000000000002 /* TrisPlaceRecognitionKit in Frameworks */,
 				A10000000000000000000003 /* TrisLocationKit in Frameworks */,
 				A10000000000000000000004 /* TrisNotificationKit in Frameworks */,
+				A10000000000000000000005 /* AuthenticationKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +132,7 @@
 				A20000000000000000000002 /* TrisPlaceRecognitionKit */,
 				A20000000000000000000003 /* TrisLocationKit */,
 				A20000000000000000000004 /* TrisNotificationKit */,
+				A20000000000000000000005 /* AuthenticationKit */,
 			);
 			productName = WakTrainer;
 			productReference = 1C7B08C0301CF6B10085A763 /* WakTrainer.app */;
@@ -219,6 +222,7 @@
 				A30000000000000000000003 /* XCRemoteSwiftPackageReference "TrisPlaceRecognitionKit" */,
 				A30000000000000000000004 /* XCRemoteSwiftPackageReference "TrisLocationKit" */,
 				A30000000000000000000005 /* XCRemoteSwiftPackageReference "TrisNotificationKit" */,
+				A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
@@ -433,6 +437,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "운동 중 심박수, 걸음 수, 활동 에너지와 이동 거리를 읽어 운동 리포트를 만듭니다.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "헬스장 도착과 이탈을 백그라운드에서도 감지하기 위해 위치를 사용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "운동 경로와 등록한 헬스장 위치를 확인하기 위해 위치를 사용합니다.";
@@ -645,6 +651,14 @@
 				kind = branch;
 			};
 		};
+		A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/AuthenticationKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -672,6 +686,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A30000000000000000000005 /* XCRemoteSwiftPackageReference "TrisNotificationKit" */;
 			productName = TrisNotificationKit;
+		};
+		A20000000000000000000005 /* AuthenticationKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */;
+			productName = AuthenticationKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

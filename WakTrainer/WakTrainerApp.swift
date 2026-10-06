@@ -1,3 +1,4 @@
+import AuthenticationKit
 import SwiftUI
 
 @main
@@ -7,9 +8,26 @@ struct WakTrainerApp: App {
     )
     private var appDelegate
 
+    init() {
+        guard
+            let baseURLString = Bundle.main.object(
+                forInfoDictionaryKey: "API_BASE_URL"
+            ) as? String,
+            let baseURL = URL(string: baseURLString)
+        else {
+            fatalError(
+                "API_BASE_URL is missing or invalid."
+            )
+        }
+
+        AuthenticationConfiguration.shared.configure(
+            baseURL: baseURL
+        )
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView(
+            AuthenticationRootView(
                 environment: appDelegate.environment
             )
         }
