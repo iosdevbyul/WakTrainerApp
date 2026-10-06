@@ -1,5 +1,6 @@
 import SwiftUI
 import UserProfileFeature
+import WakTrainerFeatureWorkout
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
@@ -11,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if environment.isProfileConfigured {
-                MainTabView(
+                MainOrbNavigationView(
                     environment: environment
                 )
             } else {
@@ -42,8 +43,11 @@ struct ContentView: View {
 
     private var profileRequiredView: some View {
         VStack(spacing: 20) {
-            Image(systemName: "figure.strengthtraining.traditional")
-                .font(.system(size: 54))
+            Image(
+                systemName:
+                    "figure.strengthtraining.traditional"
+            )
+            .font(.system(size: 54))
 
             Text("WakTrainer")
                 .font(.largeTitle.bold())
@@ -63,52 +67,141 @@ struct ContentView: View {
     }
 }
 
-private struct MainTabView: View {
+private struct MainOrbNavigationView: View {
     @ObservedObject var environment: AppEnvironment
 
+    @State
+    private var path: [MainRoute] = []
+
+    @State
+    private var isShowingWorkout = false
+
     var body: some View {
-        TabView {
-            HomeView(
-                environment: environment
-            )
-            .tabItem {
-                Label(
-                    "홈",
-                    systemImage: "house.fill"
+        ZStack(alignment: .bottom) {
+            NavigationStack(path: $path) {
+                HomeView(
+                    environment: environment,
+                    onShowReports: {
+                        path.append(.reports)
+                    },
+                    onShowPlaces: {
+                        path.append(.places)
+                    }
                 )
+                .toolbar {
+                    ToolbarItem(
+                        placement: .topBarTrailing
+                    ) {
+                        Button {
+                            path.append(.profile)
+                        } label: {
+                            Image(
+                                systemName:
+                                    "person.crop.circle"
+                            )
+                            .font(.title2)
+                        }
+                        .accessibilityLabel("프로필")
+                    }
+                }
+                .navigationDestination(
+                    for: MainRoute.self
+                ) { route in
+                    switch route {
+                    case .reports:
+                        ReportsView(
+                            environment: environment
+                        )
+
+                    case .places:
+                        PlacesView(
+                            environment: environment
+                        )
+
+                    case .profile:
+                        ProfileView(
+                            environment: environment
+                        )
+                    }
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Color.clear
+                    .frame(height: 92)
             }
 
-            ReportsView(
-                environment: environment
-            )
-            .tabItem {
-                Label(
-                    "리포트",
-                    systemImage: "chart.xyaxis.line"
-                )
+            WorkoutLaunchOrb {
+                isShowingWorkout = true
             }
-
-            PlacesTabView(
-                environment: environment
-            )
-            .tabItem {
-                Label(
-                    "장소",
-                    systemImage: "mappin.and.ellipse"
-                )
-            }
-
-            ProfileTabView(
-                environment: environment
-            )
-            .tabItem {
-                Label(
-                    "프로필",
-                    systemImage: "person.crop.circle"
-                )
+            .padding(.bottom, 16)
+        }
+        .fullScreenCover(
+            isPresented: $isShowingWorkout
+        ) {
+            WorkoutFeatureView { session in
+                environment.recordWorkout(session)
+                isShowingWorkout = false
             }
         }
     }
+}
+
+private struct WorkoutLaunchOrb: View {
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 6) {
+                ZStack {
+                    Circle()
+                        .stroke(
+                            Color.accentColor
+                                .opacity(0.18),
+                            lineWidth: 10
+                        )
+                        .frame(
+                            width: 82,
+                            height: 82
+                        )
+
+                    Circle()
+                        .fill(Color.accentColor)
+                        .frame(
+                            width: 68,
+                            height: 68
+                        )
+                        .shadow(
+                            radius: 14,
+                            y: 7
+                        )
+
+                    Image(
+                        systemName:
+                            "figure.run"
+                    )
+                    .font(
+                        .system(
+                            size: 27,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundStyle(.white)
+                }
+
+                Text("운동 시작")
+                    .font(.caption.bold())
+                    .foregroundStyle(.primary)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("운동 시작")
+    }
+}
+
+private enum MainRoute: Hashable {
+    case reports
+    case places
+    case profile
 }
 
 #Preview {
