@@ -38,84 +38,58 @@ struct HomeView: View {
         )
     }
 
-    @ViewBuilder
     private var placeCard: some View {
-        VStack(
-            alignment: .leading,
-            spacing: 14
-        ) {
-            Label(
-                "헬스장 자동 감지",
-                systemImage: "location.fill"
-            )
-            .font(.headline)
-
-            if let visitManager = environment.visitManager {
-                PlaceRecognitionStatusView(
-                    visitManager: visitManager
-                )
-            } else if environment.isPreparingPlaces {
-                ProgressView("장소 인식 준비 중")
-            } else {
-                Text(
-                    "장소 인식 서비스를 준비하고 있습니다."
-                )
-                .foregroundStyle(.secondary)
+        PlaceRecognitionCard(
+            configuration:
+                PlaceRecognitionCardConfiguration(
+                    title:
+                        "헬스장 자동 감지",
+                    registrationPrompt:
+                        "현재 장소를 운동 장소로 등록하시겠습니까?",
+                    registrationButtonTitle:
+                        "운동 장소로 등록",
+                    registrationNavigationTitle:
+                        "운동 장소 등록",
+                    enableButtonTitle:
+                        "헬스장 감지 켜기",
+                    disableButtonTitle:
+                        "자동 감지 끄기",
+                    manageButtonTitle:
+                        "장소 관리",
+                    preparingMessage:
+                        "장소 인식 준비 중",
+                    unavailableMessage:
+                        "장소 인식 서비스를 준비하고 있습니다.",
+                    unregisteredMessage:
+                        "현재 등록된 장소에 있지 않습니다."
+                ),
+            placeStore:
+                environment.placeStore,
+            locationProvider:
+                environment.locationProvider,
+            wifiProvider:
+                environment.wifiProvider,
+            visitManager:
+                environment.visitManager,
+            isPreparing:
+                environment.isPreparingPlaces,
+            isRecognitionRequested:
+                environment.isPlaceRecognitionRequested,
+            statusMessage:
+                environment.placeStatusMessage,
+            errorMessage:
+                environment.placeErrorMessage,
+            onEnableRecognition: {
+                await environment
+                    .enablePlaceRecognition()
+            },
+            onDisableRecognition: {
+                await environment
+                    .disablePlaceRecognition()
+            },
+            onManagePlaces: {
+                onShowPlaces()
             }
-
-            if let message =
-                environment.placeStatusMessage
-            {
-                Text(message)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            if let error =
-                environment.placeErrorMessage
-            {
-                Text(error)
-                    .font(.footnote)
-                    .foregroundStyle(.red)
-            }
-
-            HStack {
-                if environment
-                    .isPlaceRecognitionRequested
-                {
-                    Button("자동 감지 끄기") {
-                        Task {
-                            await environment
-                                .disablePlaceRecognition()
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                } else {
-                    Button("헬스장 감지 켜기") {
-                        Task {
-                            await environment
-                                .enablePlaceRecognition()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-
-                Spacer()
-
-                Button("장소 관리") {
-                    onShowPlaces()
-                }
-                .buttonStyle(.bordered)
-            }
-        }
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
-        .padding()
-        .background(.regularMaterial)
-        .clipShape(
-            RoundedRectangle(cornerRadius: 18)
         )
     }
 
@@ -215,34 +189,5 @@ struct HomeView: View {
         }
 
         return "\(minutes)분"
-    }
-}
-
-private struct PlaceRecognitionStatusView: View {
-    @ObservedObject var visitManager: PlaceVisitManager
-
-    var body: some View {
-        if let place =
-            visitManager.recognizedPlaces.first?.place
-        {
-            Label(
-                "\(place.name.value)에 있습니다.",
-                systemImage:
-                    "checkmark.circle.fill"
-            )
-            .font(.title3.bold())
-        } else if !visitManager.activeVisits.isEmpty {
-            Label(
-                "등록된 장소에 있습니다.",
-                systemImage:
-                    "checkmark.circle.fill"
-            )
-            .font(.title3.bold())
-        } else {
-            Text(
-                "현재 등록된 장소에 있지 않습니다."
-            )
-            .foregroundStyle(.secondary)
-        }
     }
 }
