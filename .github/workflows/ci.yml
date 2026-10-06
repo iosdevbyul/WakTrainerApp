@@ -9,9 +9,14 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-test:
     runs-on: macos-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -29,6 +34,48 @@ jobs:
             -project WakTrainer.xcodeproj \
             -scheme WakTrainer
 
+      - name: Select available iPhone Simulator
+        run: |
+          set -euo pipefail
+
+          SIMULATOR_ID="$(
+            xcrun simctl list devices available -j |
+            python3 -c '
+import json
+import sys
+
+data = json.load(sys.stdin)
+
+candidates = []
+
+for runtime, devices in data.get("devices", {}).items():
+    if "iOS" not in runtime:
+        continue
+
+    for device in devices:
+        if (
+            device.get("isAvailable")
+            and device.get("name", "").startswith("iPhone")
+        ):
+            candidates.append(
+                (
+                    runtime,
+                    device.get("name", ""),
+                    device.get("udid", "")
+                )
+            )
+
+if not candidates:
+    sys.exit(1)
+
+candidates.sort(reverse=True)
+print(candidates[0][2])
+'
+          )"
+
+          echo "Selected simulator: $SIMULATOR_ID"
+          echo "SIMULATOR_ID=$SIMULATOR_ID" >> "$GITHUB_ENV"
+
       - name: Build
         run: |
           xcodebuild \
@@ -44,7 +91,8 @@ jobs:
           xcodebuild \
             -project WakTrainer.xcodeproj \
             -scheme WakTrainer \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            -destination-timeout 120 \
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
             test
