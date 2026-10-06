@@ -73,128 +73,63 @@ private struct MainOrbNavigationView: View {
     @State
     private var path: [MainRoute] = []
 
-    @State
-    private var isShowingWorkout = false
-
     var body: some View {
-        ZStack(alignment: .bottom) {
-            NavigationStack(path: $path) {
-                HomeView(
-                    environment: environment,
-                    onShowReports: {
-                        path.append(.reports)
-                    },
-                    onShowPlaces: {
-                        path.append(.places)
-                    }
-                )
-                .toolbar {
-                    ToolbarItem(
-                        placement: .topBarTrailing
-                    ) {
-                        Button {
-                            path.append(.profile)
-                        } label: {
-                            Image(
-                                systemName:
-                                    "person.crop.circle"
-                            )
-                            .font(.title2)
-                        }
-                        .accessibilityLabel("프로필")
-                    }
+        NavigationStack(path: $path) {
+            HomeView(
+                environment: environment,
+                onShowReports: {
+                    path.append(.reports)
+                },
+                onShowPlaces: {
+                    path.append(.places)
                 }
-                .navigationDestination(
-                    for: MainRoute.self
-                ) { route in
-                    switch route {
-                    case .reports:
-                        ReportsView(
-                            environment: environment
+            )
+            .toolbar {
+                ToolbarItem(
+                    placement: .topBarTrailing
+                ) {
+                    Button {
+                        path.append(.profile)
+                    } label: {
+                        Image(
+                            systemName:
+                                "person.crop.circle"
                         )
-
-                    case .places:
-                        PlacesView(
-                            environment: environment
-                        )
-
-                    case .profile:
-                        ProfileView(
-                            environment: environment
-                        )
+                        .font(.title2)
                     }
+                    .accessibilityLabel("프로필")
                 }
             }
-            .safeAreaInset(edge: .bottom) {
-                Color.clear
-                    .frame(height: 92)
-            }
-
-            WorkoutLaunchOrb {
-                isShowingWorkout = true
-            }
-            .padding(.bottom, 16)
-        }
-        .fullScreenCover(
-            isPresented: $isShowingWorkout
-        ) {
-            WorkoutFeatureView { session in
-                environment.recordWorkout(session)
-                isShowingWorkout = false
-            }
-        }
-    }
-}
-
-private struct WorkoutLaunchOrb: View {
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 6) {
-                ZStack {
-                    Circle()
-                        .stroke(
-                            Color.accentColor
-                                .opacity(0.18),
-                            lineWidth: 10
-                        )
-                        .frame(
-                            width: 82,
-                            height: 82
-                        )
-
-                    Circle()
-                        .fill(Color.accentColor)
-                        .frame(
-                            width: 68,
-                            height: 68
-                        )
-                        .shadow(
-                            radius: 14,
-                            y: 7
-                        )
-
-                    Image(
-                        systemName:
-                            "figure.run"
+            .navigationDestination(
+                for: MainRoute.self
+            ) { route in
+                switch route {
+                case .reports:
+                    ReportsView(
+                        environment: environment
                     )
-                    .font(
-                        .system(
-                            size: 27,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundStyle(.white)
-                }
 
-                Text("운동 시작")
-                    .font(.caption.bold())
-                    .foregroundStyle(.primary)
+                case .places:
+                    PlacesView(
+                        environment: environment
+                    )
+
+                case .profile:
+                    ProfileView(
+                        environment: environment
+                    )
+                }
             }
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel("운동 시작")
+        .safeAreaInset(edge: .bottom) {
+            Color.clear
+                .frame(height: 92)
+        }
+        .wakTrainerWorkoutLauncher(
+            bottomPadding: 16
+        ) { session in
+            environment.recordWorkout(session)
+        }
     }
 }
 
