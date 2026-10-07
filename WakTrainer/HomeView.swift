@@ -56,6 +56,8 @@ struct HomeView: View {
                         "자동 감지 끄기",
                     manageButtonTitle:
                         "장소 관리",
+                    registeredPlaceSummaryTitle:
+                        "등록된 운동 장소",
                     preparingMessage:
                         "장소 인식 준비 중",
                     unavailableMessage:
