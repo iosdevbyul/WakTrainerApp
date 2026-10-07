@@ -1,78 +1,208 @@
 import SwiftUI
 import TrisPlaceRecognitionKit
 import UserProfileFeature
+import WakTrainerDesignSystem
 
 struct PlacesView: View {
     @ObservedObject var environment: AppEnvironment
 
     var body: some View {
-        Group {
-            if
-                let store = environment.placeStore,
-                let visitManager =
-                    environment.visitManager
-            {
-                PlaceManagementView(
-                    placeStore: store,
-                    locationProvider:
-                        environment.locationProvider,
-                    wifiProvider:
-                        environment.wifiProvider,
-                    visitManager: visitManager
-                )
-            } else if environment.isPreparingPlaces {
-                ProgressView("장소 서비스 준비 중")
-            } else {
-                ContentUnavailableView(
-                    "장소 서비스를 준비하지 못했습니다",
-                    systemImage: "location.slash",
-                    description: Text(
-                        environment.placeErrorMessage
-                            ?? "잠시 후 다시 시도해 주세요."
+        ZStack {
+            WakColor.background
+                .ignoresSafeArea()
+
+            Group {
+                if
+                    let store = environment.placeStore,
+                    let visitManager =
+                        environment.visitManager
+                {
+                    PlaceManagementView(
+                        placeStore: store,
+                        locationProvider:
+                            environment.locationProvider,
+                        wifiProvider:
+                            environment.wifiProvider,
+                        visitManager: visitManager
                     )
-                )
-                .task {
-                    await environment
-                        .preparePlaceServices()
+                } else if environment.isPreparingPlaces {
+                    ProgressView(
+                        AppL10n.string(
+                            "places.service.preparing"
+                        )
+                    )
+                    .tint(WakColor.primary)
+                } else {
+                    ContentUnavailableView(
+                        AppL10n.string(
+                            "places.service.unavailable_title"
+                        ),
+                        systemImage: "location.slash",
+                        description: Text(
+                            environment.placeErrorMessage
+                                ?? AppL10n.string(
+                                    "common.try_again_later"
+                                )
+                        )
+                    )
                 }
             }
         }
-        .navigationTitle("장소")
+        .tint(WakColor.primary)
+        .navigationTitle(
+            AppL10n.string(
+                "common.places"
+            )
+        )
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(
+            WakColor.background,
+            for: .navigationBar
+        )
+        .toolbarBackground(
+            .visible,
+            for: .navigationBar
+        )
+        .toolbarColorScheme(
+            .dark,
+            for: .navigationBar
+        )
+        .task {
+            guard
+                environment.placeStore == nil,
+                !environment.isPreparingPlaces
+            else {
+                return
+            }
+
+            await environment
+                .preparePlaceServices()
+        }
     }
 }
 
 struct ProfileView: View {
     @ObservedObject var environment: AppEnvironment
 
-    @State
-    private var isShowingProfileSetup = false
-
     var body: some View {
-        List {
-            Section("개인화") {
-                Label(
-                    "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다.",
-                    systemImage:
-                        "person.text.rectangle"
-                )
-            }
+        ZStack {
+            WakColor.background
+                .ignoresSafeArea()
 
-            Section {
-                Button("신체 정보 수정") {
-                    isShowingProfileSetup = true
+            ScrollView {
+                VStack(
+                    alignment: .leading,
+                    spacing: WakSpacing.large
+                ) {
+                    VStack(
+                        alignment: .leading,
+                        spacing: WakSpacing.medium
+                    ) {
+                        WakSectionHeader(
+                            "profile.body.title"
+                        )
+
+                        WakCard {
+                            NavigationLink {
+                                BodyProfileView(
+                                    onProfileUpdated: {
+                                        environment
+                                            .refreshProfile()
+                                    }
+                                )
+                            } label: {
+                                HStack(
+                                    spacing:
+                                        WakSpacing.medium
+                                ) {
+                                    Image(
+                                        systemName:
+                                            "person.text.rectangle"
+                                    )
+                                    .font(
+                                        .system(
+                                            size: 20,
+                                            weight: .semibold
+                                        )
+                                    )
+                                    .foregroundStyle(
+                                        WakColor.primary
+                                    )
+
+                                    Text(
+                                        AppL10n.string(
+                                            "profile.body.view"
+                                        )
+                                    )
+                                    .font(
+                                        WakTypography.body
+                                    )
+                                    .foregroundStyle(
+                                        WakColor.textPrimary
+                                    )
+
+                                    Spacer()
+
+                                    Image(
+                                        systemName:
+                                            "chevron.right"
+                                    )
+                                    .font(
+                                        .system(
+                                            size: 13,
+                                            weight: .semibold
+                                        )
+                                    )
+                                    .foregroundStyle(
+                                        WakColor.textSecondary
+                                    )
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+
+                    VStack(
+                        alignment: .leading,
+                        spacing: WakSpacing.medium
+                    ) {
+                        WakSectionHeader(
+                            "profile.info.section"
+                        )
+
+                        WakCard {
+                            Text(
+                                AppL10n.string(
+                                    "profile.info.description"
+                                )
+                            )
+                            .font(WakTypography.body)
+                            .foregroundStyle(
+                                WakColor.textSecondary
+                            )
+                        }
+                    }
                 }
+                .padding(WakSpacing.regular)
             }
         }
-        .navigationTitle("프로필")
+        .navigationTitle(
+            AppL10n.string(
+                "common.profile"
+            )
+        )
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(
-            isPresented: $isShowingProfileSetup,
-            onDismiss: {
-                environment.refreshProfile()
-            }
-        ) {
-            ProfileSetupView()
-        }
+        .toolbarBackground(
+            WakColor.background,
+            for: .navigationBar
+        )
+        .toolbarBackground(
+            .visible,
+            for: .navigationBar
+        )
+        .toolbarColorScheme(
+            .dark,
+            for: .navigationBar
+        )
     }
 }

@@ -1,5 +1,6 @@
 import SwiftUI
 import UserProfileFeature
+import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
 struct ContentView: View {
@@ -19,6 +20,8 @@ struct ContentView: View {
                 profileRequiredView
             }
         }
+        .preferredColorScheme(.dark)
+        .tint(WakColor.primary)
         .task {
             await environment.handleSceneBecameActive()
         }
@@ -42,28 +45,68 @@ struct ContentView: View {
     }
 
     private var profileRequiredView: some View {
-        VStack(spacing: 20) {
-            Image(
-                systemName:
-                    "figure.strengthtraining.traditional"
-            )
-            .font(.system(size: 54))
+        ZStack {
+            WakColor.background
+                .ignoresSafeArea()
 
-            Text("WakTrainer")
-                .font(.largeTitle.bold())
+            WakCard(
+                padding: WakSpacing.large
+            ) {
+                VStack(
+                    spacing: WakSpacing.large
+                ) {
+                    ZStack {
+                        Circle()
+                            .fill(
+                                WakColor.primary
+                                    .opacity(0.16)
+                            )
 
-            Text(
-                "운동 리포트를 개인화하기 위해 성별, 생년월일, 키와 몸무게를 먼저 설정합니다."
-            )
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
+                        Image(
+                            systemName:
+                                "figure.strengthtraining.traditional"
+                        )
+                        .font(
+                            .system(
+                                size: 36,
+                                weight: .bold
+                            )
+                        )
+                        .foregroundStyle(
+                            WakColor.primary
+                        )
+                    }
+                    .frame(
+                        width: 80,
+                        height: 80
+                    )
 
-            Button("신체 정보 설정") {
-                isShowingProfileSetup = true
+                    Text("WakTrainer")
+                        .font(WakTypography.screenTitle)
+                        .foregroundStyle(
+                            WakColor.textPrimary
+                        )
+
+                    Text(
+                        AppL10n.string(
+                            "profile.required.description"
+                        )
+                    )
+                    .font(WakTypography.body)
+                    .foregroundStyle(
+                        WakColor.textSecondary
+                    )
+                    .multilineTextAlignment(.center)
+
+                    WakPrimaryButton(
+                        "profile.body.setup"
+                    ) {
+                        isShowingProfileSetup = true
+                    }
+                }
             }
-            .buttonStyle(.borderedProminent)
+            .padding(WakSpacing.large)
         }
-        .padding(32)
     }
 }
 
@@ -77,27 +120,38 @@ private struct MainOrbNavigationView: View {
         NavigationStack(path: $path) {
             HomeView(
                 environment: environment,
+                workoutHistoryStore:
+                    environment.workoutHistoryStore,
                 onShowReports: {
                     path.append(.reports)
+                },
+                onShowCalendar: {
+                    path.append(.calendar)
                 },
                 onShowPlaces: {
                     path.append(.places)
                 }
             )
             .toolbar {
-                ToolbarItem(
+                ToolbarItemGroup(
                     placement: .topBarTrailing
                 ) {
-                    Button {
-                        path.append(.profile)
-                    } label: {
-                        Image(
-                            systemName:
-                                "person.crop.circle"
-                        )
-                        .font(.title2)
+                    toolbarButton(
+                        systemImage: "calendar",
+                        accessibilityKey:
+                            "common.calendar"
+                    ) {
+                        path.append(.calendar)
                     }
-                    .accessibilityLabel("프로필")
+
+                    toolbarButton(
+                        systemImage:
+                            "person.crop.circle",
+                        accessibilityKey:
+                            "common.profile"
+                    ) {
+                        path.append(.profile)
+                    }
                 }
             }
             .navigationDestination(
@@ -105,8 +159,12 @@ private struct MainOrbNavigationView: View {
             ) { route in
                 switch route {
                 case .reports:
-                    ReportsView(
-                        environment: environment
+                    ReportsView()
+
+                case .calendar:
+                    WorkoutCalendarView(
+                        workoutHistoryStore:
+                            environment.workoutHistoryStore
                     )
 
                 case .places:
@@ -121,20 +179,56 @@ private struct MainOrbNavigationView: View {
                 }
             }
         }
+        .background(WakColor.background)
         .safeAreaInset(edge: .bottom) {
             Color.clear
                 .frame(height: 92)
         }
         .wakTrainerWorkoutLauncher(
             bottomPadding: 16
-        ) { session in
-            environment.recordWorkout(session)
+        ) { _ in
+            Task {
+                await environment
+                    .refreshWorkoutHistory()
+            }
         }
+    }
+
+    private func toolbarButton(
+        systemImage: String,
+        accessibilityKey: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(
+                    .system(
+                        size: 17,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(
+                    WakColor.textPrimary
+                )
+                .frame(
+                    width: 34,
+                    height: 34
+                )
+                .background(WakColor.surface)
+                .clipShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(
+            AppL10n.string(
+                accessibilityKey
+            )
+        )
     }
 }
 
 private enum MainRoute: Hashable {
     case reports
+    case calendar
     case places
     case profile
 }

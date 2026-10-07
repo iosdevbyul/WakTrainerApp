@@ -14,6 +14,8 @@
 		A10000000000000000000004 /* TrisNotificationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000004 /* TrisNotificationKit */; };
 		A10000000000000000000005 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
 		A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
+		A10000000000000000000008 /* TrisCalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
+		A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 				A10000000000000000000004 /* TrisNotificationKit in Frameworks */,
 				A10000000000000000000005 /* AuthenticationKit in Frameworks */,
 				A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */,
+				A10000000000000000000008 /* TrisCalendarKit in Frameworks */,
+				A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +140,8 @@
 				A20000000000000000000004 /* TrisNotificationKit */,
 				A20000000000000000000005 /* AuthenticationKit */,
 				A20000000000000000000006 /* WakTrainerCoreModels */,
+				A20000000000000000000008 /* TrisCalendarKit */,
+				A20000000000000000000009 /* WakTrainerDesignSystem */,
 			);
 			productName = WakTrainer;
 			productReference = 1C7B08C0301CF6B10085A763 /* WakTrainer.app */;
@@ -215,6 +221,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ko,
 				Base,
 			);
 			mainGroup = 1C7B08B7301CF6B00085A763;
@@ -227,6 +234,8 @@
 				A30000000000000000000005 /* XCRemoteSwiftPackageReference "TrisNotificationKit" */,
 				A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */,
 				A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */,
+				A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */,
+				A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
@@ -442,9 +451,9 @@
 				MARKETING_VERSION = 1.0;
 				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainerPreview.entitlements;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "운동 중 심박수, 걸음 수, 활동 에너지와 이동 거리를 읽어 운동 리포트를 만듭니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "헬스장 도착과 이탈을 백그라운드에서도 감지하기 위해 위치를 사용합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "운동 경로와 등록한 헬스장 위치를 확인하기 위해 위치를 사용합니다.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -478,9 +487,9 @@
 				MARKETING_VERSION = 1.0;
 				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainerPreview.entitlements;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "운동 중 심박수, 걸음 수, 활동 에너지와 이동 거리를 읽어 운동 리포트를 만듭니다.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "헬스장 도착과 이탈을 백그라운드에서도 감지하기 위해 위치를 사용합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "운동 경로와 등록한 헬스장 위치를 확인하기 위해 위치를 사용합니다.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -671,6 +680,22 @@
 				kind = branch;
 			};
 		};
+		A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/TrisCalendarKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/WakTrainerDesignSystem";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -708,6 +733,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */;
 			productName = WakTrainerCoreModels;
+		};
+		A20000000000000000000008 /* TrisCalendarKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */;
+			productName = TrisCalendarKit;
+		};
+		A20000000000000000000009 /* WakTrainerDesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */;
+			productName = WakTrainerDesignSystem;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
