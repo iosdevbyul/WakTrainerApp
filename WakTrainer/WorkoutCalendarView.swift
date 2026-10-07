@@ -3,7 +3,6 @@ import TrisCalendarKit
 import WakTrainerFeatureWorkout
 
 struct WorkoutCalendarView: View {
-    @ObservedObject var environment: AppEnvironment
     @ObservedObject var workoutHistoryStore:
         WorkoutHistoryStore
 
