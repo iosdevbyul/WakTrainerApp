@@ -1,27 +1,7 @@
 import SwiftUI
-import TrisCalendarKit
 
 struct ReportsView: View {
     @ObservedObject var environment: AppEnvironment
-
-    @State
-    private var displayedMonth = Date()
-
-    @State
-    private var selectedDate: Date?
-
-    private var filteredRecords: [WorkoutSummaryRecord] {
-        WorkoutHistoryCalendar.records(
-            on: selectedDate,
-            from: environment.workoutHistory
-        )
-    }
-
-    private var highlightedDates: Set<Date> {
-        WorkoutHistoryCalendar.highlightedDates(
-            from: environment.workoutHistory
-        )
-    }
 
     var body: some View {
         Group {
@@ -34,68 +14,17 @@ struct ReportsView: View {
                     )
                 )
             } else {
-                List {
-                    Section {
-                        MonthCalendarView(
-                            displayedMonth:
-                                $displayedMonth,
-                            selectedDate:
-                                $selectedDate,
-                            highlightedDates:
-                                highlightedDates,
-                            configuration:
-                                CalendarConfiguration(
-                                    locale: .system,
-                                    timeZone: .system,
-                                    weekStart: .system
-                                )
+                List(
+                    environment.workoutHistory
+                ) { record in
+                    NavigationLink {
+                        WorkoutReportDetailView(
+                            record: record
                         )
-                        .padding(.vertical, 8)
-                    }
-
-                    if let selectedDate {
-                        Section {
-                            HStack {
-                                Text(
-                                    selectedDate.formatted(
-                                        date: .long,
-                                        time: .omitted
-                                    )
-                                )
-                                .font(.headline)
-
-                                Spacer()
-
-                                Button("전체 보기") {
-                                    self.selectedDate =
-                                        nil
-                                }
-                                .font(.subheadline)
-                            }
-                        }
-                    }
-
-                    Section {
-                        if filteredRecords.isEmpty {
-                            Text(
-                                "선택한 날짜에 운동 기록이 없습니다."
-                            )
-                            .foregroundStyle(.secondary)
-                        } else {
-                            ForEach(
-                                filteredRecords
-                            ) { record in
-                                NavigationLink {
-                                    WorkoutReportDetailView(
-                                        record: record
-                                    )
-                                } label: {
-                                    workoutRow(
-                                        record
-                                    )
-                                }
-                            }
-                        }
+                    } label: {
+                        WorkoutReportRow(
+                            record: record
+                        )
                     }
                 }
             }
@@ -103,10 +32,12 @@ struct ReportsView: View {
         .navigationTitle("운동 리포트")
         .navigationBarTitleDisplayMode(.inline)
     }
+}
 
-    private func workoutRow(
-        _ record: WorkoutSummaryRecord
-    ) -> some View {
+struct WorkoutReportRow: View {
+    let record: WorkoutSummaryRecord
+
+    var body: some View {
         VStack(
             alignment: .leading,
             spacing: 6
@@ -156,7 +87,7 @@ struct ReportsView: View {
     }
 }
 
-private struct WorkoutReportDetailView: View {
+struct WorkoutReportDetailView: View {
     let record: WorkoutSummaryRecord
 
     var body: some View {
@@ -191,7 +122,10 @@ private struct WorkoutReportDetailView: View {
                     )
                 )
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(
+                    alignment: .leading,
+                    spacing: 8
+                ) {
                     Text("세부 운동 그래프")
                         .font(.headline)
 
@@ -201,11 +135,16 @@ private struct WorkoutReportDetailView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
                 .padding()
                 .background(.regularMaterial)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(
+                        cornerRadius: 16
+                    )
                 )
             }
             .padding()
@@ -230,7 +169,9 @@ private struct WorkoutReportDetailView: View {
         .padding()
         .background(.regularMaterial)
         .clipShape(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(
+                cornerRadius: 16
+            )
         )
     }
 
