@@ -1,5 +1,6 @@
 import SwiftUI
 import TrisPlaceRecognitionKit
+import WakTrainerCoreModels
 import WakTrainerFeatureWorkout
 
 struct HomeView: View {
