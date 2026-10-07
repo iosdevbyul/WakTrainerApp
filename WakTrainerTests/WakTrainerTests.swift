@@ -9,30 +9,187 @@ import XCTest
 @testable import WakTrainer
 
 final class WakTrainerTests: XCTestCase {
+    func testWorkoutHistoryCalendarHighlightsUniqueWorkoutDates() {
+        let calendar = utcCalendar
+        let records = [
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 5,
+                    hour: 9
+                )
+            ),
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 5,
+                    hour: 18
+                )
+            ),
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 7,
+                    hour: 7
+                )
+            )
+        ]
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let highlighted =
+            WorkoutHistoryCalendar
+                .highlightedDates(
+                    from: records,
+                    calendar: calendar
+                )
+
+        XCTAssertEqual(
+            highlighted.count,
+            2
+        )
+
+        XCTAssertTrue(
+            highlighted.contains(
+                calendar.startOfDay(
+                    for: records[0].startedAt
+                )
+            )
+        )
+
+        XCTAssertTrue(
+            highlighted.contains(
+                calendar.startOfDay(
+                    for: records[2].startedAt
+                )
+            )
+        )
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testWorkoutHistoryCalendarFiltersSelectedDay() {
+        let records = [
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 5,
+                    hour: 9
+                )
+            ),
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 6,
+                    hour: 9
+                )
+            )
+        ]
+
+        let selected =
+            date(
+                year: 2026,
+                month: 10,
+                day: 5,
+                hour: 22
+            )
+
+        let filtered =
+            WorkoutHistoryCalendar.records(
+                on: selected,
+                from: records,
+                calendar: utcCalendar
+            )
+
+        XCTAssertEqual(
+            filtered.map(\.id),
+            [records[0].id]
+        )
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+    func testWorkoutHistoryCalendarReturnsAllWhenNoDateSelected() {
+        let records = [
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 5,
+                    hour: 9
+                )
+            ),
+            record(
+                id: UUID(),
+                startedAt: date(
+                    year: 2026,
+                    month: 10,
+                    day: 6,
+                    hour: 9
+                )
+            )
+        ]
+
+        XCTAssertEqual(
+            WorkoutHistoryCalendar.records(
+                on: nil,
+                from: records,
+                calendar: utcCalendar
+            ),
+            records
+        )
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    private var utcCalendar: Calendar {
+        var calendar =
+            Calendar(
+                identifier: .gregorian
+            )
+
+        calendar.timeZone =
+            TimeZone(secondsFromGMT: 0)!
+
+        return calendar
     }
 
+    private func date(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int
+    ) -> Date {
+        utcCalendar.date(
+            from: DateComponents(
+                year: year,
+                month: month,
+                day: day,
+                hour: hour
+            )
+        )!
+    }
+
+    private func record(
+        id: UUID,
+        startedAt: Date
+    ) -> WorkoutSummaryRecord {
+        WorkoutSummaryRecord(
+            id: id,
+            workoutID: "workout",
+            workoutName: "Workout",
+            startedAt: startedAt,
+            endedAt:
+                startedAt.addingTimeInterval(
+                    3600
+                ),
+            duration: 3600,
+            distanceMeters: 1000,
+            activeCalories: 300,
+            stepCount: 2000
+        )
+    }
 }
