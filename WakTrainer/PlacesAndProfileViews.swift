@@ -45,34 +45,32 @@ struct PlacesView: View {
 struct ProfileView: View {
     @ObservedObject var environment: AppEnvironment
 
-    @State
-    private var isShowingProfileSetup = false
-
     var body: some View {
         List {
-            Section("개인화") {
-                Label(
-                    "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다.",
-                    systemImage:
-                        "person.text.rectangle"
-                )
+            Section("신체 정보") {
+                NavigationLink {
+                    BodyProfileView(
+                        onProfileUpdated: {
+                            environment.refreshProfile()
+                        }
+                    )
+                } label: {
+                    Label(
+                        "신체 정보 보기",
+                        systemImage:
+                            "person.text.rectangle"
+                    )
+                }
             }
 
-            Section {
-                Button("신체 정보 수정") {
-                    isShowingProfileSetup = true
-                }
+            Section("안내") {
+                Text(
+                    "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다."
+                )
+                .foregroundStyle(.secondary)
             }
         }
         .navigationTitle("프로필")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(
-            isPresented: $isShowingProfileSetup,
-            onDismiss: {
-                environment.refreshProfile()
-            }
-        ) {
-            ProfileSetupView()
-        }
     }
 }
