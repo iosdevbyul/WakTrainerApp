@@ -15,6 +15,7 @@
 		A10000000000000000000005 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
 		A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
 		A10000000000000000000008 /* TrisCalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
+		A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 				A10000000000000000000005 /* AuthenticationKit in Frameworks */,
 				A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */,
 				A10000000000000000000008 /* TrisCalendarKit in Frameworks */,
+				A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 				A20000000000000000000005 /* AuthenticationKit */,
 				A20000000000000000000006 /* WakTrainerCoreModels */,
 				A20000000000000000000008 /* TrisCalendarKit */,
+				A20000000000000000000009 /* WakTrainerDesignSystem */,
 			);
 			productName = WakTrainer;
 			productReference = 1C7B08C0301CF6B10085A763 /* WakTrainer.app */;
@@ -232,6 +235,7 @@
 				A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */,
 				A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */,
 				A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */,
+				A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
@@ -684,6 +688,14 @@
 				kind = branch;
 			};
 		};
+		A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/WakTrainerDesignSystem";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -726,6 +738,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */;
 			productName = TrisCalendarKit;
+		};
+		A20000000000000000000009 /* WakTrainerDesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */;
+			productName = WakTrainerDesignSystem;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

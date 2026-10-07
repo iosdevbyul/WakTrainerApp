@@ -42,6 +42,16 @@
 "home.place.unregistered" = "You are not currently at a registered place.";
 "home.history.title" = "Workout History";
 "home.history.empty" = "No completed workouts yet. Start your first workout.";
+"home.greeting.title" = "Ready to train?";
+"home.week.title" = "This Week";
+"home.recent.title" = "Recent Workout";
+"home.calendar_preview.title" = "Training Calendar";
+"home.summary.workouts" = "Workouts";
+"home.summary.time" = "Time";
+"home.summary.calories" = "Calories";
+"home.workout.launcher_hint" = "Use the workout button below to choose a workout and start.";
+"duration.compact_hours_minutes" = "%1$dh %2$dm";
+"duration.compact_minutes" = "%dm";
 
 "duration.hours_minutes" = "%1$d hr %2$d min";
 "duration.minutes" = "%d min";

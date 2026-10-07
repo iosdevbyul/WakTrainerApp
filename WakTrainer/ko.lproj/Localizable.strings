@@ -42,6 +42,16 @@
 "home.place.unregistered" = "현재 등록된 장소에 있지 않습니다.";
 "home.history.title" = "운동 기록";
 "home.history.empty" = "아직 완료한 운동이 없습니다. 첫 운동을 시작해 보세요.";
+"home.greeting.title" = "운동할 준비 됐나요?";
+"home.week.title" = "이번 주";
+"home.recent.title" = "최근 운동";
+"home.calendar_preview.title" = "운동 캘린더";
+"home.summary.workouts" = "운동";
+"home.summary.time" = "시간";
+"home.summary.calories" = "칼로리";
+"home.workout.launcher_hint" = "아래 운동 버튼을 눌러 운동을 선택하고 시작하세요.";
+"duration.compact_hours_minutes" = "%1$d시간 %2$d분";
+"duration.compact_minutes" = "%d분";
 
 "duration.hours_minutes" = "%1$d시간 %2$d분";
 "duration.minutes" = "%d분";

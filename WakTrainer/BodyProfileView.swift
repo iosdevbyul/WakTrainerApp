@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import UserProfileFeature
 import WakTrainerCoreModels
+import WakTrainerDesignSystem
 
 struct BodyProfileView: View {
     @State
@@ -30,79 +31,177 @@ struct BodyProfileView: View {
     }
 
     var body: some View {
-        Group {
+        ZStack {
+            WakColor.background
+                .ignoresSafeArea()
+
             if let profile {
-                List {
-                    Section(AppL10n.string("profile.body.title")) {
-                        informationRow(
-                            title: AppL10n.string("profile.body.gender"),
-                            value: localizedGender(profile.gender)
+                ScrollView {
+                    VStack(
+                        alignment: .leading,
+                        spacing: WakSpacing.large
+                    ) {
+                        WakSectionHeader(
+                            "profile.body.title"
                         )
 
-                        informationRow(
-                            title: AppL10n.string("profile.body.birth_date"),
-                            value:
-                                AppL10n.date(
-                                    profile.birthDate,
-                                    dateStyle: .medium
+                        WakCard {
+                            VStack(
+                                spacing: 0
+                            ) {
+                                informationRow(
+                                    title:
+                                        AppL10n.string(
+                                            "profile.body.gender"
+                                        ),
+                                    value:
+                                        localizedGender(
+                                            profile.gender
+                                        )
                                 )
-                        )
 
-                        informationRow(
-                            title: AppL10n.string("profile.body.age"),
-                            value: AppL10n.format("profile.body.age_value", profile.age)
-                        )
+                                divider
 
-                        informationRow(
-                            title: AppL10n.string("profile.body.height"),
-                            value:
-                                String(
-                                    format:
-                                        "%.1f cm",
-                                    profile.heightCm
+                                informationRow(
+                                    title:
+                                        AppL10n.string(
+                                            "profile.body.birth_date"
+                                        ),
+                                    value:
+                                        AppL10n.date(
+                                            profile.birthDate,
+                                            dateStyle: .medium
+                                        )
                                 )
-                        )
 
-                        informationRow(
-                            title: AppL10n.string("profile.body.weight"),
-                            value:
-                                String(
-                                    format:
-                                        "%.1f kg",
-                                    profile.weightKg
+                                divider
+
+                                informationRow(
+                                    title:
+                                        AppL10n.string(
+                                            "profile.body.age"
+                                        ),
+                                    value:
+                                        AppL10n.format(
+                                            "profile.body.age_value",
+                                            profile.age
+                                        )
                                 )
-                        )
-                    }
 
-                    Section {
-                        Button(AppL10n.string("profile.body.edit")) {
+                                divider
+
+                                informationRow(
+                                    title:
+                                        AppL10n.string(
+                                            "profile.body.height"
+                                        ),
+                                    value:
+                                        String(
+                                            format: "%.1f cm",
+                                            profile.heightCm
+                                        )
+                                )
+
+                                divider
+
+                                informationRow(
+                                    title:
+                                        AppL10n.string(
+                                            "profile.body.weight"
+                                        ),
+                                    value:
+                                        String(
+                                            format: "%.1f kg",
+                                            profile.weightKg
+                                        )
+                                )
+                            }
+                        }
+
+                        WakSecondaryButton(
+                            "profile.body.edit"
+                        ) {
                             isShowingProfileSetup =
                                 true
                         }
                     }
+                    .padding(WakSpacing.regular)
                 }
             } else {
-                ContentUnavailableView {
-                    Label(
-                        AppL10n.string("profile.body.empty"),
-                        systemImage:
-                            "person.crop.circle.badge.questionmark"
-                    )
-                } description: {
-                    Text(
-                        AppL10n.string("profile.body.empty_description")
-                    )
-                } actions: {
-                    Button(AppL10n.string("profile.body.setup")) {
-                        isShowingProfileSetup =
-                            true
+                WakCard(
+                    padding: WakSpacing.large
+                ) {
+                    VStack(
+                        spacing: WakSpacing.large
+                    ) {
+                        Image(
+                            systemName:
+                                "person.crop.circle.badge.questionmark"
+                        )
+                        .font(
+                            .system(size: 42)
+                        )
+                        .foregroundStyle(
+                            WakColor.primary
+                        )
+
+                        Text(
+                            AppL10n.string(
+                                "profile.body.empty"
+                            )
+                        )
+                        .font(
+                            WakTypography.sectionTitle
+                        )
+                        .foregroundStyle(
+                            WakColor.textPrimary
+                        )
+
+                        Text(
+                            AppL10n.string(
+                                "profile.body.empty_description"
+                            )
+                        )
+                        .font(WakTypography.body)
+                        .foregroundStyle(
+                            WakColor.textSecondary
+                        )
+                        .multilineTextAlignment(
+                            .center
+                        )
+
+                        WakPrimaryButton(
+                            "profile.body.setup"
+                        ) {
+                            isShowingProfileSetup =
+                                true
+                        }
                     }
-                    .buttonStyle(.borderedProminent)
+                    .frame(
+                        maxWidth: .infinity
+                    )
                 }
+                .padding(WakSpacing.large)
             }
         }
-        .navigationTitle(AppL10n.string("profile.body.title"))
+        .navigationTitle(
+            AppL10n.string(
+                "profile.body.title"
+            )
+        )
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(
+            WakColor.background,
+            for: .navigationBar
+        )
+        .toolbarBackground(
+            .visible,
+            for: .navigationBar
+        )
+        .toolbarColorScheme(
+            .dark,
+            for: .navigationBar
+        )
         .task {
             reloadProfile()
         }
@@ -120,6 +219,11 @@ struct BodyProfileView: View {
 }
 
 private extension BodyProfileView {
+    var divider: some View {
+        Divider()
+            .overlay(WakColor.divider)
+    }
+
     func localizedGender(
         _ gender: UserProfile.Gender
     ) -> String {
@@ -152,11 +256,22 @@ private extension BodyProfileView {
     ) -> some View {
         HStack {
             Text(title)
+                .font(WakTypography.body)
+                .foregroundStyle(
+                    WakColor.textPrimary
+                )
 
             Spacer()
 
             Text(value)
-                .foregroundStyle(.secondary)
+                .font(WakTypography.body)
+                .foregroundStyle(
+                    WakColor.textSecondary
+                )
         }
+        .padding(
+            .vertical,
+            WakSpacing.medium
+        )
     }
 }
