@@ -121,7 +121,6 @@ private struct MainOrbNavigationView: View {
 
                 case .calendar:
                     WorkoutCalendarView(
-                        environment: environment,
                         workoutHistoryStore:
                             environment.workoutHistoryStore
                     )
