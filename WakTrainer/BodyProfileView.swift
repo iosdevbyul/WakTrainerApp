@@ -33,28 +33,28 @@ struct BodyProfileView: View {
         Group {
             if let profile {
                 List {
-                    Section("신체 정보") {
+                    Section(AppL10n.string("profile.body.title")) {
                         informationRow(
-                            title: "성별",
-                            value: profile.gender.rawValue
+                            title: AppL10n.string("profile.body.gender"),
+                            value: localizedGender(profile.gender)
                         )
 
                         informationRow(
-                            title: "생년월일",
+                            title: AppL10n.string("profile.body.birth_date"),
                             value:
-                                profile.birthDate.formatted(
-                                    date: .numeric,
-                                    time: .omitted
+                                AppL10n.date(
+                                    profile.birthDate,
+                                    dateStyle: .medium
                                 )
                         )
 
                         informationRow(
-                            title: "나이",
-                            value: "\(profile.age)세"
+                            title: AppL10n.string("profile.body.age"),
+                            value: AppL10n.format("profile.body.age_value", profile.age)
                         )
 
                         informationRow(
-                            title: "키",
+                            title: AppL10n.string("profile.body.height"),
                             value:
                                 String(
                                     format:
@@ -64,7 +64,7 @@ struct BodyProfileView: View {
                         )
 
                         informationRow(
-                            title: "몸무게",
+                            title: AppL10n.string("profile.body.weight"),
                             value:
                                 String(
                                     format:
@@ -75,7 +75,7 @@ struct BodyProfileView: View {
                     }
 
                     Section {
-                        Button("신체 정보 수정") {
+                        Button(AppL10n.string("profile.body.edit")) {
                             isShowingProfileSetup =
                                 true
                         }
@@ -84,16 +84,16 @@ struct BodyProfileView: View {
             } else {
                 ContentUnavailableView {
                     Label(
-                        "신체 정보가 없습니다",
+                        AppL10n.string("profile.body.empty"),
                         systemImage:
                             "person.crop.circle.badge.questionmark"
                     )
                 } description: {
                     Text(
-                        "운동 리포트를 위해 신체 정보를 설정해 주세요."
+                        AppL10n.string("profile.body.empty_description")
                     )
                 } actions: {
-                    Button("신체 정보 설정") {
+                    Button(AppL10n.string("profile.body.setup")) {
                         isShowingProfileSetup =
                             true
                     }
@@ -101,7 +101,7 @@ struct BodyProfileView: View {
                 }
             }
         }
-        .navigationTitle("신체 정보")
+        .navigationTitle(AppL10n.string("profile.body.title"))
         .navigationBarTitleDisplayMode(.inline)
         .task {
             reloadProfile()
@@ -120,6 +120,27 @@ struct BodyProfileView: View {
 }
 
 private extension BodyProfileView {
+    func localizedGender(
+        _ gender: UserProfile.Gender
+    ) -> String {
+        switch gender {
+        case .male:
+            return AppL10n.string(
+                "profile.gender.male"
+            )
+
+        case .female:
+            return AppL10n.string(
+                "profile.gender.female"
+            )
+
+        case .other:
+            return AppL10n.string(
+                "profile.gender.other"
+            )
+        }
+    }
+
     func reloadProfile() {
         profile =
             profileManager.loadProfile()

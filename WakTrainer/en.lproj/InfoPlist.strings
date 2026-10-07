@@ -1,0 +1,3 @@
+"NSHealthShareUsageDescription" = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+"NSLocationWhenInUseUsageDescription" = "WakTrainer uses your location to record workout routes and identify registered gym locations.";

@@ -53,12 +53,12 @@ struct ContentView: View {
                 .font(.largeTitle.bold())
 
             Text(
-                "운동 리포트를 개인화하기 위해 성별, 생년월일, 키와 몸무게를 먼저 설정합니다."
+                AppL10n.string("profile.required.description")
             )
             .foregroundStyle(.secondary)
             .multilineTextAlignment(.center)
 
-            Button("신체 정보 설정") {
+            Button(AppL10n.string("profile.body.setup")) {
                 isShowingProfileSetup = true
             }
             .buttonStyle(.borderedProminent)
@@ -96,7 +96,7 @@ private struct MainOrbNavigationView: View {
                         )
                         .font(.title2)
                     }
-                    .accessibilityLabel("캘린더")
+                    .accessibilityLabel(AppL10n.string("common.calendar"))
 
                     Button {
                         path.append(.profile)
@@ -107,7 +107,7 @@ private struct MainOrbNavigationView: View {
                         )
                         .font(.title2)
                     }
-                    .accessibilityLabel("프로필")
+                    .accessibilityLabel(AppL10n.string("common.profile"))
                 }
             }
             .navigationDestination(

@@ -7,10 +7,10 @@ struct ReportsView: View {
         Group {
             if environment.workoutHistory.isEmpty {
                 ContentUnavailableView(
-                    "아직 운동 기록이 없습니다",
+                    AppL10n.string("reports.empty.title"),
                     systemImage: "chart.xyaxis.line",
                     description: Text(
-                        "운동을 완료하면 시간, 거리, 칼로리와 걸음 수가 이곳에 저장됩니다."
+                        AppL10n.string("reports.empty.description")
                     )
                 )
             } else {
@@ -29,7 +29,7 @@ struct ReportsView: View {
                 }
             }
         }
-        .navigationTitle("운동 리포트")
+        .navigationTitle(AppL10n.string("reports.title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -80,10 +80,10 @@ struct WorkoutReportRow: View {
         let minutes = totalMinutes % 60
 
         if hours > 0 {
-            return "\(hours)시간 \(minutes)분"
+            return AppL10n.format("duration.hours_minutes", hours, minutes)
         }
 
-        return "\(minutes)분"
+        return AppL10n.format("duration.minutes", minutes)
     }
 }
 
@@ -94,12 +94,12 @@ struct WorkoutReportDetailView: View {
         ScrollView {
             VStack(spacing: 16) {
                 metric(
-                    title: "운동 시간",
+                    title: AppL10n.string("reports.duration"),
                     value: durationText
                 )
 
                 metric(
-                    title: "소모 칼로리",
+                    title: AppL10n.string("reports.calories"),
                     value: String(
                         format: "%.0f kcal",
                         record.activeCalories
@@ -107,7 +107,7 @@ struct WorkoutReportDetailView: View {
                 )
 
                 metric(
-                    title: "걸음 수",
+                    title: AppL10n.string("reports.steps"),
                     value: String(
                         format: "%.0f",
                         record.stepCount
@@ -115,7 +115,7 @@ struct WorkoutReportDetailView: View {
                 )
 
                 metric(
-                    title: "이동 거리",
+                    title: AppL10n.string("reports.distance"),
                     value: String(
                         format: "%.2f km",
                         record.distanceMeters / 1000
@@ -126,11 +126,11 @@ struct WorkoutReportDetailView: View {
                     alignment: .leading,
                     spacing: 8
                 ) {
-                    Text("세부 운동 그래프")
+                    Text(AppL10n.string("reports.chart.title"))
                         .font(.headline)
 
                     Text(
-                        "WorkoutSession에 수집된 심박수와 운동 시계열 데이터를 기반으로 다음 단계에서 WakTrainerChart 그래프를 표시합니다."
+                        AppL10n.string("reports.chart.description")
                     )
                     .font(.footnote)
                     .foregroundStyle(.secondary)

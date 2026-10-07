@@ -1,0 +1,82 @@
+"common.calendar" = "캘린더";
+"common.profile" = "프로필";
+"common.places" = "장소";
+"common.view_all" = "전체 보기";
+"common.try_again_later" = "잠시 후 다시 시도해 주세요.";
+
+"auth.sign_up.title" = "회원가입";
+"auth.forgot_password.title" = "비밀번호 찾기";
+
+"profile.required.description" = "운동 리포트를 개인화하기 위해 성별, 생년월일, 키와 몸무게를 먼저 설정합니다.";
+"profile.body.setup" = "신체 정보 설정";
+"profile.body.title" = "신체 정보";
+"profile.body.view" = "신체 정보 보기";
+"profile.body.edit" = "신체 정보 수정";
+"profile.body.empty" = "신체 정보가 없습니다";
+"profile.body.empty_description" = "운동 리포트를 위해 신체 정보를 설정해 주세요.";
+"profile.body.gender" = "성별";
+"profile.body.birth_date" = "생년월일";
+"profile.body.age" = "나이";
+"profile.body.age_value" = "%d세";
+"profile.body.height" = "키";
+"profile.body.weight" = "몸무게";
+"profile.gender.male" = "남성";
+"profile.gender.female" = "여성";
+"profile.gender.other" = "기타";
+"profile.info.section" = "안내";
+"profile.info.description" = "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다.";
+
+"home.title" = "오늘";
+"home.workout.title" = "오늘의 운동";
+"home.workout.description" = "화면 아래 운동 버튼을 눌러 원하는 운동을 바로 시작할 수 있습니다.";
+"home.place.title" = "헬스장 자동 감지";
+"home.place.registration_prompt" = "현재 장소를 운동 장소로 등록하시겠습니까?";
+"home.place.register_button" = "운동 장소로 등록";
+"home.place.registration_title" = "운동 장소 등록";
+"home.place.enable" = "헬스장 감지 켜기";
+"home.place.disable" = "자동 감지 끄기";
+"home.place.manage" = "장소 관리";
+"home.place.registered" = "등록된 운동 장소";
+"home.place.preparing" = "장소 인식 준비 중";
+"home.place.unavailable" = "장소 인식 서비스를 준비하고 있습니다.";
+"home.place.unregistered" = "현재 등록된 장소에 있지 않습니다.";
+"home.history.title" = "운동 기록";
+"home.history.empty" = "아직 완료한 운동이 없습니다. 첫 운동을 시작해 보세요.";
+
+"duration.hours_minutes" = "%1$d시간 %2$d분";
+"duration.minutes" = "%d분";
+
+"places.service.preparing" = "장소 서비스 준비 중";
+"places.service.unavailable_title" = "장소 서비스를 준비하지 못했습니다";
+
+"place.permission.not_selected" = "위치 권한 선택이 완료되지 않았습니다.";
+"place.permission.restricted" = "위치 사용이 제한되어 있습니다.";
+"place.permission.required" = "헬스장 도착과 이탈을 감지하려면 위치 권한이 필요합니다.";
+"place.permission.unknown" = "현재 위치 권한 상태를 확인할 수 없습니다.";
+"place.service.prepare_failed" = "장소 인식 서비스를 준비하지 못했습니다.";
+"place.status.background_active" = "헬스장 도착과 이탈을 백그라운드에서 감지하고 있습니다.";
+"place.status.disabled" = "헬스장 자동 감지를 껐습니다.";
+"place.status.always_permission_needed" = "앱을 닫은 뒤에도 감지하려면 위치 접근을 '항상'으로 허용해 주세요.";
+"place.status.will_request_permission" = "헬스장 자동 감지를 켜면 위치 권한을 요청합니다.";
+"place.status.settings_permission_needed" = "설정에서 위치 권한을 허용해야 헬스장 자동 감지를 다시 시작할 수 있습니다.";
+"place.status.device_restricted" = "이 기기에서는 위치 사용이 제한되어 있습니다.";
+"place.notification.permission_failed" = "알림 권한을 요청하지 못했습니다. 장소 감지는 계속 사용할 수 있습니다.";
+"place.background.always_requested" = "백그라운드 감지를 위해 '항상 허용' 권한을 요청했습니다. 권한을 선택하면 자동으로 이어집니다.";
+"place.background.denied" = "위치 권한이 거부되어 백그라운드 감지를 시작할 수 없습니다.";
+"place.background.restricted" = "위치 사용이 제한되어 백그라운드 감지를 시작할 수 없습니다.";
+"place.background.inaccurate_location" = "현재 위치 정확도가 충분하지 않습니다. 잠시 후 다시 시도해 주세요.";
+
+"reports.title" = "운동 리포트";
+"reports.empty.title" = "아직 운동 기록이 없습니다";
+"reports.empty.description" = "운동을 완료하면 시간, 거리, 칼로리와 걸음 수가 이곳에 저장됩니다.";
+"reports.duration" = "운동 시간";
+"reports.calories" = "소모 칼로리";
+"reports.steps" = "걸음 수";
+"reports.distance" = "이동 거리";
+"reports.chart.title" = "세부 운동 그래프";
+"reports.chart.description" = "WorkoutSession에 수집된 심박수와 운동 시계열 데이터를 기반으로 다음 단계에서 WakTrainerChart 그래프를 표시합니다.";
+
+"calendar.no_records.title" = "운동 기록이 없습니다";
+"calendar.no_records.description" = "선택한 날짜에 저장된 운동이 없습니다.";
+"calendar.select_date.title" = "날짜를 선택해 주세요";
+"calendar.select_date.description" = "운동한 날짜는 캘린더에 표시됩니다.";
