@@ -115,9 +115,7 @@ private struct MainOrbNavigationView: View {
             ) { route in
                 switch route {
                 case .reports:
-                    ReportsView(
-                        environment: environment
-                    )
+                    ReportsView()
 
                 case .calendar:
                     WorkoutCalendarView(
