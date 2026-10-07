@@ -11,15 +11,43 @@ struct AuthenticationRootView: View {
     @State
     private var path: [AuthenticationRoute] = []
 
+    @State
+    private var didRestoreSession = false
+
     var body: some View {
         Group {
-            if session != nil {
+            if !didRestoreSession {
+                ProgressView()
+            } else if session != nil {
                 ContentView(
                     environment: environment
                 )
             } else {
                 authenticationFlow
             }
+        }
+        .task {
+            restoreSessionIfNeeded()
+        }
+    }
+
+    private func restoreSessionIfNeeded() {
+        guard !didRestoreSession else {
+            return
+        }
+
+        defer {
+            didRestoreSession = true
+        }
+
+        do {
+            try AuthenticationService.shared
+                .restoreSession()
+            session =
+                AuthenticationService.shared
+                    .currentSession
+        } catch {
+            session = nil
         }
     }
 
