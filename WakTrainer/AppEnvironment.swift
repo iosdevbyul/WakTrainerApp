@@ -4,7 +4,6 @@ import TrisLocationKit
 import TrisNotificationKit
 import TrisPlaceRecognitionKit
 import UserProfileFeature
-import WakTrainerCoreModels
 import WakTrainerFeatureWorkout
 
 @MainActor
@@ -16,8 +15,8 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var isPlaceRecognitionRequested: Bool
     @Published private(set) var placeStatusMessage: String?
     @Published private(set) var placeErrorMessage: String?
-    @Published private(set) var workoutHistory: [WorkoutSummaryRecord]
 
+    let workoutHistoryStore: WorkoutHistoryStore
     let locationProvider: CoreLocationProvider
     let wifiProvider: any WiFiProviding
 
@@ -27,12 +26,10 @@ final class AppEnvironment: ObservableObject {
     private let backgroundRecognitionPreferenceKey =
         "WakTrainer.backgroundPlaceRecognitionEnabled"
 
-    private let workoutHistoryStorageKey =
-        "WakTrainer.workoutHistory"
-
     init() {
         let profileManager = DefaultUserProfileManager.shared
 
+        self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
         self.wifiProvider = SystemWiFiProvider()
         self.notificationService = LocalNotificationService()
@@ -41,13 +38,11 @@ final class AppEnvironment: ObservableObject {
         self.isPlaceRecognitionRequested = UserDefaults.standard.bool(
             forKey: backgroundRecognitionPreferenceKey
         )
-        self.workoutHistory = Self.loadWorkoutHistory(
-            storageKey: workoutHistoryStorageKey
-        )
     }
 
     func handleApplicationLaunch() async {
         refreshProfile()
+        await workoutHistoryStore.reload()
         await preparePlaceServices()
 
         guard isPlaceRecognitionRequested else {
@@ -59,6 +54,7 @@ final class AppEnvironment: ObservableObject {
 
     func handleSceneBecameActive() async {
         refreshProfile()
+        await workoutHistoryStore.reload()
         await preparePlaceServices()
 
         guard isPlaceRecognitionRequested else {
@@ -180,28 +176,8 @@ final class AppEnvironment: ObservableObject {
         placeErrorMessage = nil
     }
 
-    func recordWorkout(_ session: WorkoutSession) {
-        let endedAt =
-            session.timing.endDate
-            ?? Date()
-
-        let summary =
-            session.health.summary
-
-        let record = WorkoutSummaryRecord(
-            id: session.id,
-            workoutID: session.workout.workoutID,
-            workoutName: session.workout.name,
-            startedAt: session.timing.startDate,
-            endedAt: endedAt,
-            duration: session.timing.activeDuration,
-            distanceMeters: summary.distanceMeters ?? 0,
-            activeCalories: summary.activeCalories ?? 0,
-            stepCount: summary.stepCount ?? 0
-        )
-
-        workoutHistory.insert(record, at: 0)
-        persistWorkoutHistory()
+    func refreshWorkoutHistory() async {
+        await workoutHistoryStore.reload()
     }
 
     private func resumeRequestedPlaceRecognition() async {
@@ -293,32 +269,5 @@ final class AppEnvironment: ObservableObject {
         }
     }
 
-    private func persistWorkoutHistory() {
-        guard let data = try? JSONEncoder().encode(workoutHistory) else {
-            return
-        }
 
-        UserDefaults.standard.set(
-            data,
-            forKey: workoutHistoryStorageKey
-        )
-    }
-
-    private static func loadWorkoutHistory(
-        storageKey: String
-    ) -> [WorkoutSummaryRecord] {
-        guard
-            let data = UserDefaults.standard.data(forKey: storageKey),
-            let history = try? JSONDecoder().decode(
-                [WorkoutSummaryRecord].self,
-                from: data
-            )
-        else {
-            return []
-        }
-
-        return history.sorted {
-            $0.endedAt > $1.endedAt
-        }
-    }
 }
