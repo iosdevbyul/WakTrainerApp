@@ -85,9 +85,19 @@ private struct MainOrbNavigationView: View {
                 }
             )
             .toolbar {
-                ToolbarItem(
+                ToolbarItemGroup(
                     placement: .topBarTrailing
                 ) {
+                    Button {
+                        path.append(.calendar)
+                    } label: {
+                        Image(
+                            systemName: "calendar"
+                        )
+                        .font(.title2)
+                    }
+                    .accessibilityLabel("캘린더")
+
                     Button {
                         path.append(.profile)
                     } label: {
@@ -106,6 +116,11 @@ private struct MainOrbNavigationView: View {
                 switch route {
                 case .reports:
                     ReportsView(
+                        environment: environment
+                    )
+
+                case .calendar:
+                    WorkoutCalendarView(
                         environment: environment
                     )
 
@@ -135,6 +150,7 @@ private struct MainOrbNavigationView: View {
 
 private enum MainRoute: Hashable {
     case reports
+    case calendar
     case places
     case profile
 }

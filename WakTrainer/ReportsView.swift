@@ -5,61 +5,71 @@ struct ReportsView: View {
 
     var body: some View {
         Group {
-                if environment.workoutHistory.isEmpty {
-                    ContentUnavailableView(
-                        "아직 운동 기록이 없습니다",
-                        systemImage: "chart.xyaxis.line",
-                        description: Text(
-                            "운동을 완료하면 시간, 거리, 칼로리와 걸음 수가 이곳에 저장됩니다."
-                        )
+            if environment.workoutHistory.isEmpty {
+                ContentUnavailableView(
+                    "아직 운동 기록이 없습니다",
+                    systemImage: "chart.xyaxis.line",
+                    description: Text(
+                        "운동을 완료하면 시간, 거리, 칼로리와 걸음 수가 이곳에 저장됩니다."
                     )
-                } else {
-                    List(
-                        environment.workoutHistory
-                    ) { record in
-                        NavigationLink {
-                            WorkoutReportDetailView(
-                                record: record
-                            )
-                        } label: {
-                            VStack(
-                                alignment: .leading,
-                                spacing: 6
-                            ) {
-                                Text(record.workoutName)
-                                    .font(.headline)
-
-                                Text(
-                                    record.endedAt.formatted(
-                                        date: .abbreviated,
-                                        time: .shortened
-                                    )
-                                )
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-
-                                HStack(spacing: 12) {
-                                    Text(
-                                        durationText(
-                                            record.duration
-                                        )
-                                    )
-
-                                    Text(
-                                        String(
-                                            format: "%.0f kcal",
-                                            record.activeCalories
-                                        )
-                                    )
-                                }
-                                .font(.subheadline)
-                            }
-                        }
+                )
+            } else {
+                List(
+                    environment.workoutHistory
+                ) { record in
+                    NavigationLink {
+                        WorkoutReportDetailView(
+                            record: record
+                        )
+                    } label: {
+                        WorkoutReportRow(
+                            record: record
+                        )
                     }
                 }
+            }
         }
         .navigationTitle("운동 리포트")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct WorkoutReportRow: View {
+    let record: WorkoutSummaryRecord
+
+    var body: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 6
+        ) {
+            Text(record.workoutName)
+                .font(.headline)
+
+            Text(
+                record.endedAt.formatted(
+                    date: .abbreviated,
+                    time: .shortened
+                )
+            )
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            HStack(spacing: 12) {
+                Text(
+                    durationText(
+                        record.duration
+                    )
+                )
+
+                Text(
+                    String(
+                        format: "%.0f kcal",
+                        record.activeCalories
+                    )
+                )
+            }
+            .font(.subheadline)
+        }
     }
 
     private func durationText(
@@ -77,7 +87,7 @@ struct ReportsView: View {
     }
 }
 
-private struct WorkoutReportDetailView: View {
+struct WorkoutReportDetailView: View {
     let record: WorkoutSummaryRecord
 
     var body: some View {
@@ -112,7 +122,10 @@ private struct WorkoutReportDetailView: View {
                     )
                 )
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(
+                    alignment: .leading,
+                    spacing: 8
+                ) {
                     Text("세부 운동 그래프")
                         .font(.headline)
 
@@ -122,11 +135,16 @@ private struct WorkoutReportDetailView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
                 .padding()
                 .background(.regularMaterial)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(
+                        cornerRadius: 16
+                    )
                 )
             }
             .padding()
@@ -151,14 +169,17 @@ private struct WorkoutReportDetailView: View {
         .padding()
         .background(.regularMaterial)
         .clipShape(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(
+                cornerRadius: 16
+            )
         )
     }
 
     private var durationText: String {
         let totalSeconds = Int(record.duration)
         let hours = totalSeconds / 3600
-        let minutes = (totalSeconds % 3600) / 60
+        let minutes =
+            (totalSeconds % 3600) / 60
         let seconds = totalSeconds % 60
 
         if hours > 0 {
