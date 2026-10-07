@@ -1,5 +1,6 @@
 import SwiftUI
 import UserProfileFeature
+import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
 struct ContentView: View {
@@ -19,6 +20,8 @@ struct ContentView: View {
                 profileRequiredView
             }
         }
+        .preferredColorScheme(.dark)
+        .tint(WakColor.primary)
         .task {
             await environment.handleSceneBecameActive()
         }
@@ -42,28 +45,68 @@ struct ContentView: View {
     }
 
     private var profileRequiredView: some View {
-        VStack(spacing: 20) {
-            Image(
-                systemName:
-                    "figure.strengthtraining.traditional"
-            )
-            .font(.system(size: 54))
+        ZStack {
+            WakColor.background
+                .ignoresSafeArea()
 
-            Text("WakTrainer")
-                .font(.largeTitle.bold())
+            WakCard(
+                padding: WakSpacing.large
+            ) {
+                VStack(
+                    spacing: WakSpacing.large
+                ) {
+                    ZStack {
+                        Circle()
+                            .fill(
+                                WakColor.primary
+                                    .opacity(0.16)
+                            )
 
-            Text(
-                AppL10n.string("profile.required.description")
-            )
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
+                        Image(
+                            systemName:
+                                "figure.strengthtraining.traditional"
+                        )
+                        .font(
+                            .system(
+                                size: 36,
+                                weight: .bold
+                            )
+                        )
+                        .foregroundStyle(
+                            WakColor.primary
+                        )
+                    }
+                    .frame(
+                        width: 80,
+                        height: 80
+                    )
 
-            Button(AppL10n.string("profile.body.setup")) {
-                isShowingProfileSetup = true
+                    Text("WakTrainer")
+                        .font(WakTypography.screenTitle)
+                        .foregroundStyle(
+                            WakColor.textPrimary
+                        )
+
+                    Text(
+                        AppL10n.string(
+                            "profile.required.description"
+                        )
+                    )
+                    .font(WakTypography.body)
+                    .foregroundStyle(
+                        WakColor.textSecondary
+                    )
+                    .multilineTextAlignment(.center)
+
+                    WakPrimaryButton(
+                        "profile.body.setup"
+                    ) {
+                        isShowingProfileSetup = true
+                    }
+                }
             }
-            .buttonStyle(.borderedProminent)
+            .padding(WakSpacing.large)
         }
-        .padding(32)
     }
 }
 
@@ -82,6 +125,9 @@ private struct MainOrbNavigationView: View {
                 onShowReports: {
                     path.append(.reports)
                 },
+                onShowCalendar: {
+                    path.append(.calendar)
+                },
                 onShowPlaces: {
                     path.append(.places)
                 }
@@ -90,26 +136,22 @@ private struct MainOrbNavigationView: View {
                 ToolbarItemGroup(
                     placement: .topBarTrailing
                 ) {
-                    Button {
+                    toolbarButton(
+                        systemImage: "calendar",
+                        accessibilityKey:
+                            "common.calendar"
+                    ) {
                         path.append(.calendar)
-                    } label: {
-                        Image(
-                            systemName: "calendar"
-                        )
-                        .font(.title2)
                     }
-                    .accessibilityLabel(AppL10n.string("common.calendar"))
 
-                    Button {
+                    toolbarButton(
+                        systemImage:
+                            "person.crop.circle",
+                        accessibilityKey:
+                            "common.profile"
+                    ) {
                         path.append(.profile)
-                    } label: {
-                        Image(
-                            systemName:
-                                "person.crop.circle"
-                        )
-                        .font(.title2)
                     }
-                    .accessibilityLabel(AppL10n.string("common.profile"))
                 }
             }
             .navigationDestination(
@@ -137,6 +179,7 @@ private struct MainOrbNavigationView: View {
                 }
             }
         }
+        .background(WakColor.background)
         .safeAreaInset(edge: .bottom) {
             Color.clear
                 .frame(height: 92)
@@ -149,6 +192,37 @@ private struct MainOrbNavigationView: View {
                     .refreshWorkoutHistory()
             }
         }
+    }
+
+    private func toolbarButton(
+        systemImage: String,
+        accessibilityKey: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(
+                    .system(
+                        size: 17,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(
+                    WakColor.textPrimary
+                )
+                .frame(
+                    width: 34,
+                    height: 34
+                )
+                .background(WakColor.surface)
+                .clipShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(
+            AppL10n.string(
+                accessibilityKey
+            )
+        )
     }
 }
 
