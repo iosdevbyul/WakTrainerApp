@@ -4,6 +4,8 @@ import WakTrainerFeatureWorkout
 
 struct WorkoutCalendarView: View {
     @ObservedObject var environment: AppEnvironment
+    @ObservedObject var workoutHistoryStore:
+        WorkoutHistoryStore
 
     @State
     private var displayedMonth = Date()
@@ -12,11 +14,8 @@ struct WorkoutCalendarView: View {
     private var selectedDate: Date?
 
     private var highlightedDates: Set<Date> {
-        WorkoutHistoryCalendar
-            .highlightedDates(
-                from:
-                    environment.workoutHistory
-            )
+        workoutHistoryStore
+            .highlightedDates()
     }
 
     var body: some View {
