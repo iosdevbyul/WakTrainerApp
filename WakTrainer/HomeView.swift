@@ -16,7 +16,7 @@ struct HomeView: View {
             }
             .padding()
         }
-        .navigationTitle("오늘")
+        .navigationTitle(AppL10n.string("home.title"))
     }
 
     private var introCard: some View {
@@ -24,11 +24,11 @@ struct HomeView: View {
             alignment: .leading,
             spacing: 8
         ) {
-            Text("오늘의 운동")
+            Text(AppL10n.string("home.workout.title"))
                 .font(.title2.bold())
 
             Text(
-                "화면 아래 운동 버튼을 눌러 원하는 운동을 바로 시작할 수 있습니다."
+                AppL10n.string("home.workout.description")
             )
             .foregroundStyle(.secondary)
         }
@@ -43,27 +43,27 @@ struct HomeView: View {
             configuration:
                 PlaceRecognitionCardConfiguration(
                     title:
-                        "헬스장 자동 감지",
+                        AppL10n.string("home.place.title"),
                     registrationPrompt:
-                        "현재 장소를 운동 장소로 등록하시겠습니까?",
+                        AppL10n.string("home.place.registration_prompt"),
                     registrationButtonTitle:
-                        "운동 장소로 등록",
+                        AppL10n.string("home.place.register_button"),
                     registrationNavigationTitle:
-                        "운동 장소 등록",
+                        AppL10n.string("home.place.registration_title"),
                     enableButtonTitle:
-                        "헬스장 감지 켜기",
+                        AppL10n.string("home.place.enable"),
                     disableButtonTitle:
-                        "자동 감지 끄기",
+                        AppL10n.string("home.place.disable"),
                     manageButtonTitle:
-                        "장소 관리",
+                        AppL10n.string("home.place.manage"),
                     registeredPlaceSummaryTitle:
-                        "등록된 운동 장소",
+                        AppL10n.string("home.place.registered"),
                     preparingMessage:
-                        "장소 인식 준비 중",
+                        AppL10n.string("home.place.preparing"),
                     unavailableMessage:
-                        "장소 인식 서비스를 준비하고 있습니다.",
+                        AppL10n.string("home.place.unavailable"),
                     unregisteredMessage:
-                        "현재 등록된 장소에 있지 않습니다."
+                        AppL10n.string("home.place.unregistered")
                 ),
             placeStore:
                 environment.placeStore,
@@ -103,14 +103,14 @@ struct HomeView: View {
         ) {
             HStack {
                 Label(
-                    "운동 기록",
+                    AppL10n.string("home.history.title"),
                     systemImage: "chart.xyaxis.line"
                 )
                 .font(.headline)
 
                 Spacer()
 
-                Button("전체 보기") {
+                Button(AppL10n.string("common.view_all")) {
                     onShowReports()
                 }
                 .font(.subheadline)
@@ -162,7 +162,7 @@ struct HomeView: View {
                 .buttonStyle(.plain)
             } else {
                 Text(
-                    "아직 완료한 운동이 없습니다. 첫 운동을 시작해 보세요."
+                    AppL10n.string("home.history.empty")
                 )
                 .foregroundStyle(.secondary)
             }
@@ -187,9 +187,9 @@ struct HomeView: View {
             (totalSeconds % 3600) / 60
 
         if hours > 0 {
-            return "\(hours)시간 \(minutes)분"
+            return AppL10n.format("duration.hours_minutes", hours, minutes)
         }
 
-        return "\(minutes)분"
+        return AppL10n.format("duration.minutes", minutes)
     }
 }

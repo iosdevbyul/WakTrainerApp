@@ -1,0 +1,82 @@
+"common.calendar" = "Calendar";
+"common.profile" = "Profile";
+"common.places" = "Places";
+"common.view_all" = "View All";
+"common.try_again_later" = "Please try again shortly.";
+
+"auth.sign_up.title" = "Sign Up";
+"auth.forgot_password.title" = "Forgot Password";
+
+"profile.required.description" = "To personalize your workout reports, set your gender, date of birth, height, and weight first.";
+"profile.body.setup" = "Set Body Information";
+"profile.body.title" = "Body Information";
+"profile.body.view" = "View Body Information";
+"profile.body.edit" = "Edit Body Information";
+"profile.body.empty" = "No Body Information";
+"profile.body.empty_description" = "Set your body information to personalize workout reports.";
+"profile.body.gender" = "Gender";
+"profile.body.birth_date" = "Date of Birth";
+"profile.body.age" = "Age";
+"profile.body.age_value" = "%d years old";
+"profile.body.height" = "Height";
+"profile.body.weight" = "Weight";
+"profile.gender.male" = "Male";
+"profile.gender.female" = "Female";
+"profile.gender.other" = "Other";
+"profile.info.section" = "Information";
+"profile.info.description" = "Gender, date of birth, height, and weight are used to calculate your workout reports.";
+
+"home.title" = "Today";
+"home.workout.title" = "Today's Workout";
+"home.workout.description" = "Tap the workout button below to start the workout you want.";
+"home.place.title" = "Gym Auto Detection";
+"home.place.registration_prompt" = "Register your current location as a workout place?";
+"home.place.register_button" = "Register as Workout Place";
+"home.place.registration_title" = "Register Workout Place";
+"home.place.enable" = "Turn On Gym Detection";
+"home.place.disable" = "Turn Off Auto Detection";
+"home.place.manage" = "Manage Places";
+"home.place.registered" = "Registered Workout Places";
+"home.place.preparing" = "Preparing Place Recognition";
+"home.place.unavailable" = "Preparing the place recognition service.";
+"home.place.unregistered" = "You are not currently at a registered place.";
+"home.history.title" = "Workout History";
+"home.history.empty" = "No completed workouts yet. Start your first workout.";
+
+"duration.hours_minutes" = "%1$d hr %2$d min";
+"duration.minutes" = "%d min";
+
+"places.service.preparing" = "Preparing place services";
+"places.service.unavailable_title" = "Unable to Prepare Place Services";
+
+"place.permission.not_selected" = "Location permission selection has not been completed.";
+"place.permission.restricted" = "Location access is restricted.";
+"place.permission.required" = "Location permission is required to detect gym arrivals and departures.";
+"place.permission.unknown" = "The current location permission status could not be determined.";
+"place.service.prepare_failed" = "The place recognition service could not be prepared.";
+"place.status.background_active" = "Gym arrivals and departures are being detected in the background.";
+"place.status.disabled" = "Gym auto detection is turned off.";
+"place.status.always_permission_needed" = "To keep detecting after you close the app, allow location access to Always.";
+"place.status.will_request_permission" = "Turning on gym auto detection will request location permission.";
+"place.status.settings_permission_needed" = "Allow location access in Settings to restart gym auto detection.";
+"place.status.device_restricted" = "Location access is restricted on this device.";
+"place.notification.permission_failed" = "Notification permission could not be requested. Place detection can still be used.";
+"place.background.always_requested" = "Always Allow location access was requested for background detection. Detection will continue after you choose a permission.";
+"place.background.denied" = "Background detection cannot start because location permission was denied.";
+"place.background.restricted" = "Background detection cannot start because location access is restricted.";
+"place.background.inaccurate_location" = "The current location is not accurate enough. Please try again shortly.";
+
+"reports.title" = "Workout Reports";
+"reports.empty.title" = "No Workout History Yet";
+"reports.empty.description" = "Complete a workout to save its duration, distance, calories, and steps here.";
+"reports.duration" = "Workout Duration";
+"reports.calories" = "Calories Burned";
+"reports.steps" = "Steps";
+"reports.distance" = "Distance";
+"reports.chart.title" = "Detailed Workout Charts";
+"reports.chart.description" = "Detailed heart-rate and workout time-series charts from WorkoutSession will be displayed here in the next step.";
+
+"calendar.no_records.title" = "No Workout History";
+"calendar.no_records.description" = "There are no saved workouts on the selected date.";
+"calendar.select_date.title" = "Select a Date";
+"calendar.select_date.description" = "Dates with workouts are highlighted on the calendar.";

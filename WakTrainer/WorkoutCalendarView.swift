@@ -43,7 +43,7 @@ struct WorkoutCalendarView: View {
                         highlightedDates,
                     configuration:
                         CalendarConfiguration(
-                            locale: .system,
+                            locale: .custom(AppL10n.locale),
                             timeZone: .system,
                             weekStart: .system
                         )
@@ -53,7 +53,7 @@ struct WorkoutCalendarView: View {
             }
             .padding()
         }
-        .navigationTitle("캘린더")
+        .navigationTitle(AppL10n.string("common.calendar"))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -65,20 +65,20 @@ struct WorkoutCalendarView: View {
                 spacing: 12
             ) {
                 Text(
-                    selectedDate.formatted(
-                        date: .long,
-                        time: .omitted
+                    AppL10n.date(
+                        selectedDate,
+                        dateStyle: .long
                     )
                 )
                 .font(.headline)
 
                 if selectedRecords.isEmpty {
                     ContentUnavailableView(
-                        "운동 기록이 없습니다",
+                        AppL10n.string("calendar.no_records.title"),
                         systemImage:
                             "figure.run",
                         description: Text(
-                            "선택한 날짜에 저장된 운동이 없습니다."
+                            AppL10n.string("calendar.no_records.description")
                         )
                     )
                 } else {
@@ -124,10 +124,10 @@ struct WorkoutCalendarView: View {
             }
         } else {
             ContentUnavailableView(
-                "날짜를 선택해 주세요",
+                AppL10n.string("calendar.select_date.title"),
                 systemImage: "calendar",
                 description: Text(
-                    "운동한 날짜는 캘린더에 표시됩니다."
+                    AppL10n.string("calendar.select_date.description")
                 )
             )
         }

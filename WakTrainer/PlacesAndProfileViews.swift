@@ -21,14 +21,14 @@ struct PlacesView: View {
                     visitManager: visitManager
                 )
             } else if environment.isPreparingPlaces {
-                ProgressView("장소 서비스 준비 중")
+                ProgressView(AppL10n.string("places.service.preparing"))
             } else {
                 ContentUnavailableView(
-                    "장소 서비스를 준비하지 못했습니다",
+                    AppL10n.string("places.service.unavailable_title"),
                     systemImage: "location.slash",
                     description: Text(
                         environment.placeErrorMessage
-                            ?? "잠시 후 다시 시도해 주세요."
+                            ?? AppL10n.string("common.try_again_later")
                     )
                 )
                 .task {
@@ -37,7 +37,7 @@ struct PlacesView: View {
                 }
             }
         }
-        .navigationTitle("장소")
+        .navigationTitle(AppL10n.string("common.places"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -47,7 +47,7 @@ struct ProfileView: View {
 
     var body: some View {
         List {
-            Section("신체 정보") {
+            Section(AppL10n.string("profile.body.title")) {
                 NavigationLink {
                     BodyProfileView(
                         onProfileUpdated: {
@@ -56,21 +56,21 @@ struct ProfileView: View {
                     )
                 } label: {
                     Label(
-                        "신체 정보 보기",
+                        AppL10n.string("profile.body.view"),
                         systemImage:
                             "person.text.rectangle"
                     )
                 }
             }
 
-            Section("안내") {
+            Section(AppL10n.string("profile.info.section")) {
                 Text(
-                    "성별, 생년월일, 키와 몸무게를 운동 리포트 계산에 사용합니다."
+                    AppL10n.string("profile.info.description")
                 )
                 .foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("프로필")
+        .navigationTitle(AppL10n.string("common.profile"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

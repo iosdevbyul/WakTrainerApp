@@ -123,19 +123,19 @@ final class AppEnvironment: ObservableObject {
             break
 
         case .notDetermined:
-            placeErrorMessage = "위치 권한 선택이 완료되지 않았습니다."
+            placeErrorMessage = AppL10n.string("place.permission.not_selected")
             return
 
         case .restricted:
-            placeErrorMessage = "위치 사용이 제한되어 있습니다."
+            placeErrorMessage = AppL10n.string("place.permission.restricted")
             return
 
         case .denied:
-            placeErrorMessage = "헬스장 도착과 이탈을 감지하려면 위치 권한이 필요합니다."
+            placeErrorMessage = AppL10n.string("place.permission.required")
             return
 
         case .unknown:
-            placeErrorMessage = "현재 위치 권한 상태를 확인할 수 없습니다."
+            placeErrorMessage = AppL10n.string("place.permission.unknown")
             return
         }
 
@@ -143,7 +143,7 @@ final class AppEnvironment: ObservableObject {
         await preparePlaceServices()
 
         guard let visitManager else {
-            placeErrorMessage = "장소 인식 서비스를 준비하지 못했습니다."
+            placeErrorMessage = AppL10n.string("place.service.prepare_failed")
             return
         }
 
@@ -158,7 +158,7 @@ final class AppEnvironment: ObservableObject {
             try await visitManager.startBackgroundRecognition()
 
             placeStatusMessage =
-                "헬스장 도착과 이탈을 백그라운드에서 감지하고 있습니다."
+                AppL10n.string("place.status.background_active")
         } catch let error as BackgroundRecognitionManagerError {
             handleBackgroundRecognitionError(error)
         } catch {
@@ -176,7 +176,7 @@ final class AppEnvironment: ObservableObject {
             forKey: backgroundRecognitionPreferenceKey
         )
 
-        placeStatusMessage = "헬스장 자동 감지를 껐습니다."
+        placeStatusMessage = AppL10n.string("place.status.disabled")
         placeErrorMessage = nil
     }
 
@@ -216,7 +216,7 @@ final class AppEnvironment: ObservableObject {
                 try await visitManager.startBackgroundRecognition()
 
                 placeStatusMessage =
-                    "헬스장 도착과 이탈을 백그라운드에서 감지하고 있습니다."
+                    AppL10n.string("place.status.background_active")
                 placeErrorMessage = nil
             } catch {
                 placeErrorMessage = error.localizedDescription
@@ -227,7 +227,7 @@ final class AppEnvironment: ObservableObject {
                 try await visitManager.start()
 
                 placeStatusMessage =
-                    "앱을 닫은 뒤에도 감지하려면 위치 접근을 '항상'으로 허용해 주세요."
+                    AppL10n.string("place.status.always_permission_needed")
                 placeErrorMessage = nil
             } catch {
                 placeErrorMessage = error.localizedDescription
@@ -235,19 +235,19 @@ final class AppEnvironment: ObservableObject {
 
         case .notDetermined:
             placeStatusMessage =
-                "헬스장 자동 감지를 켜면 위치 권한을 요청합니다."
+                AppL10n.string("place.status.will_request_permission")
 
         case .denied:
             placeErrorMessage =
-                "설정에서 위치 권한을 허용해야 헬스장 자동 감지를 다시 시작할 수 있습니다."
+                AppL10n.string("place.status.settings_permission_needed")
 
         case .restricted:
             placeErrorMessage =
-                "이 기기에서는 위치 사용이 제한되어 있습니다."
+                AppL10n.string("place.status.device_restricted")
 
         case .unknown:
             placeErrorMessage =
-                "현재 위치 권한 상태를 확인할 수 없습니다."
+                AppL10n.string("place.permission.unknown")
         }
     }
 
@@ -262,7 +262,7 @@ final class AppEnvironment: ObservableObject {
             _ = try await notificationService.requestPermission()
         } catch {
             placeErrorMessage =
-                "알림 권한을 요청하지 못했습니다. 장소 감지는 계속 사용할 수 있습니다."
+                AppL10n.string("place.notification.permission_failed")
         }
     }
 
@@ -272,24 +272,24 @@ final class AppEnvironment: ObservableObject {
         switch error {
         case .alwaysAuthorizationRequired:
             placeStatusMessage =
-                "백그라운드 감지를 위해 '항상 허용' 권한을 요청했습니다. 권한을 선택하면 자동으로 이어집니다."
+                AppL10n.string("place.background.always_requested")
             placeErrorMessage = nil
 
         case .authorizationDenied:
             placeErrorMessage =
-                "위치 권한이 거부되어 백그라운드 감지를 시작할 수 없습니다."
+                AppL10n.string("place.background.denied")
 
         case .authorizationRestricted:
             placeErrorMessage =
-                "위치 사용이 제한되어 백그라운드 감지를 시작할 수 없습니다."
+                AppL10n.string("place.background.restricted")
 
         case .authorizationUnknown:
             placeErrorMessage =
-                "현재 위치 권한 상태를 확인할 수 없습니다."
+                AppL10n.string("place.permission.unknown")
 
         case .unacceptableLocationSnapshot:
             placeErrorMessage =
-                "현재 위치 정확도가 충분하지 않습니다. 잠시 후 다시 시도해 주세요."
+                AppL10n.string("place.background.inaccurate_location")
         }
     }
 

@@ -43,7 +43,7 @@ struct AuthenticationRootView: View {
                         onSignUpSuccess:
                             handleAuthenticationSuccess
                     )
-                    .navigationTitle("회원가입")
+                    .navigationTitle(AppL10n.string("auth.sign_up.title"))
                     .navigationBarTitleDisplayMode(.inline)
 
                 case .forgotPassword:
@@ -52,7 +52,7 @@ struct AuthenticationRootView: View {
                             path.removeAll()
                         }
                     )
-                    .navigationTitle("비밀번호 찾기")
+                    .navigationTitle(AppL10n.string("auth.forgot_password.title"))
                     .navigationBarTitleDisplayMode(.inline)
                 }
             }
