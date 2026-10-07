@@ -77,6 +77,8 @@ private struct MainOrbNavigationView: View {
         NavigationStack(path: $path) {
             HomeView(
                 environment: environment,
+                workoutHistoryStore:
+                    environment.workoutHistoryStore,
                 onShowReports: {
                     path.append(.reports)
                 },
@@ -115,13 +117,12 @@ private struct MainOrbNavigationView: View {
             ) { route in
                 switch route {
                 case .reports:
-                    ReportsView(
-                        environment: environment
-                    )
+                    ReportsView()
 
                 case .calendar:
                     WorkoutCalendarView(
-                        environment: environment
+                        workoutHistoryStore:
+                            environment.workoutHistoryStore
                     )
 
                 case .places:
@@ -142,8 +143,11 @@ private struct MainOrbNavigationView: View {
         }
         .wakTrainerWorkoutLauncher(
             bottomPadding: 16
-        ) { session in
-            environment.recordWorkout(session)
+        ) { _ in
+            Task {
+                await environment
+                    .refreshWorkoutHistory()
+            }
         }
     }
 }

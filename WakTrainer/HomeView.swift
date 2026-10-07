@@ -1,8 +1,12 @@
 import SwiftUI
 import TrisPlaceRecognitionKit
+import WakTrainerCoreModels
+import WakTrainerFeatureWorkout
 
 struct HomeView: View {
     @ObservedObject var environment: AppEnvironment
+    @ObservedObject var workoutHistoryStore:
+        WorkoutHistoryStore
 
     let onShowReports: () -> Void
     let onShowPlaces: () -> Void
@@ -117,7 +121,7 @@ struct HomeView: View {
             }
 
             if let latest =
-                environment.workoutHistory.first
+                workoutHistoryStore.latestSession
             {
                 Button {
                     onShowReports()
@@ -127,14 +131,17 @@ struct HomeView: View {
                             alignment: .leading,
                             spacing: 4
                         ) {
-                            Text(latest.workoutName)
+                            Text(latest.workout.name)
                                 .font(.title3.bold())
                                 .foregroundStyle(
                                     .primary
                                 )
 
                             Text(
-                                latest.endedAt.formatted(
+                                (
+                                    latest.timing.endDate
+                                    ?? latest.timing.startDate
+                                ).formatted(
                                     date: .abbreviated,
                                     time: .shortened
                                 )
@@ -149,7 +156,7 @@ struct HomeView: View {
 
                         Text(
                             formattedDuration(
-                                latest.duration
+                                latest.timing.activeDuration
                             )
                         )
                         .font(

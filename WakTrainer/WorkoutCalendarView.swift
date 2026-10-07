@@ -1,8 +1,10 @@
 import SwiftUI
 import TrisCalendarKit
+import WakTrainerFeatureWorkout
 
 struct WorkoutCalendarView: View {
-    @ObservedObject var environment: AppEnvironment
+    @ObservedObject var workoutHistoryStore:
+        WorkoutHistoryStore
 
     @State
     private var displayedMonth = Date()
@@ -11,21 +13,8 @@ struct WorkoutCalendarView: View {
     private var selectedDate: Date?
 
     private var highlightedDates: Set<Date> {
-        WorkoutHistoryCalendar
-            .highlightedDates(
-                from:
-                    environment.workoutHistory
-            )
-    }
-
-    private var selectedRecords:
-        [WorkoutSummaryRecord] {
-
-        WorkoutHistoryCalendar.records(
-            on: selectedDate,
-            from:
-                environment.workoutHistory
-        )
+        workoutHistoryStore
+            .highlightedDates()
     }
 
     var body: some View {
@@ -72,55 +61,9 @@ struct WorkoutCalendarView: View {
                 )
                 .font(.headline)
 
-                if selectedRecords.isEmpty {
-                    ContentUnavailableView(
-                        AppL10n.string("calendar.no_records.title"),
-                        systemImage:
-                            "figure.run",
-                        description: Text(
-                            AppL10n.string("calendar.no_records.description")
-                        )
-                    )
-                } else {
-                    VStack(spacing: 0) {
-                        ForEach(
-                            selectedRecords
-                        ) { record in
-                            NavigationLink {
-                                WorkoutReportDetailView(
-                                    record: record
-                                )
-                            } label: {
-                                WorkoutReportRow(
-                                    record: record
-                                )
-                                .frame(
-                                    maxWidth:
-                                        .infinity,
-                                    alignment:
-                                        .leading
-                                )
-                                .padding(.vertical, 12)
-                            }
-                            .buttonStyle(.plain)
-
-                            if record.id
-                                != selectedRecords
-                                    .last?.id {
-                                Divider()
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .background(
-                        .regularMaterial
-                    )
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 16
-                        )
-                    )
-                }
+                WorkoutHistoryView(
+                    selectedDate: selectedDate
+                )
             }
         } else {
             ContentUnavailableView(
