@@ -90,3 +90,5 @@
 "calendar.no_records.description" = "There are no saved workouts on the selected date.";
 "calendar.select_date.title" = "Select a Date";
 "calendar.select_date.description" = "Dates with workouts are highlighted on the calendar.";
+
+"auth.welcome.description" = "Track every workout. Build your progress.";
