@@ -449,7 +449,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainerPreview.entitlements;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
@@ -485,7 +485,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainerPreview.entitlements;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";

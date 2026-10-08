@@ -31,7 +31,7 @@ final class AppEnvironment: ObservableObject {
 
         self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
-        self.wifiProvider = SystemWiFiProvider()
+        self.wifiProvider = PreviewWiFiProvider()
         self.notificationService = LocalNotificationService()
         self.profileManager = profileManager
         self.isProfileConfigured = profileManager.loadProfile() != nil
@@ -95,7 +95,7 @@ final class AppEnvironment: ObservableObject {
 
             let manager = try PlaceVisitManager(
                 recognitionService: recognitionService,
-                recognitionPolicy: .wifiFirst,
+                recognitionPolicy: .gpsConstrained,
                 placeVisitNotificationsEnabled: true
             )
 
@@ -270,4 +270,10 @@ final class AppEnvironment: ObservableObject {
     }
 
 
+}
+
+private struct PreviewWiFiProvider: WiFiProviding {
+    func currentNetwork() async -> WiFiNetwork? {
+        nil
+    }
 }
