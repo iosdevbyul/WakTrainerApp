@@ -272,7 +272,6 @@ final class AppEnvironment: ObservableObject {
 
 }
 
-
 private struct PreviewWiFiProvider: WiFiProviding {
     func currentNetwork() async -> WiFiNetwork? {
         nil

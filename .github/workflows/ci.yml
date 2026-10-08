@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - preview/free-personal-team
   pull_request:
     branches:
       - main
+      - preview/free-personal-team
   workflow_dispatch:
 
 concurrency:

@@ -21,16 +21,3 @@ Feature-specific behavior remains in its owning package. The app consumes reusab
 ## Localization
 
 English remains the source/default language. Korean strings are supplied through the app localization resources and are shown when the user selects Korean for WakTrainer in iOS language settings.
-
-
-## Free Personal Team Preview
-
-The `preview/free-personal-team` branch mirrors the current `main` app UI and feature integration while keeping a signing configuration that can be installed with a free Personal Team.
-
-In this preview branch:
-
-- Access Wi-Fi Information is not requested.
-- Place recognition uses GPS-only behavior through a no-op Wi-Fi provider.
-- New place registrations are saved without Wi-Fi identity information.
-- The preview entitlement file remains empty for free Personal Team signing.
-- Production `main` keeps the full Wi-Fi-enabled configuration unchanged.
