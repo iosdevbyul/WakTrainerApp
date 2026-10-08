@@ -1,5 +1,6 @@
 import AuthenticationKit
 import SwiftUI
+import WakTrainerDesignSystem
 
 @MainActor
 struct AuthenticationRootView: View {
@@ -47,15 +48,34 @@ struct AuthenticationRootView: View {
 
     private var authenticationFlow: some View {
         NavigationStack(path: $path) {
-            LoginView(
-                onLoginSuccess: handleAuthenticationSuccess,
-                onSignUp: {
-                    path.append(.signUp)
-                },
-                onForgotPassword: {
-                    path.append(.forgotPassword)
+            VStack(spacing: 0) {
+                VStack(spacing: 14) {
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .font(.system(size: 36, weight: .semibold))
+                        .foregroundStyle(WakColor.primary)
+                        .frame(width: 84, height: 84)
+                        .background(WakColor.primary.opacity(0.15), in: RoundedRectangle(cornerRadius: 22))
+
+                    Text("WakTrainer")
+                        .font(WakTypography.screenTitle)
+                        .foregroundStyle(WakColor.textPrimary)
+
+                    Text(AppL10n.string("auth.welcome.description"))
+                        .font(WakTypography.body)
+                        .foregroundStyle(WakColor.textSecondary)
+                        .multilineTextAlignment(.center)
                 }
-            )
+                .padding(.horizontal, 24)
+                .padding(.top, 28)
+
+                LoginView(
+                    theme: .wakTrainer,
+                    onLoginSuccess: handleAuthenticationSuccess,
+                    onSignUp: { path.append(.signUp) },
+                    onForgotPassword: { path.append(.forgotPassword) }
+                )
+            }
+            .background(WakColor.background.ignoresSafeArea())
             .navigationDestination(
                 for: AuthenticationRoute.self
             ) { route in
@@ -87,6 +107,8 @@ struct AuthenticationRootView: View {
                 }
             }
         }
+        .preferredColorScheme(.dark)
+        .tint(WakColor.primary)
     }
 
     private func restoreSessionIfNeeded() {
@@ -117,4 +139,29 @@ struct AuthenticationRootView: View {
 private enum AuthenticationRoute: Hashable {
     case signUp
     case forgotPassword
+}
+
+private extension AuthenticationTheme {
+    static let wakTrainer = AuthenticationTheme(
+        background: WakColor.background,
+        primary: WakColor.primary,
+        text: WakColor.textPrimary,
+        secondaryText: WakColor.textSecondary,
+        placeholder: WakColor.textSecondary,
+        border: WakColor.divider,
+        error: .red,
+        link: WakColor.primary,
+        button: .init(
+            background: WakColor.primary,
+            foreground: WakColor.background,
+            disabled: WakColor.textSecondary.opacity(0.4)
+        ),
+        textField: .init(
+            background: WakColor.surface,
+            text: WakColor.textPrimary,
+            placeholder: WakColor.textSecondary,
+            border: WakColor.divider,
+            focusedBorder: WakColor.primary
+        )
+    )
 }
