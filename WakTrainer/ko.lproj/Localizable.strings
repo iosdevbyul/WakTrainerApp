@@ -90,3 +90,5 @@
 "calendar.no_records.description" = "선택한 날짜에 저장된 운동이 없습니다.";
 "calendar.select_date.title" = "날짜를 선택해 주세요";
 "calendar.select_date.description" = "운동한 날짜는 캘린더에 표시됩니다.";
+
+"auth.welcome.description" = "운동을 기록하고, 나만의 성장을 만들어 보세요.";
