@@ -629,7 +629,7 @@
 			repositoryURL = "https://github.com/iosdevbyul/WakTrainerFeatureWorkout";
 			requirement = {
 				kind = revision;
-				revision = e56b23040ead19708ddbf4a74e97fb47b1319aca;
+				revision = 02d6b297d56e75a89e7a29499c6bb08a4af0669c;
 			};
 		};
 		A30000000000000000000002 /* XCRemoteSwiftPackageReference "UserProfileFeature" */ = {
@@ -644,32 +644,32 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/TrisPlaceRecognitionKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 		A30000000000000000000004 /* XCRemoteSwiftPackageReference "TrisLocationKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/TrisLocationKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		A30000000000000000000005 /* XCRemoteSwiftPackageReference "TrisNotificationKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/TrisNotificationKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		A30000000000000000000006 /* XCRemoteSwiftPackageReference "AuthenticationKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/AuthenticationKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.2.0;
 			};
 		};
 		A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */ = {
@@ -684,8 +684,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/TrisCalendarKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */ = {
