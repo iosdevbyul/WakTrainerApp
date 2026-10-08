@@ -668,8 +668,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/AuthenticationKit";
 			requirement = {
-				kind = exactVersion;
-				version = 0.2.0;
+				kind = revision;
+				revision = c9d67ad91ca7396e07e1d45c52650ad8b5cd3e11;
 			};
 		};
 		A30000000000000000000007 /* XCRemoteSwiftPackageReference "WakTrainerCoreModels" */ = {
