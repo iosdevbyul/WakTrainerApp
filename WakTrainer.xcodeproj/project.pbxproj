@@ -644,8 +644,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/TrisPlaceRecognitionKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 		A30000000000000000000004 /* XCRemoteSwiftPackageReference "TrisLocationKit" */ = {
