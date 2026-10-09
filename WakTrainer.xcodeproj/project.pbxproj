@@ -82,6 +82,7 @@
 				A10000000000000000000008 /* TrisCalendarKit in Frameworks */,
 				A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */,
 				B10000000000000000000001 /* TrisLiveActivityKit in Frameworks */,
+				C10000000000000000000001 /* WakTrainerServiceHealthKit in Frameworks */,
 				B10000000000000000000002 /* WakTrainerLiveActivityModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
