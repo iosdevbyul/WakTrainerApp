@@ -16,25 +16,25 @@
 		A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
 		A10000000000000000000008 /* TrisCalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
 		A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
-		C10000000000000000000001 /* WakTrainerServiceHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = C20000000000000000000001 /* WakTrainerServiceHealthKit */; };
 		B10000000000000000000001 /* TrisLiveActivityKit in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000001 /* TrisLiveActivityKit */; };
 		B10000000000000000000002 /* WakTrainerLiveActivityModels in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
-		B10000000000000000000003 /* WakTrainerLiveActivityModels Widget in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
+		B10000000000000000000003 /* WakTrainerLiveActivityModels in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
 		B10000000000000000000004 /* WakTrainerWorkoutWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B30000000000000000000001 /* WakTrainerWorkoutWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D40000000000000000000030 /* WakTrainerFeatureWorkout Demo in Frameworks */ = {isa = PBXBuildFile; productRef = 1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */; };
-		D40000000000000000000031 /* UserProfileFeature Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000001 /* UserProfileFeature */; };
-		D40000000000000000000032 /* TrisPlaceRecognitionKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000002 /* TrisPlaceRecognitionKit */; };
-		D40000000000000000000033 /* TrisLocationKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000003 /* TrisLocationKit */; };
-		D40000000000000000000034 /* TrisNotificationKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000004 /* TrisNotificationKit */; };
-		D40000000000000000000035 /* AuthenticationKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
-		D40000000000000000000036 /* WakTrainerCoreModels Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
-		D40000000000000000000037 /* TrisCalendarKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
-		D40000000000000000000038 /* WakTrainerDesignSystem Demo in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
-		D40000000000000000000039 /* TrisLiveActivityKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000001 /* TrisLiveActivityKit */; };
-		D40000000000000000000040 /* WakTrainerServiceHealthKit Demo in Frameworks */ = {isa = PBXBuildFile; productRef = C20000000000000000000001 /* WakTrainerServiceHealthKit */; };
-		D40000000000000000000041 /* WakTrainerLiveActivityModels Demo in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
+		C10000000000000000000001 /* WakTrainerServiceHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = C20000000000000000000001 /* WakTrainerServiceHealthKit */; };
 		D40000000000000000000020 /* WakTrainerDemoWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D40000000000000000000004 /* WakTrainerDemoWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D40000000000000000000021 /* WakTrainerLiveActivityModels Demo Widget in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
+		D40000000000000000000021 /* WakTrainerLiveActivityModels in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
+		D40000000000000000000030 /* WakTrainerFeatureWorkout in Frameworks */ = {isa = PBXBuildFile; productRef = 1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */; };
+		D40000000000000000000031 /* UserProfileFeature in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000001 /* UserProfileFeature */; };
+		D40000000000000000000032 /* TrisPlaceRecognitionKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000002 /* TrisPlaceRecognitionKit */; };
+		D40000000000000000000033 /* TrisLocationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000003 /* TrisLocationKit */; };
+		D40000000000000000000034 /* TrisNotificationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000004 /* TrisNotificationKit */; };
+		D40000000000000000000035 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000005 /* AuthenticationKit */; };
+		D40000000000000000000036 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
+		D40000000000000000000037 /* TrisCalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
+		D40000000000000000000038 /* WakTrainerDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
+		D40000000000000000000039 /* TrisLiveActivityKit in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000001 /* TrisLiveActivityKit */; };
+		D40000000000000000000040 /* WakTrainerServiceHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = C20000000000000000000001 /* WakTrainerServiceHealthKit */; };
+		D40000000000000000000041 /* WakTrainerLiveActivityModels in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +52,46 @@
 			remoteGlobalIDString = 1C7B08BF301CF6B10085A763;
 			remoteInfo = WakTrainer;
 		};
-		B30000000000000000000012 /* Widget Proxy */ = {isa = PBXContainerItemProxy; containerPortal = 1C7B08B8301CF6B10085A763 /* Project object */; proxyType = 1; remoteGlobalIDString = B30000000000000000000007; remoteInfo = WakTrainerWorkoutWidget; };
-		D40000000000000000000019 /* Demo Widget Proxy */ = {isa = PBXContainerItemProxy; containerPortal = 1C7B08B8301CF6B10085A763 /* Project object */; proxyType = 1; remoteGlobalIDString = D40000000000000000000002; remoteInfo = WakTrainerDemoWidget; };
+		B30000000000000000000012 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1C7B08B8301CF6B10085A763 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B30000000000000000000007;
+			remoteInfo = WakTrainerWorkoutWidget;
+		};
+		D40000000000000000000019 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1C7B08B8301CF6B10085A763 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D40000000000000000000002;
+			remoteInfo = WakTrainerDemoWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B30000000000000000000004 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B10000000000000000000004 /* WakTrainerWorkoutWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000014 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D40000000000000000000020 /* WakTrainerDemoWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C7B08C0301CF6B10085A763 /* WakTrainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WakTrainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +118,11 @@
 			path = WakTrainerUITests;
 			sourceTree = "<group>";
 		};
-		B30000000000000000000002 /* WakTrainerWorkoutWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; path = WakTrainerWorkoutWidget; sourceTree = "<group>"; };
+		B30000000000000000000002 /* WakTrainerWorkoutWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WakTrainerWorkoutWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,15 +159,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B30000000000000000000003 /* Widget Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = ( B10000000000000000000003 /* WakTrainerLiveActivityModels Widget in Frameworks */, ); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000012 /* Demo Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (D40000000000000000000030 /* WakTrainerFeatureWorkout Demo in Frameworks */, D40000000000000000000031 /* UserProfileFeature Demo in Frameworks */, D40000000000000000000032 /* TrisPlaceRecognitionKit Demo in Frameworks */, D40000000000000000000033 /* TrisLocationKit Demo in Frameworks */, D40000000000000000000034 /* TrisNotificationKit Demo in Frameworks */, D40000000000000000000035 /* AuthenticationKit Demo in Frameworks */, D40000000000000000000036 /* WakTrainerCoreModels Demo in Frameworks */, D40000000000000000000037 /* TrisCalendarKit Demo in Frameworks */, D40000000000000000000038 /* WakTrainerDesignSystem Demo in Frameworks */, D40000000000000000000039 /* TrisLiveActivityKit Demo in Frameworks */, D40000000000000000000040 /* WakTrainerServiceHealthKit Demo in Frameworks */, D40000000000000000000041 /* WakTrainerLiveActivityModels Demo in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000016 /* Demo Widget Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (D40000000000000000000021 /* WakTrainerLiveActivityModels Demo Widget in Frameworks */, ); runOnlyForDeploymentPostprocessing = 0; };
+		B30000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000000000000000000003 /* WakTrainerLiveActivityModels in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000012 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40000000000000000000030 /* WakTrainerFeatureWorkout in Frameworks */,
+				D40000000000000000000031 /* UserProfileFeature in Frameworks */,
+				D40000000000000000000032 /* TrisPlaceRecognitionKit in Frameworks */,
+				D40000000000000000000033 /* TrisLocationKit in Frameworks */,
+				D40000000000000000000034 /* TrisNotificationKit in Frameworks */,
+				D40000000000000000000035 /* AuthenticationKit in Frameworks */,
+				D40000000000000000000036 /* WakTrainerCoreModels in Frameworks */,
+				D40000000000000000000037 /* TrisCalendarKit in Frameworks */,
+				D40000000000000000000038 /* WakTrainerDesignSystem in Frameworks */,
+				D40000000000000000000039 /* TrisLiveActivityKit in Frameworks */,
+				D40000000000000000000040 /* WakTrainerServiceHealthKit in Frameworks */,
+				D40000000000000000000041 /* WakTrainerLiveActivityModels in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000016 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40000000000000000000021 /* WakTrainerLiveActivityModels in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B30000000000000000000004 /* Embed App Extensions */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = ( B10000000000000000000004 /* WakTrainerWorkoutWidget.appex in Embed App Extensions */, ); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000014 /* Embed Demo Widget */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (D40000000000000000000020 /* WakTrainerDemoWidget.appex in Embed App Extensions */, ); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXGroup section */
 		1C7B08B7301CF6B00085A763 = {
@@ -168,7 +236,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B30000000000000000000011 /* Widget Dependency */,
+				B30000000000000000000011 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				1C7B08C2301CF6B10085A763 /* WakTrainer */,
@@ -240,19 +308,86 @@
 		};
 		B30000000000000000000007 /* WakTrainerWorkoutWidget */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B30000000000000000000010 /* Build configuration list for WakTrainerWorkoutWidget */;
-			buildPhases = ( B30000000000000000000005 /* Widget Sources */, B30000000000000000000003 /* Widget Frameworks */, B30000000000000000000006 /* Widget Resources */, );
-			buildRules = ( );
-			dependencies = ( );
-			fileSystemSynchronizedGroups = ( B30000000000000000000002 /* WakTrainerWorkoutWidget */, );
+			buildConfigurationList = B30000000000000000000010 /* Build configuration list for PBXNativeTarget "WakTrainerWorkoutWidget" */;
+			buildPhases = (
+				B30000000000000000000005 /* Sources */,
+				B30000000000000000000003 /* Frameworks */,
+				B30000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B30000000000000000000002 /* WakTrainerWorkoutWidget */,
+			);
 			name = WakTrainerWorkoutWidget;
-			packageProductDependencies = ( B20000000000000000000002 /* WakTrainerLiveActivityModels */, );
+			packageProductDependencies = (
+				B20000000000000000000002 /* WakTrainerLiveActivityModels */,
+			);
 			productName = WakTrainerWorkoutWidget;
 			productReference = B30000000000000000000001 /* WakTrainerWorkoutWidget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		D40000000000000000000001 /* WakTrainerDemo */ = {isa = PBXNativeTarget; buildConfigurationList = D40000000000000000000005 /* Build configuration list for WakTrainerDemo */; buildPhases = (D40000000000000000000011 /* Demo Sources */, D40000000000000000000012 /* Demo Frameworks */, D40000000000000000000013 /* Demo Resources */, D40000000000000000000014 /* Embed Demo Widget */, ); buildRules = ( ); dependencies = (D40000000000000000000018 /* Demo Widget Dependency */, ); fileSystemSynchronizedGroups = (1C7B08C2301CF6B10085A763 /* WakTrainer */, ); name = WakTrainerDemo; packageProductDependencies = (1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */, A20000000000000000000001 /* UserProfileFeature */, A20000000000000000000002 /* TrisPlaceRecognitionKit */, A20000000000000000000003 /* TrisLocationKit */, A20000000000000000000004 /* TrisNotificationKit */, A20000000000000000000005 /* AuthenticationKit */, A20000000000000000000006 /* WakTrainerCoreModels */, A20000000000000000000008 /* TrisCalendarKit */, A20000000000000000000009 /* WakTrainerDesignSystem */, B20000000000000000000001 /* TrisLiveActivityKit */, C20000000000000000000001 /* WakTrainerServiceHealthKit */, B20000000000000000000002 /* WakTrainerLiveActivityModels */,); productName = WakTrainerDemo; productReference = D40000000000000000000003 /* WakTrainerDemo.app */; productType = "com.apple.product-type.application"; };
-		D40000000000000000000002 /* WakTrainerDemoWidget */ = {isa = PBXNativeTarget; buildConfigurationList = D40000000000000000000006 /* Build configuration list for WakTrainerDemoWidget */; buildPhases = (D40000000000000000000015 /* Demo Widget Sources */, D40000000000000000000016 /* Demo Widget Frameworks */, D40000000000000000000017 /* Demo Widget Resources */, ); buildRules = ( ); dependencies = ( ); fileSystemSynchronizedGroups = (B30000000000000000000002 /* WakTrainerWorkoutWidget */, ); name = WakTrainerDemoWidget; packageProductDependencies = (B20000000000000000000002 /* WakTrainerLiveActivityModels */, ); productName = WakTrainerDemoWidget; productReference = D40000000000000000000004 /* WakTrainerDemoWidget.appex */; productType = "com.apple.product-type.app-extension"; };
+		D40000000000000000000001 /* WakTrainerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D40000000000000000000005 /* Build configuration list for PBXNativeTarget "WakTrainerDemo" */;
+			buildPhases = (
+				D40000000000000000000011 /* Sources */,
+				D40000000000000000000012 /* Frameworks */,
+				D40000000000000000000013 /* Resources */,
+				D40000000000000000000014 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D40000000000000000000018 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1C7B08C2301CF6B10085A763 /* WakTrainer */,
+			);
+			name = WakTrainerDemo;
+			packageProductDependencies = (
+				1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */,
+				A20000000000000000000001 /* UserProfileFeature */,
+				A20000000000000000000002 /* TrisPlaceRecognitionKit */,
+				A20000000000000000000003 /* TrisLocationKit */,
+				A20000000000000000000004 /* TrisNotificationKit */,
+				A20000000000000000000005 /* AuthenticationKit */,
+				A20000000000000000000006 /* WakTrainerCoreModels */,
+				A20000000000000000000008 /* TrisCalendarKit */,
+				A20000000000000000000009 /* WakTrainerDesignSystem */,
+				B20000000000000000000001 /* TrisLiveActivityKit */,
+				C20000000000000000000001 /* WakTrainerServiceHealthKit */,
+				B20000000000000000000002 /* WakTrainerLiveActivityModels */,
+			);
+			productName = WakTrainerDemo;
+			productReference = D40000000000000000000003 /* WakTrainerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D40000000000000000000002 /* WakTrainerDemoWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D40000000000000000000006 /* Build configuration list for PBXNativeTarget "WakTrainerDemoWidget" */;
+			buildPhases = (
+				D40000000000000000000015 /* Sources */,
+				D40000000000000000000016 /* Frameworks */,
+				D40000000000000000000017 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B30000000000000000000002 /* WakTrainerWorkoutWidget */,
+			);
+			name = WakTrainerDemoWidget;
+			packageProductDependencies = (
+				B20000000000000000000002 /* WakTrainerLiveActivityModels */,
+			);
+			productName = WakTrainerDemoWidget;
+			productReference = D40000000000000000000004 /* WakTrainerDemoWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,7 +433,7 @@
 				A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */,
 				B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */,
 				C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */,
-				B30000000000000000000014 /* XCLocalSwiftPackageReference "WakTrainerLiveActivityModels" */,
+				B30000000000000000000014 /* XCLocalSwiftPackageReference "Packages/WakTrainerLiveActivityModels" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C7B08C1301CF6B10085A763 /* Products */;
@@ -337,9 +472,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B30000000000000000000006 /* Widget Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000013 /* Demo Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000017 /* Demo Widget Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
+		B30000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000013 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000017 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -364,9 +517,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B30000000000000000000005 /* Widget Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000011 /* Demo Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
-		D40000000000000000000015 /* Demo Widget Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
+		B30000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D40000000000000000000015 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -380,8 +551,16 @@
 			target = 1C7B08BF301CF6B10085A763 /* WakTrainer */;
 			targetProxy = 1C7B08D8301CF6B60085A763 /* PBXContainerItemProxy */;
 		};
-		B30000000000000000000011 /* Widget Dependency */ = {isa = PBXTargetDependency; target = B30000000000000000000007 /* WakTrainerWorkoutWidget */; targetProxy = B30000000000000000000012 /* Widget Proxy */; };
-		D40000000000000000000018 /* Demo Widget Dependency */ = {isa = PBXTargetDependency; target = D40000000000000000000002 /* WakTrainerDemoWidget */; targetProxy = D40000000000000000000019 /* Demo Widget Proxy */; };
+		B30000000000000000000011 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B30000000000000000000007 /* WakTrainerWorkoutWidget */;
+			targetProxy = B30000000000000000000012 /* PBXContainerItemProxy */;
+		};
+		D40000000000000000000018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D40000000000000000000002 /* WakTrainerDemoWidget */;
+			targetProxy = D40000000000000000000019 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -509,10 +688,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -523,12 +709,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -546,10 +726,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -560,12 +747,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = WakTrainer/WakTrainer.entitlements;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -584,6 +765,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -605,6 +787,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
@@ -625,6 +808,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerUITests;
@@ -644,6 +828,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerUITests;
@@ -658,45 +843,63 @@
 			};
 			name = Release;
 		};
-		B30000000000000000000008 /* Widget Debug */ = {isa = XCBuildConfiguration; buildSettings = {
-			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-			APPLICATION_EXTENSION_API_ONLY = YES;
-			CURRENT_PROJECT_VERSION = 1;
-			MARKETING_VERSION = 1.0;
-			CODE_SIGN_STYLE = Automatic;
-			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
-			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
-			PRODUCT_NAME = "$(TARGET_NAME)";
-			SKIP_INSTALL = YES;
-			SWIFT_VERSION = 5.0;
-			TARGETED_DEVICE_FAMILY = "1,2";
-		}; name = Debug; };
-		B30000000000000000000009 /* Widget Release */ = {isa = XCBuildConfiguration; buildSettings = {
-			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-			APPLICATION_EXTENSION_API_ONLY = YES;
-			CURRENT_PROJECT_VERSION = 1;
-			MARKETING_VERSION = 1.0;
-			CODE_SIGN_STYLE = Automatic;
-			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
-			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
-			PRODUCT_NAME = "$(TARGET_NAME)";
-			SKIP_INSTALL = YES;
-			SWIFT_VERSION = 5.0;
-			TARGETED_DEVICE_FAMILY = "1,2";
-		}; name = Release; };
+		B30000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/WakTrainerWorkoutWidget-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B30000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/WakTrainerWorkoutWidget-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D40000000000000000000007 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Examples/WakTrainerDemo/Demo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
+				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -707,17 +910,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = Examples/WakTrainerDemo/Demo.entitlements;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WAKTRAINER_DEMO";
-				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WAKTRAINER_DEMO";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -732,10 +928,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Examples/WakTrainerDemo/Demo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
+				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -746,17 +950,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				CODE_SIGN_ENTITLEMENTS = Examples/WakTrainerDemo/Demo.entitlements;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
-				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WAKTRAINER_DEMO";
-				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WAKTRAINER_DEMO";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -766,37 +963,46 @@
 			};
 			name = Release;
 		};
-		D40000000000000000000009 /* Widget Debug */ = {isa = XCBuildConfiguration; buildSettings = {
-			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-			APPLICATION_EXTENSION_API_ONLY = YES;
-			CURRENT_PROJECT_VERSION = 1;
-			MARKETING_VERSION = 1.0;
-			CODE_SIGN_STYLE = Automatic;
-			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
-			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo.WorkoutWidget;
-			PRODUCT_NAME = "$(TARGET_NAME)";
-			SKIP_INSTALL = YES;
-			SWIFT_VERSION = 5.0;
-			TARGETED_DEVICE_FAMILY = "1,2";
-		}; name = Debug; };
-		D40000000000000000000010 /* Widget Release */ = {isa = XCBuildConfiguration; buildSettings = {
-			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-			APPLICATION_EXTENSION_API_ONLY = YES;
-			CURRENT_PROJECT_VERSION = 1;
-			MARKETING_VERSION = 1.0;
-			CODE_SIGN_STYLE = Automatic;
-			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
-			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo.WorkoutWidget;
-			PRODUCT_NAME = "$(TARGET_NAME)";
-			SKIP_INSTALL = YES;
-			SWIFT_VERSION = 5.0;
-			TARGETED_DEVICE_FAMILY = "1,2";
-		}; name = Release; };
-
+		D40000000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/WakTrainerWorkoutWidget-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo.WorkoutWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D40000000000000000000010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NXY923MCN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/WakTrainerWorkoutWidget-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainerDemo.WorkoutWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -836,7 +1042,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B30000000000000000000010 /* Build configuration list for WakTrainerWorkoutWidget */ = {isa = XCConfigurationList; buildConfigurations = ( B30000000000000000000008 /* Widget Debug */, B30000000000000000000009 /* Widget Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B30000000000000000000010 /* Build configuration list for PBXNativeTarget "WakTrainerWorkoutWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B30000000000000000000008 /* Debug */,
+				B30000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D40000000000000000000005 /* Build configuration list for PBXNativeTarget "WakTrainerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -846,8 +1060,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D40000000000000000000006 /* Build configuration list for WakTrainerDemoWidget */ = {isa = XCConfigurationList; buildConfigurations = ( D40000000000000000000009 /* Widget Debug */, D40000000000000000000010 /* Widget Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D40000000000000000000006 /* Build configuration list for PBXNativeTarget "WakTrainerDemoWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D40000000000000000000009 /* Debug */,
+				D40000000000000000000010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B30000000000000000000014 /* XCLocalSwiftPackageReference "Packages/WakTrainerLiveActivityModels" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/WakTrainerLiveActivityModels;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		A30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerFeatureWorkout" */ = {
@@ -922,13 +1151,23 @@
 				kind = branch;
 			};
 		};
-		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit"; requirement = { kind = branch; branch = main; }; };
-		B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/TrisLiveActivityKit"; requirement = { kind = revision; revision = f11d582affa7c37f02b160654413e91cea391d6b; }; };
+		B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/TrisLiveActivityKit";
+			requirement = {
+				kind = revision;
+				revision = f11d582affa7c37f02b160654413e91cea391d6b;
+			};
+		};
+		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		B30000000000000000000014 /* XCLocalSwiftPackageReference "WakTrainerLiveActivityModels" */ = {isa = XCLocalSwiftPackageReference; relativePath = Packages/WakTrainerLiveActivityModels; };
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		1C7B08EB301CF7E90085A763 /* WakTrainerFeatureWorkout */ = {
@@ -976,9 +1215,21 @@
 			package = A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */;
 			productName = WakTrainerDesignSystem;
 		};
-		C20000000000000000000001 /* WakTrainerServiceHealthKit */ = {isa = XCSwiftPackageProductDependency; package = C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */; productName = WakTrainerServiceHealthKit; };
-		B20000000000000000000001 /* TrisLiveActivityKit */ = {isa = XCSwiftPackageProductDependency; package = B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */; productName = TrisLiveActivityKit; };
-		B20000000000000000000002 /* WakTrainerLiveActivityModels */ = {isa = XCSwiftPackageProductDependency; package = B30000000000000000000014 /* XCLocalSwiftPackageReference "WakTrainerLiveActivityModels" */; productName = WakTrainerLiveActivityModels; };
+		B20000000000000000000001 /* TrisLiveActivityKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */;
+			productName = TrisLiveActivityKit;
+		};
+		B20000000000000000000002 /* WakTrainerLiveActivityModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B30000000000000000000014 /* XCLocalSwiftPackageReference "Packages/WakTrainerLiveActivityModels" */;
+			productName = WakTrainerLiveActivityModels;
+		};
+		C20000000000000000000001 /* WakTrainerServiceHealthKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */;
+			productName = WakTrainerServiceHealthKit;
+		};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1C7B08B8301CF6B10085A763 /* Project object */;
