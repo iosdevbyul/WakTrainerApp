@@ -19,6 +19,10 @@ final class WorkoutLiveActivityController {
     }
 
     func receive(_ snapshot: WorkoutLiveSnapshot) {
+        if snapshot.phase == .finished {
+            finish()
+            return
+        }
         guard service.areActivitiesEnabled else { return }
 
         let now = Date()
