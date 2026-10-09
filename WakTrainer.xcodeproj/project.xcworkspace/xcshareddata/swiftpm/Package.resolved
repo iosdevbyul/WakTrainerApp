@@ -1,0 +1,147 @@
+{
+  "originHash" : "7c01de80c145e1fbdca7fe3f51194895abc088725fbd59b353b7d68064084bc0",
+  "pins" : [
+    {
+      "identity" : "authenticationkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/AuthenticationKit",
+      "state" : {
+        "revision" : "f32a2142110921fe96e3614d49b1b4e916239bd0",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "triscalendarkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisCalendarKit",
+      "state" : {
+        "revision" : "b1f398967c0957413d7de9ae82cff5176789a137",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "trisliveactivitykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisLiveActivityKit",
+      "state" : {
+        "revision" : "f11d582affa7c37f02b160654413e91cea391d6b"
+      }
+    },
+    {
+      "identity" : "trislocationkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisLocationKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c25e447bb502a9b8c1abc81d913f1cdf307f9533"
+      }
+    },
+    {
+      "identity" : "trisnetworkkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisNetworkKit.git",
+      "state" : {
+        "revision" : "e0d15ed31922078e42135e4968d5c49e51173232",
+        "version" : "0.1.0"
+      }
+    },
+    {
+      "identity" : "trisnotificationkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisNotificationKit",
+      "state" : {
+        "revision" : "97a61a2318e6940dc96af484f20cf0b099fba729",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "trisplacerecognitionkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/TrisPlaceRecognitionKit",
+      "state" : {
+        "revision" : "ee0161d79723cf5e3195085399299aa86b5a8997",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "userprofilefeature",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/UserProfileFeature",
+      "state" : {
+        "branch" : "main",
+        "revision" : "01d29e6cf5f5786edabd13857665fef3445a800d"
+      }
+    },
+    {
+      "identity" : "waktrainercoremodels",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerCoreModels",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a19ca9d53b7b395b3c41efbbcc9883c53a672832"
+      }
+    },
+    {
+      "identity" : "waktrainerdesignsystem",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerDesignSystem",
+      "state" : {
+        "branch" : "main",
+        "revision" : "11e6ece897c2e0b938a08e43a5c170c421b2d907"
+      }
+    },
+    {
+      "identity" : "waktrainerdomainworkout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerDomainWorkout",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c8d605a70e8abff876ebd7acf4b7593fc095dc2f"
+      }
+    },
+    {
+      "identity" : "waktrainerfeaturetimer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerFeatureTimer",
+      "state" : {
+        "revision" : "46a6adc65b69ef3f966448d7f26084fe3dee68d7"
+      }
+    },
+    {
+      "identity" : "waktrainerfeatureworkout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerFeatureWorkout",
+      "state" : {
+        "revision" : "47a83f3baa81b3353959a176e1c54a7966f73158"
+      }
+    },
+    {
+      "identity" : "waktrainerservicehealthkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerServiceHealthKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e09d9a718a6d86b99a9ec0a7a88aa7c0169c7cb4"
+      }
+    },
+    {
+      "identity" : "waktrainerservicelocation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerServiceLocation",
+      "state" : {
+        "branch" : "main",
+        "revision" : "224c6e4f0ad2abd844d6f438618177cf1d145812"
+      }
+    },
+    {
+      "identity" : "waktrainerserviceworkoutstorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iosdevbyul/WakTrainerServiceWorkoutStorage",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c786b81602745ce21334a8826332c8ec3505ff5d"
+      }
+    }
+  ],
+  "version" : 3
+}
