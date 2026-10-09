@@ -71,3 +71,13 @@ jobs:
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
             test
+
+      - name: Build Wi-Fi-free demo
+        run: |
+          xcodebuild \
+            -project WakTrainer.xcodeproj \
+            -scheme WakTrainerDemo \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            build
