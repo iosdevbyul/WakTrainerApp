@@ -25,7 +25,7 @@ final class WorkoutLiveActivityController {
         let state = WorkoutActivityAttributes.ContentState(
             phase: snapshot.phase == .running ? .running : .paused,
             elapsedSeconds: max(0, snapshot.elapsedSeconds),
-            runningSince: snapshot.phase == .running ? now : nil,
+            runningSince: snapshot.phase == .running ? now.addingTimeInterval(-max(0, snapshot.elapsedSeconds)) : nil,
             heartRate: Int(max(0, snapshot.heartRateBPM)),
             calories: Int(max(0, snapshot.activeCalories)),
             distanceMeters: max(0, snapshot.distanceMeters),
