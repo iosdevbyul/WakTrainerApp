@@ -67,7 +67,7 @@ struct WorkoutLiveActivityWidget: Widget {
     @ViewBuilder
     private func elapsed(_ state: WorkoutActivityAttributes.ContentState) -> some View {
         if let runningSince = state.runningSince, state.phase == .running {
-            Text(timerInterval: runningSince.addingTimeInterval(-state.elapsedSeconds)...Date.distantFuture, countsDown: false, showsHours: true)
+            Text(runningSince, style: .timer)
         } else {
             Text(Duration.seconds(state.elapsedSeconds).formatted(.time(pattern: .hourMinuteSecond)))
         }
