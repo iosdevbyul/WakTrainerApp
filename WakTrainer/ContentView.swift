@@ -185,13 +185,17 @@ private struct MainOrbNavigationView: View {
                 .frame(height: 92)
         }
         .wakTrainerWorkoutLauncher(
-            bottomPadding: 16
-        ) { _ in
-            Task {
-                await environment
-                    .refreshWorkoutHistory()
+            bottomPadding: 16,
+            onFinished: { _ in
+                WorkoutLiveActivityController.shared.finish()
+                Task {
+                    await environment.refreshWorkoutHistory()
+                }
+            },
+            onWorkoutUpdate: { snapshot in
+                WorkoutLiveActivityController.shared.receive(snapshot)
             }
-        }
+        )
     }
 
     private func toolbarButton(
