@@ -16,6 +16,7 @@
 		A10000000000000000000006 /* WakTrainerCoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000006 /* WakTrainerCoreModels */; };
 		A10000000000000000000008 /* TrisCalendarKit in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000008 /* TrisCalendarKit */; };
 		A10000000000000000000009 /* WakTrainerDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A20000000000000000000009 /* WakTrainerDesignSystem */; };
+		C10000000000000000000001 /* WakTrainerServiceHealthKit in Frameworks */ = {isa = PBXBuildFile; productRef = C20000000000000000000001 /* WakTrainerServiceHealthKit */; };
 		B10000000000000000000001 /* TrisLiveActivityKit in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000001 /* TrisLiveActivityKit */; };
 		B10000000000000000000002 /* WakTrainerLiveActivityModels in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
 		B10000000000000000000003 /* WakTrainerLiveActivityModels Widget in Frameworks */ = {isa = PBXBuildFile; productRef = B20000000000000000000002 /* WakTrainerLiveActivityModels */; };
@@ -161,6 +162,7 @@
 				A20000000000000000000008 /* TrisCalendarKit */,
 				A20000000000000000000009 /* WakTrainerDesignSystem */,
 				B20000000000000000000001 /* TrisLiveActivityKit */,
+				C20000000000000000000001 /* WakTrainerServiceHealthKit */,
 				B20000000000000000000002 /* WakTrainerLiveActivityModels */,
 			);
 			productName = WakTrainer;
@@ -270,6 +272,7 @@
 				A30000000000000000000008 /* XCRemoteSwiftPackageReference "TrisCalendarKit" */,
 				A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */,
 				B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */,
+				C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */,
 				B30000000000000000000014 /* XCLocalSwiftPackageReference "WakTrainerLiveActivityModels" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -768,6 +771,7 @@
 				kind = branch;
 			};
 		};
+		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit"; requirement = { kind = revision; revision = e09d9a718a6d86b99a9ec0a7a88aa7c0169c7cb4; }; };
 		B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/TrisLiveActivityKit"; requirement = { kind = revision; revision = f11d582affa7c37f02b160654413e91cea391d6b; }; };
 /* End XCRemoteSwiftPackageReference section */
 
@@ -821,6 +825,7 @@
 			package = A30000000000000000000009 /* XCRemoteSwiftPackageReference "WakTrainerDesignSystem" */;
 			productName = WakTrainerDesignSystem;
 		};
+		C20000000000000000000001 /* WakTrainerServiceHealthKit */ = {isa = XCSwiftPackageProductDependency; package = C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */; productName = WakTrainerServiceHealthKit; };
 		B20000000000000000000001 /* TrisLiveActivityKit */ = {isa = XCSwiftPackageProductDependency; package = B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */; productName = TrisLiveActivityKit; };
 		B20000000000000000000002 /* WakTrainerLiveActivityModels */ = {isa = XCSwiftPackageProductDependency; package = B30000000000000000000014 /* XCLocalSwiftPackageReference "WakTrainerLiveActivityModels" */; productName = WakTrainerLiveActivityModels; };
 /* End XCSwiftPackageProductDependency section */
