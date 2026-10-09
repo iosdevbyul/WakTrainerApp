@@ -100,13 +100,15 @@ final class AppEnvironment: ObservableObject {
                 placeStore: store
             )
 
+#if WAKTRAINER_DEMO
+            let recognitionPolicy: PlaceRecognitionPolicy = .gpsConstrained
+#else
+            let recognitionPolicy: PlaceRecognitionPolicy = .wifiFirst
+#endif
+
             let manager = try PlaceVisitManager(
                 recognitionService: recognitionService,
-#if WAKTRAINER_DEMO
-                recognitionPolicy: .gpsConstrained,
-#else
-                recognitionPolicy: .wifiFirst,
-#endif
+                recognitionPolicy: recognitionPolicy,
                 placeVisitNotificationsEnabled: true
             )
 
