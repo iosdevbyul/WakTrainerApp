@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WakTrainerServiceHealthKit
 import TrisLocationKit
 import TrisNotificationKit
 import TrisPlaceRecognitionKit
@@ -21,6 +22,8 @@ final class AppEnvironment: ObservableObject {
     let wifiProvider: any WiFiProviding
 
     private let notificationService: LocalNotificationService
+    private let healthKitManager = HealthKitManager()
+    private var didRequestHealthKitAuthorization = false
     private let profileManager: DefaultUserProfileManager
 
     private let backgroundRecognitionPreferenceKey =
@@ -176,6 +179,18 @@ final class AppEnvironment: ObservableObject {
         placeErrorMessage = nil
     }
 
+    func requestHealthKitAuthorizationIfNeeded() async {
+        guard !didRequestHealthKitAuthorization else { return }
+        didRequestHealthKitAuthorization = true
+
+        do {
+            _ = try await healthKitManager.requestAuthorization()
+        } catch {
+            // HealthKit is optional: permission errors must not block workouts.
+            print("HealthKit authorization request failed: \(error)")
+        }
+    }
+
     func refreshWorkoutHistory() async {
         await workoutHistoryStore.reload()
     }
@@ -270,10 +285,4 @@ final class AppEnvironment: ObservableObject {
     }
 
 
-}
-
-private struct PreviewWiFiProvider: WiFiProviding {
-    func currentNetwork() async -> WiFiNetwork? {
-        nil
-    }
 }
