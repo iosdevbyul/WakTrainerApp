@@ -34,7 +34,11 @@ final class AppEnvironment: ObservableObject {
 
         self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
+#if WAKTRAINER_DEMO
+        self.wifiProvider = DemoWiFiProvider()
+#else
         self.wifiProvider = SystemWiFiProvider()
+#endif
         self.notificationService = LocalNotificationService()
         self.profileManager = profileManager
         self.isProfileConfigured = profileManager.loadProfile() != nil
@@ -96,9 +100,15 @@ final class AppEnvironment: ObservableObject {
                 placeStore: store
             )
 
+#if WAKTRAINER_DEMO
+            let recognitionPolicy: PlaceRecognitionPolicy = .gpsConstrained
+#else
+            let recognitionPolicy: PlaceRecognitionPolicy = .wifiFirst
+#endif
+
             let manager = try PlaceVisitManager(
                 recognitionService: recognitionService,
-                recognitionPolicy: .wifiFirst,
+                recognitionPolicy: recognitionPolicy,
                 placeVisitNotificationsEnabled: true
             )
 
@@ -286,3 +296,10 @@ final class AppEnvironment: ObservableObject {
 
 
 }
+
+#if WAKTRAINER_DEMO
+/// A Wi-Fi-free implementation for Personal Team demo builds.
+private struct DemoWiFiProvider: WiFiProviding {
+    func currentNetwork() async -> WiFiNetwork? { nil }
+}
+#endif
