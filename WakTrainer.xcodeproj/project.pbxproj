@@ -628,7 +628,7 @@
 			APPLICATION_EXTENSION_API_ONLY = YES;
 			CODE_SIGN_STYLE = Automatic;
 			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = WakTrainerWorkoutWidget/Info.plist;
+			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
 			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
 			PRODUCT_NAME = "$(TARGET_NAME)";
@@ -641,7 +641,7 @@
 			APPLICATION_EXTENSION_API_ONLY = YES;
 			CODE_SIGN_STYLE = Automatic;
 			GENERATE_INFOPLIST_FILE = NO;
-			INFOPLIST_FILE = WakTrainerWorkoutWidget/Info.plist;
+			INFOPLIST_FILE = Config/WakTrainerWorkoutWidget-Info.plist;
 			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 			PRODUCT_BUNDLE_IDENTIFIER = com.tris.WakTrainer.WorkoutWidget;
 			PRODUCT_NAME = "$(TARGET_NAME)";
