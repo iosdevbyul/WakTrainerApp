@@ -772,7 +772,7 @@
 				kind = branch;
 			};
 		};
-		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit"; requirement = { kind = revision; revision = e09d9a718a6d86b99a9ec0a7a88aa7c0169c7cb4; }; };
+		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit"; requirement = { kind = branch; branch = main; }; };
 		B30000000000000000000013 /* XCRemoteSwiftPackageReference "TrisLiveActivityKit" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/iosdevbyul/TrisLiveActivityKit"; requirement = { kind = revision; revision = f11d582affa7c37f02b160654413e91cea391d6b; }; };
 /* End XCRemoteSwiftPackageReference section */
 
