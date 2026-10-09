@@ -24,6 +24,7 @@ struct ContentView: View {
         .tint(WakColor.primary)
         .task {
             await environment.handleSceneBecameActive()
+            await environment.requestHealthKitAuthorizationIfNeeded()
         }
         .onChange(of: scenePhase) { _, newPhase in
             guard newPhase == .active else {

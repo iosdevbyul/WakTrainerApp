@@ -33,6 +33,10 @@ struct WorkoutLiveActivityWidget: Widget {
                 }
             }
             .padding()
+            // The Live Activity uses a fixed dark surface even in light appearance.
+            // Explicitly pair it with light foreground colors for legibility.
+            .foregroundStyle(.white)
+            .environment(\.colorScheme, .dark)
             .activityBackgroundTint(Color(red: 0.09, green: 0.10, blue: 0.14))
             .activitySystemActionForegroundColor(.white)
         } dynamicIsland: { context in
