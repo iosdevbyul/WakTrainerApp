@@ -30,9 +30,15 @@ struct WakTrainerApp: App {
 
     var body: some Scene {
         WindowGroup {
+#if WAKTRAINER_DEMO
+            ContentView(
+                environment: appDelegate.environment
+            )
+#else
             AuthenticationRootView(
                 environment: appDelegate.environment
             )
+#endif
         }
     }
 }
