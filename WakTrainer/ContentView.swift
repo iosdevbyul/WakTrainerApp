@@ -25,8 +25,8 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
         .tint(WakColor.primary)
         .task {
-            await environment.handleSceneBecameActive()
             environment.configureWorkoutSync(ownerUserID: ownerUserID)
+            await environment.handleSceneBecameActive()
             await environment.syncPendingWorkouts()
             await environment.requestHealthKitAuthorizationIfNeeded()
         }
