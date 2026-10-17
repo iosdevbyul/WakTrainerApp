@@ -15,7 +15,8 @@ struct ContentView: View {
         Group {
             if environment.isProfileConfigured {
                 MainOrbNavigationView(
-                    environment: environment
+                    environment: environment,
+                    ownerUserID: ownerUserID
                 )
             } else {
                 profileRequiredView
@@ -117,6 +118,7 @@ struct ContentView: View {
 
 private struct MainOrbNavigationView: View {
     @ObservedObject var environment: AppEnvironment
+    let ownerUserID: UUID?
 
     @State
     private var path: [MainRoute] = []
@@ -191,7 +193,7 @@ private struct MainOrbNavigationView: View {
         }
         .wakTrainerWorkoutLauncher(
             bottomPadding: 16,
-            ownerUserID: environment.workoutOwnerUserID,
+            ownerUserID: ownerUserID,
             onFinished: { _ in
                 WorkoutLiveActivityController.shared.finish()
                 Task {
