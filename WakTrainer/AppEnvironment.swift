@@ -207,6 +207,9 @@ final class AppEnvironment: ObservableObject {
     func configureWorkoutSync(ownerUserID: UUID?) {
         guard workoutOwnerUserID != ownerUserID else { return }
         workoutOwnerUserID = ownerUserID
+        // Replace the published store immediately so old-account rows
+        // cannot remain visible during the next asynchronous reload.
+        workoutHistoryStore = WorkoutHistoryStore(ownerUserID: ownerUserID)
         workoutSync = nil
 
         guard let ownerUserID,
