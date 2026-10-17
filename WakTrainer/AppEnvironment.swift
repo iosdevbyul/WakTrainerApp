@@ -1,6 +1,7 @@
 import Combine
 import AuthenticationKit
 import Foundation
+import Network
 import WakTrainerServiceHealthKit
 import TrisLocationKit
 import TrisNotificationKit
@@ -21,6 +22,8 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var workoutHistoryStore: WorkoutHistoryStore
     private(set) var workoutOwnerUserID: UUID?
     private var workoutSync: WorkoutServerSync?
+    private let networkMonitor = NWPathMonitor()
+    private var hasStartedNetworkMonitor = false
     let locationProvider: CoreLocationProvider
     let wifiProvider: any WiFiProviding
 
@@ -231,6 +234,23 @@ final class AppEnvironment: ObservableObject {
                 }
                 return session.accessToken
             }
+        )
+        startWorkoutNetworkMonitoringIfNeeded()
+    }
+
+    private func startWorkoutNetworkMonitoringIfNeeded() {
+        guard !hasStartedNetworkMonitor else { return }
+        hasStartedNetworkMonitor = true
+
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            guard path.status == .satisfied else { return }
+
+            Task { @MainActor [weak self] in
+                await self?.syncPendingWorkouts()
+            }
+        }
+        networkMonitor.start(
+            queue: DispatchQueue(label: "WakTrainer.WorkoutNetworkMonitor")
         )
     }
 
