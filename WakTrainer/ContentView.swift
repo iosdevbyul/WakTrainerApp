@@ -7,6 +7,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     @ObservedObject var environment: AppEnvironment
+    var ownerUserID: UUID? = nil
 
     @State private var isShowingProfileSetup = false
 
@@ -14,7 +15,8 @@ struct ContentView: View {
         Group {
             if environment.isProfileConfigured {
                 MainOrbNavigationView(
-                    environment: environment
+                    environment: environment,
+                    ownerUserID: ownerUserID
                 )
             } else {
                 profileRequiredView
@@ -23,7 +25,9 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
         .tint(WakColor.primary)
         .task {
+            environment.configureWorkoutSync(ownerUserID: ownerUserID)
             await environment.handleSceneBecameActive()
+            await environment.syncPendingWorkouts()
             await environment.requestHealthKitAuthorizationIfNeeded()
         }
         .onChange(of: scenePhase) { _, newPhase in
@@ -33,6 +37,7 @@ struct ContentView: View {
 
             Task {
                 await environment.handleSceneBecameActive()
+                await environment.syncPendingWorkouts()
             }
         }
         .sheet(
@@ -113,6 +118,7 @@ struct ContentView: View {
 
 private struct MainOrbNavigationView: View {
     @ObservedObject var environment: AppEnvironment
+    let ownerUserID: UUID?
 
     @State
     private var path: [MainRoute] = []
@@ -187,10 +193,12 @@ private struct MainOrbNavigationView: View {
         }
         .wakTrainerWorkoutLauncher(
             bottomPadding: 16,
+            ownerUserID: ownerUserID,
             onFinished: { _ in
                 WorkoutLiveActivityController.shared.finish()
                 Task {
                     await environment.refreshWorkoutHistory()
+                    await environment.syncPendingWorkouts()
                 }
             },
             onWorkoutUpdate: { snapshot in

@@ -32,9 +32,11 @@ struct AuthenticationRootView: View {
                         maxWidth: .infinity,
                         maxHeight: .infinity
                     )
-            } else if session != nil {
+            } else if let session,
+                      let userID = UUID(uuidString: session.user.id) {
                 ContentView(
-                    environment: environment
+                    environment: environment,
+                    ownerUserID: userID
                 )
             } else {
                 authenticationFlow

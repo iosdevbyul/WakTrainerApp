@@ -1,4 +1,5 @@
 import Combine
+import AuthenticationKit
 import Foundation
 import WakTrainerServiceHealthKit
 import TrisLocationKit
@@ -17,7 +18,9 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var placeStatusMessage: String?
     @Published private(set) var placeErrorMessage: String?
 
-    let workoutHistoryStore: WorkoutHistoryStore
+    @Published private(set) var workoutHistoryStore: WorkoutHistoryStore
+    private(set) var workoutOwnerUserID: UUID?
+    private var workoutSync: WorkoutServerSync?
     let locationProvider: CoreLocationProvider
     let wifiProvider: any WiFiProviding
 
@@ -199,6 +202,40 @@ final class AppEnvironment: ObservableObject {
             // HealthKit is optional: permission errors must not block workouts.
             print("HealthKit authorization request failed: \(error)")
         }
+    }
+
+    func configureWorkoutSync(ownerUserID: UUID?) {
+        guard workoutOwnerUserID != ownerUserID else { return }
+        workoutOwnerUserID = ownerUserID
+        // Replace the published store immediately so old-account rows
+        // cannot remain visible during the next asynchronous reload.
+        workoutHistoryStore = WorkoutHistoryStore(ownerUserID: ownerUserID)
+        workoutSync = nil
+
+        guard let ownerUserID,
+              let urlString = Bundle.main.object(
+                  forInfoDictionaryKey: "WORKOUT_API_BASE_URL"
+              ) as? String,
+              let baseURL = URL(string: urlString),
+              ["http", "https"].contains(baseURL.scheme?.lowercased() ?? "") else {
+            return
+        }
+
+        workoutSync = try? WorkoutServerSync(
+            baseURL: baseURL,
+            ownerUserID: ownerUserID,
+            accessToken: {
+                guard let session = AuthenticationService.shared.currentSession,
+                      UUID(uuidString: session.user.id) == ownerUserID else {
+                    return nil
+                }
+                return session.accessToken
+            }
+        )
+    }
+
+    func syncPendingWorkouts() async {
+        await workoutSync?.syncPendingSessions()
     }
 
     func refreshWorkoutHistory() async {
