@@ -30,6 +30,7 @@ struct WakTrainerApp: App {
 
     var body: some Scene {
         WindowGroup {
+            AppStartupSplash {
 #if WAKTRAINER_DEMO
             ContentView(
                 environment: appDelegate.environment
@@ -39,6 +40,7 @@ struct WakTrainerApp: App {
                 environment: appDelegate.environment
             )
 #endif
+            }
         }
     }
 }
