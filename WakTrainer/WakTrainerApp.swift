@@ -9,6 +9,9 @@ struct WakTrainerApp: App {
     private var appDelegate
 
     init() {
+#if DEBUG && targetEnvironment(simulator)
+        UserDefaults.standard.set(true, forKey: "WakTrainer.debug.simulateWorkout")
+#endif
         let configuredBaseURL =
             (Bundle.main.object(
                 forInfoDictionaryKey: "API_BASE_URL"
