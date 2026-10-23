@@ -1090,7 +1090,7 @@
 			repositoryURL = "https://github.com/iosdevbyul/WakTrainerFeatureWorkout";
 			requirement = {
 				kind = revision;
-				revision = eb512cd4a95c0dcdf63219cae7c4f9eec7cad160;
+				revision = 78c7e9467e10bd1976d4e93ec227e20e6f8ad482;
 			};
 		};
 		A30000000000000000000002 /* XCRemoteSwiftPackageReference "UserProfileFeature" */ = {
