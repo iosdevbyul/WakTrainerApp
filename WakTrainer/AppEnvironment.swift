@@ -9,6 +9,11 @@ import TrisPlaceRecognitionKit
 import UserProfileFeature
 import WakTrainerFeatureWorkout
 
+enum WorkoutDataMode: String, CaseIterable {
+    case server
+    case localOnly
+}
+
 @MainActor
 final class AppEnvironment: ObservableObject {
     @Published private(set) var isProfileConfigured: Bool
@@ -19,6 +24,8 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var placeStatusMessage: String?
     @Published private(set) var placeErrorMessage: String?
 
+    @Published private(set) var workoutDataMode: WorkoutDataMode
+    private let workoutDataModeKey = "WakTrainer.workoutDataMode"
     @Published private(set) var workoutHistoryStore: WorkoutHistoryStore
     private(set) var workoutOwnerUserID: UUID?
     private var workoutSync: WorkoutServerSync?
@@ -38,6 +45,9 @@ final class AppEnvironment: ObservableObject {
     init() {
         let profileManager = DefaultUserProfileManager.shared
 
+        self.workoutDataMode = WorkoutDataMode(
+            rawValue: UserDefaults.standard.string(forKey: "WakTrainer.workoutDataMode") ?? ""
+        ) ?? .server
         self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
 #if WAKTRAINER_DEMO
@@ -254,7 +264,17 @@ final class AppEnvironment: ObservableObject {
         )
     }
 
+    func setWorkoutDataMode(_ mode: WorkoutDataMode) {
+        guard workoutDataMode != mode else { return }
+        workoutDataMode = mode
+        UserDefaults.standard.set(mode.rawValue, forKey: workoutDataModeKey)
+        if mode == .server {
+            Task { await syncPendingWorkouts() }
+        }
+    }
+
     func syncPendingWorkouts() async {
+        guard workoutDataMode == .server else { return }
         await workoutSync?.syncPendingSessions()
     }
 

@@ -83,6 +83,9 @@ struct PlacesView: View {
 
 struct ProfileView: View {
     @ObservedObject var environment: AppEnvironment
+    @State private var developerTapCount = 0
+    @State private var showDeveloperSettings = false
+    @State private var showServerResumeConfirmation = false
 
     var body: some View {
         ZStack {
@@ -159,6 +162,78 @@ struct ProfileView: View {
                                 }
                             }
                             .buttonStyle(.plain)
+                        }
+                    }
+
+                    WakCard {
+                        HStack(spacing: WakSpacing.medium) {
+                            Image(systemName: environment.workoutDataMode == .localOnly ? "iphone" : "arrow.triangle.2.circlepath")
+                                .foregroundStyle(WakColor.primary)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Workout Data Mode")
+                                    .font(WakTypography.body)
+                                    .foregroundStyle(WakColor.textPrimary)
+                                Text(environment.workoutDataMode == .localOnly ? "Local Only · Uploads paused" : "Server · Uploads enabled")
+                                    .font(.caption)
+                                    .foregroundStyle(WakColor.textSecondary)
+                            }
+                            Spacer()
+                            if environment.workoutDataMode == .localOnly {
+                                Button("Resume Sync") {
+                                    showServerResumeConfirmation = true
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+                    }
+                    .confirmationDialog(
+                        "Resume Server Mode?",
+                        isPresented: $showServerResumeConfirmation,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Resume Server Sync") {
+                            environment.setWorkoutDataMode(.server)
+                        }
+                    } message: {
+                        Text("Pending workouts will be eligible for upload when the server is reachable. Local workout records remain on this device.")
+                    }
+
+                    Button {
+                        developerTapCount += 1
+                        if developerTapCount >= 5 {
+                            developerTapCount = 0
+                            showDeveloperSettings = true
+                        }
+                    } label: {
+                        Text("WakTrainer")
+                            .font(.caption)
+                            .foregroundStyle(WakColor.textSecondary)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("App information")
+                    .sheet(isPresented: $showDeveloperSettings) {
+                        NavigationStack {
+                            Form {
+                                Section("Workout Data Mode") {
+                                    Picker("Mode", selection: Binding(
+                                        get: { environment.workoutDataMode },
+                                        set: { environment.setWorkoutDataMode($0) }
+                                    )) {
+                                        Text("Server").tag(WorkoutDataMode.server)
+                                        Text("Local Only").tag(WorkoutDataMode.localOnly)
+                                    }
+                                    .pickerStyle(.segmented)
+                                    Text("Local Only keeps workouts on this device and pauses workout uploads. Switching back to Server resumes pending workout uploads.")
+                                        .font(.footnote)
+                                }
+                            }
+                            .navigationTitle("Developer Settings")
+                            .toolbar {
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button("Done") { showDeveloperSettings = false }
+                                }
+                            }
                         }
                     }
 
