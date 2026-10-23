@@ -3,9 +3,10 @@ import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
 struct ReportsView: View {
+    let ownerUserID: UUID?
 
     var body: some View {
-        WorkoutHistoryView()
+        WorkoutHistoryView(ownerUserID: ownerUserID)
             .scrollContentBackground(.hidden)
             .background(
                 WakColor.background
