@@ -83,6 +83,8 @@ struct PlacesView: View {
 
 struct ProfileView: View {
     @ObservedObject var environment: AppEnvironment
+    @State private var developerTapCount = 0
+    @State private var showDeveloperSettings = false
 
     var body: some View {
         ZStack {
@@ -159,6 +161,45 @@ struct ProfileView: View {
                                 }
                             }
                             .buttonStyle(.plain)
+                        }
+                    }
+
+                    Button {
+                        developerTapCount += 1
+                        if developerTapCount >= 5 {
+                            developerTapCount = 0
+                            showDeveloperSettings = true
+                        }
+                    } label: {
+                        Text("WakTrainer")
+                            .font(.caption)
+                            .foregroundStyle(WakColor.textSecondary)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("App information")
+                    .sheet(isPresented: $showDeveloperSettings) {
+                        NavigationStack {
+                            Form {
+                                Section("Workout Data Mode") {
+                                    Picker("Mode", selection: Binding(
+                                        get: { environment.workoutDataMode },
+                                        set: { environment.setWorkoutDataMode($0) }
+                                    )) {
+                                        Text("Server").tag(WorkoutDataMode.server)
+                                        Text("Local Only").tag(WorkoutDataMode.localOnly)
+                                    }
+                                    .pickerStyle(.segmented)
+                                    Text("Local Only keeps workouts on this device and pauses workout uploads. Switching back to Server resumes pending workout uploads.")
+                                        .font(.footnote)
+                                }
+                            }
+                            .navigationTitle("Developer Settings")
+                            .toolbar {
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button("Done") { showDeveloperSettings = false }
+                                }
+                            }
                         }
                     }
 
