@@ -58,7 +58,7 @@ struct WorkoutCalendarView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.NSSystemTimeZoneDidChange)) { _ in
-            viewingTimeZone = .autoupdatingCurrent
+            viewingTimeZone = .current
             selectedDate = nil
             displayedMonth = Date()
         }
