@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>API_BASE_URL</key>
+    <string>http://192.168.1.100:8080</string>
+    <key>WORKOUT_API_BASE_URL</key>
+    <string>http://192.168.1.100:8081</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Connect to the development servers on your local network for authentication and workout synchronization.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+</dict>
+</plist>
