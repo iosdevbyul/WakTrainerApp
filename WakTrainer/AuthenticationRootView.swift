@@ -49,7 +49,25 @@ struct AuthenticationRootView: View {
 
     private var authenticationFlow: some View {
         NavigationStack(path: $path) {
-            LoginView(
+            VStack(spacing: 12) {
+                if environment.workoutDataMode == .localOnly {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label("Offline Access Unavailable", systemImage: "wifi.slash")
+                            .font(.headline)
+                        Text("This device has no restorable login session. For offline access, sign in while the server is available and enable Auto Login.")
+                            .font(.subheadline)
+                        Button("Switch to Server Mode") {
+                            environment.setWorkoutDataMode(.server)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                    .padding(.horizontal)
+                }
+
+                LoginView(
                 onLoginSuccess: handleAuthenticationSuccess,
                 onSignUp: {
                     path.append(.signUp)
@@ -57,7 +75,8 @@ struct AuthenticationRootView: View {
                 onForgotPassword: {
                     path.append(.forgotPassword)
                 }
-            )
+                )
+            }
             .navigationDestination(
                 for: AuthenticationRoute.self
             ) { route in
