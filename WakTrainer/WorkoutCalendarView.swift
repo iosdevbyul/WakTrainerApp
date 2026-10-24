@@ -11,6 +11,9 @@ struct WorkoutCalendarView: View {
     private var displayedMonth = Date()
 
     @State
+    private var viewingTimeZone = TimeZone.autoupdatingCurrent
+
+    @State
     private var selectedDate: Date?
 
     private var highlightedDates: Set<Date> {
@@ -42,7 +45,7 @@ struct WorkoutCalendarView: View {
                                         .custom(
                                             AppL10n.locale
                                         ),
-                                    timeZone: .system,
+                                    timeZone: viewingTimeZone,
                                     weekStart: .system
                                 )
                         )
@@ -53,6 +56,11 @@ struct WorkoutCalendarView: View {
                 }
                 .padding(WakSpacing.regular)
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.NSSystemTimeZoneDidChange)) { _ in
+            viewingTimeZone = .autoupdatingCurrent
+            selectedDate = nil
+            displayedMonth = Date()
         }
         .navigationTitle(
             AppL10n.string(
