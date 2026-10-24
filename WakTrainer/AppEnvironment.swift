@@ -52,7 +52,7 @@ final class AppEnvironment: ObservableObject {
         ) ?? .server
         self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
         self.wifiProvider = DemoWiFiProvider()
 #else
         self.wifiProvider = SystemWiFiProvider()
