@@ -29,6 +29,8 @@ final class AppEnvironment: ObservableObject {
     @Published private(set) var workoutHistoryStore: WorkoutHistoryStore
     private(set) var workoutOwnerUserID: UUID?
     private var workoutSync: WorkoutServerSync?
+    private var workoutSyncTask: Task<Void, Never>?
+    private var workoutSyncGeneration = 0
     private let networkMonitor = NWPathMonitor()
     private var hasStartedNetworkMonitor = false
     let locationProvider: CoreLocationProvider
@@ -219,6 +221,7 @@ final class AppEnvironment: ObservableObject {
 
     func configureWorkoutSync(ownerUserID: UUID?) {
         guard workoutOwnerUserID != ownerUserID else { return }
+        cancelWorkoutSync()
         workoutOwnerUserID = ownerUserID
         // Replace the published store immediately so old-account rows
         // cannot remain visible during the next asynchronous reload.
@@ -266,6 +269,9 @@ final class AppEnvironment: ObservableObject {
 
     func setWorkoutDataMode(_ mode: WorkoutDataMode) {
         guard workoutDataMode != mode else { return }
+        if mode == .localOnly {
+            cancelWorkoutSync()
+        }
         workoutDataMode = mode
         UserDefaults.standard.set(mode.rawValue, forKey: workoutDataModeKey)
         if mode == .server {
@@ -273,9 +279,28 @@ final class AppEnvironment: ObservableObject {
         }
     }
 
+    private func cancelWorkoutSync() {
+        workoutSyncGeneration += 1
+        workoutSyncTask?.cancel()
+        workoutSyncTask = nil
+    }
+
     func syncPendingWorkouts() async {
         guard workoutDataMode == .server else { return }
-        await workoutSync?.syncPendingSessions()
+        if let workoutSyncTask {
+            await workoutSyncTask.value
+            return
+        }
+        guard let workoutSync else { return }
+        let generation = workoutSyncGeneration
+        let task = Task {
+            await workoutSync.syncPendingSessions()
+        }
+        workoutSyncTask = task
+        await task.value
+        if generation == workoutSyncGeneration {
+            workoutSyncTask = nil
+        }
     }
 
     func refreshWorkoutHistory() async {
