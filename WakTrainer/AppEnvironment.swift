@@ -399,7 +399,7 @@ final class AppEnvironment: ObservableObject {
 
 }
 
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 /// A Wi-Fi-free implementation for Personal Team demo builds.
 private struct DemoWiFiProvider: WiFiProviding {
     func currentNetwork() async -> WiFiNetwork? { nil }
