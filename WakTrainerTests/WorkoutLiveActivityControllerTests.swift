@@ -5,8 +5,8 @@ import WakTrainerFeatureWorkout
 import XCTest
 @testable import WakTrainer
 
-@MainActor
 final class WorkoutLiveActivityControllerTests: XCTestCase {
+    @MainActor
     func testDisabledActivitiesExposeActionableFailure() {
         let service = StubLiveActivityService(enabled: false)
         let controller = WorkoutLiveActivityController(service: service)
@@ -18,6 +18,7 @@ final class WorkoutLiveActivityControllerTests: XCTestCase {
         XCTAssertEqual(service.startCount, 0)
     }
 
+    @MainActor
     func testStartingAndFinishingUsesActivityService() async throws {
         let service = StubLiveActivityService(enabled: true)
         let controller = WorkoutLiveActivityController(service: service)
