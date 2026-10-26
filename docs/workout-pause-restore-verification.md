@@ -43,7 +43,7 @@ This checklist applies to WakTrainer, WakTrainerDemo (Wi-Fi-free), and WakTraine
 
 ## Integrated real-device acceptance: workout issues (FeatureWorkout #44, App #53)
 
-Run on a physical iPhone with the **WakTrainer** scheme after this integration is merged.
+Run on a physical iPhone with the **WakTrainerDemo** scheme after this integration is merged.
 WakTrainerDemo may use simulated health data and does not establish real HealthKit behavior.
 
 1. **Live Activity:** Enable Live Activities for WakTrainer in iOS Settings, start a workout, lock the screen and verify a WakTrainer Live Activity is visible. Check Dynamic Island, elapsed time, exercise and completed sets. If absent, capture the `WakTrainer Live Activity` console message and verify the installed widget extension and entitlements.
@@ -57,3 +57,14 @@ WakTrainerDemo may use simulated health data and does not establish real HealthK
 - A CI build cannot confirm on-device HealthKit sample production or Live Activity visibility.
 - Frequency sorting counts exercise **selections**, not completed workout sessions.
 - Recovery extrapolation is bounded to recent checkpoints and assumes no unrecorded pause during app termination. Manual verification is required before claiming full recovery reliability.
+
+## Live Activity startup diagnostics (App follow-up)
+
+1. Install and run **WakTrainerDemo** on a physical iPhone (not the unavailable WakTrainer scheme). Verify the Demo widget extension is embedded and signed under the Demo app bundle identifier.
+2. Start a strength workout, lock the device and check the Lock Screen. On supported devices also inspect Dynamic Island.
+3. If ActivityKit reports that Live Activities are disabled, the app now displays a visible alert with Settings guidance. Check iOS per-app Live Activities permission and system Live Activities settings; names and locations vary by iOS version.
+4. If the ActivityKit request throws, capture the alert text, device iOS version, Xcode console lines beginning `WakTrainer Live Activity`, and whether the Demo widget extension is installed. The alert includes the running app bundle identifier.
+5. If the console reports `WakTrainer Live Activity started` but the Lock Screen remains empty, investigate WidgetKit rendering, signing, device permissions and Lock Screen presentation rather than retrying requests blindly.
+6. Start a workout and immediately end it. Confirm no delayed Live Activity remains visible; an in-flight start is now ended if the workout was finished before the request completed.
+
+CI validates build integration, **not** physical-device Live Activity presentation. Keep the issue open until the device check passes.

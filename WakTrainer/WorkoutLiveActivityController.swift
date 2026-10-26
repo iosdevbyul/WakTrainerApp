@@ -1,11 +1,20 @@
 import ActivityKit
+import Combine
 import Foundation
+import SwiftUI
 import TrisLiveActivityKit
 import WakTrainerFeatureWorkout
 import WakTrainerLiveActivityModels
 
 @MainActor
-final class WorkoutLiveActivityController {
+final class WorkoutLiveActivityController: ObservableObject {
+    struct Failure: Identifiable {
+        let id = UUID()
+        let message: String
+    }
+
+    @Published var failure: Failure?
+
     static let shared = WorkoutLiveActivityController()
 
     private let service: any LiveActivityServiceProtocol
@@ -14,6 +23,7 @@ final class WorkoutLiveActivityController {
     private var lastUpdateDate: Date = .distantPast
     private var isProcessing = false
     private var pendingSnapshot: WorkoutLiveSnapshot?
+    private var lifecycleGeneration = 0
     private(set) var lastFailureDescription: String?
 
     init(service: any LiveActivityServiceProtocol = LiveActivityService()) {
@@ -26,8 +36,7 @@ final class WorkoutLiveActivityController {
             return
         }
         guard service.areActivitiesEnabled else {
-            lastFailureDescription = "Live Activities are disabled for WakTrainer in iOS settings."
-            print("WakTrainer Live Activity: \(lastFailureDescription!)")
+            reportFailure("Live Activities are disabled for this app. Check Settings > Apps > WakTrainerDemo > Live Activities, and Settings > Face ID & Passcode > Live Activities. Then try starting a workout again.")
             return
         }
 
@@ -56,6 +65,7 @@ final class WorkoutLiveActivityController {
             return
         }
         isProcessing = true
+        let generation = lifecycleGeneration
         Task {
             defer {
                 isProcessing = false
@@ -77,7 +87,7 @@ final class WorkoutLiveActivityController {
                         staleDate: now.addingTimeInterval(60)
                     )
                 } else {
-                    activityID = try service.start(
+                    let startedID = try service.start(
                         attributes: WorkoutActivityAttributes(
                             name: snapshot.workoutName,
                             kind: snapshot.kind == .strength ? .strength : .cardio
@@ -85,20 +95,41 @@ final class WorkoutLiveActivityController {
                         state: state,
                         staleDate: now.addingTimeInterval(60)
                     )
+                    if generation != lifecycleGeneration {
+                        try? await service.end(
+                            id: startedID,
+                            as: WorkoutActivityAttributes.self,
+                            finalState: nil,
+                            dismissalPolicy: .immediate
+                        )
+                        return
+                    }
+                    activityID = startedID
+                    print("WakTrainer Live Activity started: \(startedID) [\(Bundle.main.bundleIdentifier ?? "unknown bundle")]")
                 }
+                guard generation == lifecycleGeneration else { return }
                 lastState = state
                 lastUpdateDate = now
                 lastFailureDescription = nil
             } catch {
                 // A Live Activity failure must never interrupt a workout.
-                lastFailureDescription = error.localizedDescription
+                guard generation == lifecycleGeneration else { return }
                 activityID = nil
+                reportFailure("ActivityKit request failed: \(error.localizedDescription). App: \(Bundle.main.bundleIdentifier ?? "unknown"). Confirm Live Activities are enabled and the app's widget extension is installed.")
                 print("WakTrainer Live Activity request failed: \(error)")
             }
         }
     }
 
+    private func reportFailure(_ message: String) {
+        guard lastFailureDescription != message else { return }
+        lastFailureDescription = message
+        failure = Failure(message: message)
+        print("WakTrainer Live Activity: \(message)")
+    }
+
     func finish() {
+        lifecycleGeneration += 1
         pendingSnapshot = nil
         let id = activityID ?? service.activeIDs(for: WorkoutActivityAttributes.self).first
         guard let id else { return }
