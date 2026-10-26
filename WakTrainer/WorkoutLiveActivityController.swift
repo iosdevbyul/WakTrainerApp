@@ -13,6 +13,8 @@ final class WorkoutLiveActivityController {
     private var lastState: WorkoutActivityAttributes.ContentState?
     private var lastUpdateDate: Date = .distantPast
     private var isProcessing = false
+    private var pendingSnapshot: WorkoutLiveSnapshot?
+    private(set) var lastFailureDescription: String?
 
     init(service: any LiveActivityServiceProtocol = LiveActivityService()) {
         self.service = service
@@ -23,7 +25,11 @@ final class WorkoutLiveActivityController {
             finish()
             return
         }
-        guard service.areActivitiesEnabled else { return }
+        guard service.areActivitiesEnabled else {
+            lastFailureDescription = "Live Activities are disabled for WakTrainer in iOS settings."
+            print("WakTrainer Live Activity: \(lastFailureDescription!)")
+            return
+        }
 
         let now = Date()
         let state = WorkoutActivityAttributes.ContentState(
@@ -42,12 +48,22 @@ final class WorkoutLiveActivityController {
         guard state.phase != lastState?.phase ||
               state.exercise != lastState?.exercise ||
               state.completedSets != lastState?.completedSets ||
+              activityID == nil ||
               now.timeIntervalSince(lastUpdateDate) >= 10 else { return }
 
-        guard !isProcessing else { return }
+        guard !isProcessing else {
+            pendingSnapshot = snapshot
+            return
+        }
         isProcessing = true
         Task {
-            defer { isProcessing = false }
+            defer {
+                isProcessing = false
+                if let pending = pendingSnapshot {
+                    pendingSnapshot = nil
+                    receive(pending)
+                }
+            }
             do {
                 if activityID == nil {
                     // Reconcile a still-existing activity after a scene restart.
@@ -72,14 +88,18 @@ final class WorkoutLiveActivityController {
                 }
                 lastState = state
                 lastUpdateDate = now
+                lastFailureDescription = nil
             } catch {
                 // A Live Activity failure must never interrupt a workout.
-                print("Live Activity update failed: \(error)")
+                lastFailureDescription = error.localizedDescription
+                activityID = nil
+                print("WakTrainer Live Activity request failed: \(error)")
             }
         }
     }
 
     func finish() {
+        pendingSnapshot = nil
         let id = activityID ?? service.activeIDs(for: WorkoutActivityAttributes.self).first
         guard let id else { return }
         activityID = nil
