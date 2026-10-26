@@ -1548,7 +1548,7 @@
 			repositoryURL = "https://github.com/iosdevbyul/TrisLiveActivityKit";
 			requirement = {
 				kind = revision;
-				revision = 2afb04ef66394c3e24ae2ab81b5eb281c29dceac;
+				revision = f11d582affa7c37f02b160654413e91cea391d6b;
 			};
 		};
 		C30000000000000000000001 /* XCRemoteSwiftPackageReference "WakTrainerServiceHealthKit" */ = {
