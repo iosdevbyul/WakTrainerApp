@@ -7,6 +7,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     @ObservedObject var environment: AppEnvironment
+    @ObservedObject private var liveActivityController = WorkoutLiveActivityController.shared
     var ownerUserID: UUID? = nil
 
     @State private var isShowingProfileSetup = false
@@ -21,6 +22,13 @@ struct ContentView: View {
             } else {
                 profileRequiredView
             }
+        }
+        .alert(item: $liveActivityController.failure) { failure in
+            Alert(
+                title: Text("Live Activity Could Not Start"),
+                message: Text(failure.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
         .preferredColorScheme(.dark)
         .tint(WakColor.primary)
