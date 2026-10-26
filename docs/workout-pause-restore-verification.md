@@ -39,3 +39,21 @@ This checklist applies to WakTrainer, WakTrainerDemo (Wi-Fi-free), and WakTraine
 - SwiftData compare-and-replace is coordinated within its ModelContext; independent writers are not yet covered by a database-level versioned compare-and-swap.
 - Live in-progress workout totals need separate paused-GPS partition verification; the completed report uses the DomainWorkout partitioning and quantity coverage rules.
 - CI build success is not proof of device-level GPS or HealthKit behavior. Do not mark device checks as passed until observed.
+
+
+## Integrated real-device acceptance: workout issues (FeatureWorkout #44, App #53)
+
+Run on a physical iPhone with the **WakTrainer** scheme after this integration is merged.
+WakTrainerDemo may use simulated health data and does not establish real HealthKit behavior.
+
+1. **Live Activity:** Enable Live Activities for WakTrainer in iOS Settings, start a workout, lock the screen and verify a WakTrainer Live Activity is visible. Check Dynamic Island, elapsed time, exercise and completed sets. If absent, capture the `WakTrainer Live Activity` console message and verify the installed widget extension and entitlements.
+2. **HealthKit:** In iOS Health data access settings, allow WakTrainer to read heart rate, active energy, steps and distance. Start a real workout while a supported source is writing samples. Verify readings update, or capture the new authorization/missing-sample warning. No HealthKit samples means **not verified**, even if CI passes. iPhone alone may not provide live heart-rate samples.
+3. **Completed sets:** Record several sets, tap an earlier completed set, change reps and weight, save, switch screens, return and confirm edits persist. Confirm warm-up flag and units.
+4. **Exercise catalog:** Search for Leg Extension, Hip Abduction, Pec Deck and T Bar Row. Toggle favorites, filter favorites only, sort by Most used and My order, drag to reorder, close and reopen to confirm preferences persist.
+5. **Crash/relaunch recovery:** Begin a strength workout and record its time. Terminate the app, wait, reopen and choose Resume. Verify the restored elapsed time includes the gap since a recent running checkpoint (for example 8 minutes recorded, 22 minutes wall-clock) and continues increasing after Resume. Repeat with a deliberately paused workout and ensure the paused gap is not counted.
+6. **Persistence:** End the workout and verify completed sets and timing in History. Check Restore/Undo of paused intervals separately.
+
+### Known constraints
+- A CI build cannot confirm on-device HealthKit sample production or Live Activity visibility.
+- Frequency sorting counts exercise **selections**, not completed workout sessions.
+- Recovery extrapolation is bounded to recent checkpoints and assumes no unrecorded pause during app termination. Manual verification is required before claiming full recovery reliability.
