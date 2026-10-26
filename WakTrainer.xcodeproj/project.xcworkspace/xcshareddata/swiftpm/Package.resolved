@@ -78,7 +78,7 @@
       "location": "https://github.com/iosdevbyul/WakTrainerCoreModels",
       "state": {
         "branch": "main",
-        "revision": "7ba702c72e152ebc663869ab67aa02d69f611a99"
+        "revision": "3405c71f0f36e20994bfd9c55c2869370688f675"
       }
     },
     {
@@ -112,7 +112,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/WakTrainerFeatureWorkout",
       "state": {
-        "revision": "14821662490e7b786af315f05aa91c71c2173391"
+        "revision": "2c62809c4f9c3c3ad4b64e00abc6f4440293d50a"
       }
     },
     {
@@ -121,7 +121,7 @@
       "location": "https://github.com/iosdevbyul/WakTrainerServiceHealthKit",
       "state": {
         "branch": "main",
-        "revision": "557cdc1a51a245cb15e936c97f2f260d53c86e98"
+        "revision": "8b878189370de8a3a353250464dbf646c8d0e750"
       }
     },
     {
