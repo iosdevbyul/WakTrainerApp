@@ -130,6 +130,9 @@ private struct MainOrbNavigationView: View {
 
     @State
     private var path: [MainRoute] = []
+#if WAKTRAINER_DEMO
+    @State private var showingLiveActivityTest = false
+#endif
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -148,6 +151,14 @@ private struct MainOrbNavigationView: View {
                 }
             )
             .toolbar {
+#if WAKTRAINER_DEMO
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Activity Test") {
+                        showingLiveActivityTest = true
+                    }
+                    .accessibilityIdentifier("demo.liveActivityTest")
+                }
+#endif
                 ToolbarItemGroup(
                     placement: .topBarTrailing
                 ) {
@@ -194,6 +205,11 @@ private struct MainOrbNavigationView: View {
                 }
             }
         }
+#if WAKTRAINER_DEMO
+        .sheet(isPresented: $showingLiveActivityTest) {
+            DemoLiveActivityDiagnosticView()
+        }
+#endif
         .background(WakColor.background)
         .safeAreaInset(edge: .bottom) {
             Color.clear

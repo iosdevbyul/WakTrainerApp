@@ -59,8 +59,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/TrisPlaceRecognitionKit",
       "state": {
-        "revision": "ee0161d79723cf5e3195085399299aa86b5a8997",
-        "version": "1.1.0"
+        "revision": "f11d582affa7c37f02b160654413e91cea391d6b"
       }
     },
     {
@@ -112,7 +111,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/WakTrainerFeatureWorkout",
       "state": {
-        "revision": "a816008398123af1201b5e9854625646faa1fbfe"
+        "revision": "9b4563d6814255524ac9f1b2b73c0277a58760f2"
       }
     },
     {
