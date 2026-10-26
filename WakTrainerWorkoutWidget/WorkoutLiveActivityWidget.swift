@@ -15,15 +15,24 @@ struct WorkoutLiveActivityWidget: Widget {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-                elapsed(context.state).font(.title2.monospacedDigit().bold())
+                HStack(alignment: .firstTextBaseline) {
+                    elapsed(context.state)
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .monospacedDigit()
+                    Spacer()
+                    if context.attributes.kind == .strength {
+                        Text("\(context.state.completedSets) sets")
+                            .font(.subheadline.weight(.semibold))
+                    }
+                }
                 HStack(spacing: 16) {
                     metric("Heart Rate", "\(context.state.heartRate) bpm")
                     metric("Calories", "\(context.state.calories) kcal")
                 }
                 if context.attributes.kind == .strength {
                     HStack(spacing: 16) {
-                        metric("Exercise", context.state.exercise ?? "Not selected")
-                        metric("Completed Sets", "\(context.state.completedSets)")
+                        metric("Current Exercise", context.state.exercise ?? "Choose exercise")
+                        metric("Sets Done", "\(context.state.completedSets)")
                     }
                 } else {
                     HStack(spacing: 16) {
@@ -42,7 +51,8 @@ struct WorkoutLiveActivityWidget: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label("WakTrainer", systemImage: context.attributes.kind == .strength ? "dumbbell" : "figure.run")
+                    Label(context.state.exercise ?? context.attributes.name, systemImage: context.attributes.kind == .strength ? "dumbbell" : "figure.run")
+                        .lineLimit(1)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     elapsed(context.state).monospacedDigit()
@@ -61,9 +71,9 @@ struct WorkoutLiveActivityWidget: Widget {
             } compactLeading: {
                 Image(systemName: context.attributes.kind == .strength ? "dumbbell" : "figure.run")
             } compactTrailing: {
-                Text("\(context.state.heartRate)").monospacedDigit()
+                elapsed(context.state).font(.caption2.monospacedDigit())
             } minimal: {
-                Image(systemName: "figure.run")
+                Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
             }
         }
     }
