@@ -16,74 +16,45 @@ private enum WorkoutActivityPalette {
 struct WorkoutLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 11) {
-                HStack(spacing: 8) {
-                    Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                    Text(context.attributes.name)
-                        .font(.system(size: 16, weight: .bold))
-                        .lineLimit(1)
-                    Spacer(minLength: 6)
-                    Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
-                        .font(.system(size: 11, weight: .heavy, design: .rounded))
-                        .tracking(0.6)
-                        .foregroundStyle(context.state.phase == .paused ? WorkoutActivityPalette.text : WorkoutActivityPalette.background)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(context.state.phase == .paused ? WorkoutActivityPalette.surface : WorkoutActivityPalette.primary, in: Capsule())
-                }
-
-                elapsed(context.state)
-                    .font(.system(size: 43, weight: .heavy, design: .rounded))
-                    .monospacedDigit()
-                    .foregroundStyle(WorkoutActivityPalette.text)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-
-                Rectangle()
-                    .fill(WorkoutActivityPalette.primary.opacity(0.6))
-                    .frame(height: 2)
-
-                HStack(alignment: .top, spacing: 18) {
-                    prominentMetric(
-                        "HEART RATE",
-                        value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
-                        unit: "bpm",
-                        symbol: "heart.fill"
-                    )
-                    if context.attributes.kind == .strength {
-                        prominentMetric(
-                            "SETS DONE",
-                            value: "\(context.state.completedSets)",
-                            unit: "sets",
-                            symbol: "checkmark.circle.fill"
-                        )
-                    } else {
-                        prominentMetric(
-                            "DISTANCE",
-                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                            unit: "km",
-                            symbol: "location.fill"
-                        )
-                    }
-                }
-
-                HStack(spacing: 8) {
-                    secondaryMetric("flame.fill", "\(context.state.calories) kcal")
-                    Spacer(minLength: 6)
-                    if context.attributes.kind == .strength {
-                        Text(context.state.exercise ?? "Choose exercise")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(WorkoutActivityPalette.secondary)
+            GeometryReader { proxy in
+                let scale = min(1.0, max(0.55, proxy.size.height / 205.0))
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 6) {
+                        Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                            .foregroundStyle(WorkoutActivityPalette.primary)
+                        Text(context.attributes.name)
                             .lineLimit(1)
-                    } else {
-                        secondaryMetric("figure.walk", "\(context.state.steps.formatted()) steps")
+                        Spacer(minLength: 4)
+                        Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
+                            .foregroundStyle(WorkoutActivityPalette.primary)
+                    }
+                    .font(.system(size: 12 * scale, weight: .bold))
+
+                    elapsed(context.state)
+                        .font(.system(size: 86 * scale, weight: .heavy, design: .rounded))
+                        .monospacedDigit()
+                        .foregroundStyle(WorkoutActivityPalette.text)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    HStack(alignment: .firstTextBaseline, spacing: 10 * scale) {
+                        largeMetric("HR",
+                            value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
+                            unit: "bpm", scale: scale)
+                        if context.attributes.kind == .strength {
+                            largeMetric("SETS", value: "\(context.state.completedSets)", unit: "sets", scale: scale)
+                        } else {
+                            largeMetric("DISTANCE",
+                                value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                                unit: "km", scale: scale)
+                        }
                     }
                 }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 3)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
-            .padding(.horizontal, 17)
-            .padding(.vertical, 14)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .activityBackgroundTint(WorkoutActivityPalette.background)
@@ -135,6 +106,26 @@ struct WorkoutLiveActivityWidget: Widget {
         } else {
             Text(Duration.seconds(state.elapsedSeconds).formatted(.time(pattern: .hourMinuteSecond)))
         }
+    }
+
+    private func largeMetric(_ title: String, value: String, unit: String, scale: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(title)
+                .font(.system(size: 11 * scale, weight: .bold))
+                .foregroundStyle(WorkoutActivityPalette.secondary)
+            HStack(alignment: .firstTextBaseline, spacing: 3) {
+                Text(value)
+                    .font(.system(size: 54 * scale, weight: .heavy, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(WorkoutActivityPalette.primary)
+                    .minimumScaleFactor(0.65)
+                Text(unit)
+                    .font(.system(size: 12 * scale, weight: .bold))
+                    .foregroundStyle(WorkoutActivityPalette.text)
+            }
+            .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func prominentMetric(_ title: String, value: String, unit: String, symbol: String) -> some View {
