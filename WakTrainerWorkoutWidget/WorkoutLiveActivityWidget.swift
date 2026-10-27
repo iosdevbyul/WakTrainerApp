@@ -57,6 +57,7 @@ struct WorkoutLiveActivityWidget: Widget {
             }
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
+            .widgetURL(URL(string: "waktrainer://workout/resume"))
             .activityBackgroundTint(WorkoutActivityPalette.background)
             .activitySystemActionForegroundColor(WorkoutActivityPalette.primary)
         } dynamicIsland: { context in
