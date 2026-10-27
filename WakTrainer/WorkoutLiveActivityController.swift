@@ -41,6 +41,16 @@ final class WorkoutLiveActivityController: ObservableObject {
 
     init(service: any LiveActivityServiceProtocol = LiveActivityService()) {
         self.service = service
+
+        // ActivityKit preserves a running Live Activity even when the app
+        // process is terminated. Reopen the matching saved workout before
+        // SwiftUI's normal Resume/Delete recovery presentation begins.
+        // Do not rely on the Live Activity URL reaching a cold scene first.
+        let activeWorkoutIDs = service.activeIDs(for: WorkoutActivityAttributes.self)
+        if !activeWorkoutIDs.isEmpty {
+            resumeRequestID = UUID()
+            print("WakTrainer Live Activity cold launch: active workout activity found; requesting direct workout screen")
+        }
     }
 
     func receive(_ snapshot: WorkoutLiveSnapshot) {
