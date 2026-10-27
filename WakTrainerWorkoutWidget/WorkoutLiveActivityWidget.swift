@@ -23,8 +23,8 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 5) {
-                HStack {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 6) {
                     Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
                         .foregroundStyle(WorkoutActivityPalette.primary)
                     Text(context.attributes.name)
@@ -35,31 +35,29 @@ struct WorkoutLiveActivityWidget: Widget {
                 }
                 .font(.system(size: 13, weight: .bold))
 
-                HStack(alignment: .center, spacing: 12) {
-                    elapsed(context.state)
-                        .font(.system(size: 50, weight: .heavy, design: .rounded))
-                        .monospacedDigit()
-                        .minimumScaleFactor(0.65)
-                        .lineLimit(1)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    VStack(alignment: .leading, spacing: 3) {
-                        compactMetric("HEART RATE",
-                            value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
-                            unit: "bpm")
-                        if context.attributes.kind == .strength {
-                            compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
-                        } else {
-                            compactMetric("DISTANCE",
-                                value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                                unit: "km")
-                        }
-                    }
+                elapsed(context.state)
+                    .font(.system(size: 64, weight: .heavy, design: .rounded))
+                    .monospacedDigit()
+                    .minimumScaleFactor(0.65)
+                    .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
+
+                HStack(spacing: 12) {
+                    compactMetric("HEART RATE",
+                        value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
+                        unit: "bpm")
+                    if context.attributes.kind == .strength {
+                        compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
+                    } else {
+                        compactMetric("DISTANCE",
+                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                            unit: "km")
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, minHeight: 155, alignment: .center)
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 10)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
