@@ -17,9 +17,14 @@ final class WorkoutLiveActivityController: ObservableObject {
     @Published private(set) var resumeRequestID: UUID?
 
     func handleActivityURL(_ url: URL) {
+        print("WakTrainer Live Activity URL received: scheme=\(url.scheme ?? "none"), host=\(url.host ?? "none"), path=\(url.path), bundle=\(Bundle.main.bundleIdentifier ?? "unknown")")
         guard ["waktrainer", "waktrainer-demo", "waktrainer-device-test"].contains(url.scheme ?? ""),
-              url.host == "workout", url.path == "/resume" else { return }
+              url.host == "workout", url.path == "/resume" else {
+            print("WakTrainer Live Activity URL rejected: invalid workout resume route")
+            return
+        }
         resumeRequestID = UUID()
+        print("WakTrainer Live Activity direct resume requested")
     }
 
     static let shared = WorkoutLiveActivityController()
