@@ -42,20 +42,31 @@ struct WorkoutLiveActivityWidget: Widget {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack(spacing: 12) {
-                    compactMetric("HEART RATE",
-                        value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
-                        unit: "bpm")
-                    if context.attributes.kind == .strength {
-                        compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
-                    } else {
-                        compactMetric("DISTANCE",
-                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                            unit: "km")
-                    }
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                    Text(context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--")
+                        .font(.system(size: 42, weight: .heavy, design: .rounded))
+                        .monospacedDigit()
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                        .minimumScaleFactor(0.8)
+                        .lineLimit(1)
+                    Text("bpm")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.text)
+                    Spacer(minLength: 0)
+                }
+
+                if context.attributes.kind == .strength {
+                    compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
+                } else {
+                    compactMetric("DISTANCE",
+                        value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                        unit: "km")
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 155, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
             .foregroundStyle(WorkoutActivityPalette.text)
@@ -106,9 +117,18 @@ struct WorkoutLiveActivityWidget: Widget {
     @ViewBuilder
     private func elapsed(_ state: WorkoutActivityAttributes.ContentState) -> some View {
         if let runningSince = state.runningSince, state.phase == .running {
-            Text(runningSince, style: .timer)
+            // Timer text must always be numeric and include seconds.
+            // Avoid Date's adaptive timer/relative-unit presentation.
+            Text(
+                timerInterval: runningSince...Date.distantFuture,
+                countsDown: false,
+                showsHours: true
+            )
         } else {
-            Text(Duration.seconds(state.elapsedSeconds).formatted(.time(pattern: .hourMinuteSecond)))
+            Text(
+                Duration.seconds(max(0, state.elapsedSeconds))
+                    .formatted(.time(pattern: .hourMinuteSecond))
+            )
         }
     }
 
@@ -152,14 +172,14 @@ struct WorkoutLiveActivityWidget: Widget {
     private func prominentMetric(_ title: String, value: String, unit: String, symbol: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Label(title, systemImage: symbol)
-                .font(.system(size: 10, weight: .bold))
+                .font(.system(size: 12, weight: .bold))
                 .tracking(0.3)
                 .foregroundStyle(WorkoutActivityPalette.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text(value)
-                    .font(.system(size: 27, weight: .heavy, design: .rounded))
+                    .font(.system(size: 34, weight: .heavy, design: .rounded))
                     .monospacedDigit()
                     .foregroundStyle(WorkoutActivityPalette.primary)
                     .minimumScaleFactor(0.7)
