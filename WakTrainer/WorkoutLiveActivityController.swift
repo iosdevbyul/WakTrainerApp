@@ -24,6 +24,7 @@ final class WorkoutLiveActivityController: ObservableObject {
     private var isProcessing = false
     private var pendingSnapshot: WorkoutLiveSnapshot?
     private var lifecycleGeneration = 0
+    private var hasObservedWorkoutSnapshot = false
     private(set) var lastFailureDescription: String?
 
     init(service: any LiveActivityServiceProtocol = LiveActivityService()) {
@@ -31,6 +32,10 @@ final class WorkoutLiveActivityController: ObservableObject {
     }
 
     func receive(_ snapshot: WorkoutLiveSnapshot) {
+        if !hasObservedWorkoutSnapshot {
+            hasObservedWorkoutSnapshot = true
+            print("WakTrainer Live Activity received first workout snapshot: phase=\(snapshot.phase), enabled=\(service.areActivitiesEnabled), bundle=\(Bundle.main.bundleIdentifier ?? "unknown")")
+        }
         if snapshot.phase == .finished {
             finish()
             return
@@ -129,6 +134,7 @@ final class WorkoutLiveActivityController: ObservableObject {
     }
 
     func finish() {
+        print("WakTrainer Live Activity finish requested; snapshotObserved=\(hasObservedWorkoutSnapshot), activityID=\(activityID ?? "none")")
         lifecycleGeneration += 1
         pendingSnapshot = nil
         let id = activityID ?? service.activeIDs(for: WorkoutActivityAttributes.self).first
