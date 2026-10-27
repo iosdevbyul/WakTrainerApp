@@ -17,7 +17,8 @@ final class WorkoutLiveActivityController: ObservableObject {
     @Published private(set) var resumeRequestID: UUID?
 
     func handleActivityURL(_ url: URL) {
-        guard url.scheme == "waktrainer", url.host == "workout", url.path == "/resume" else { return }
+        guard ["waktrainer", "waktrainer-demo", "waktrainer-device-test"].contains(url.scheme ?? ""),
+              url.host == "workout", url.path == "/resume" else { return }
         resumeRequestID = UUID()
     }
 
