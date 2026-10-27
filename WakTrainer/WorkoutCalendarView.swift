@@ -6,6 +6,7 @@ import WakTrainerFeatureWorkout
 struct WorkoutCalendarView: View {
     @ObservedObject var workoutHistoryStore:
         WorkoutHistoryStore
+    let ownerUserID: UUID?
 
     @State
     private var displayedMonth = Date()
@@ -57,6 +58,9 @@ struct WorkoutCalendarView: View {
                 .padding(WakSpacing.regular)
             }
         }
+        .task {
+            await workoutHistoryStore.reload()
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.NSSystemTimeZoneDidChange)) { _ in
             viewingTimeZone = .system
             selectedDate = nil
@@ -101,26 +105,18 @@ struct WorkoutCalendarView: View {
                 )
 
                 WorkoutHistoryView(
-                    selectedDate: selectedDate
+                    selectedDate: selectedDate,
+                    ownerUserID: ownerUserID
                 )
                 .scrollContentBackground(.hidden)
             }
         } else {
-            WakCard {
-                ContentUnavailableView(
-                    AppL10n.string(
-                        "calendar.select_date.title"
-                    ),
-                    systemImage: "calendar",
-                    description: Text(
-                        AppL10n.string(
-                            "calendar.select_date.description"
-                        )
-                    )
-                )
-                .foregroundStyle(
-                    WakColor.textSecondary
-                )
+            VStack(alignment: .leading, spacing: WakSpacing.medium) {
+                Text("Workout History")
+                    .font(WakTypography.sectionTitle)
+                    .foregroundStyle(WakColor.textPrimary)
+                WorkoutHistoryView(ownerUserID: ownerUserID)
+                    .scrollContentBackground(.hidden)
             }
         }
     }
