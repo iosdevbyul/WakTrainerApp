@@ -1,5 +1,5 @@
 import SwiftUI
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 import MapKit
 #endif
 import UserProfileFeature
@@ -14,6 +14,9 @@ struct ContentView: View {
     var ownerUserID: UUID? = nil
 
     @State private var isShowingProfileSetup = false
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
+    @State private var showingProfileMapDemo = false
+#endif
 
     var body: some View {
         Group {
@@ -33,6 +36,11 @@ struct ContentView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
+        .sheet(isPresented: $showingProfileMapDemo) {
+            RunningMapModesDemoView()
+        }
+#endif
         .preferredColorScheme(.dark)
         .tint(WakColor.primary)
         .task {
@@ -120,6 +128,13 @@ struct ContentView: View {
                     ) {
                         isShowingProfileSetup = true
                     }
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
+                    Button("3D Map Demo · 4 Modes") {
+                        showingProfileMapDemo = true
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .accessibilityIdentifier("demo.map3D.profile")
+#endif
                 }
             }
             .padding(WakSpacing.large)
@@ -136,6 +151,8 @@ private struct MainOrbNavigationView: View {
     private var path: [MainRoute] = []
 #if WAKTRAINER_DEMO
     @State private var showingLiveActivityTest = false
+#endif
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
     @State private var showing3DMapDemo = false
 #endif
 
@@ -162,11 +179,6 @@ private struct MainOrbNavigationView: View {
                         showingLiveActivityTest = true
                     }
                     .accessibilityIdentifier("demo.liveActivityTest")
-
-                    Button("3D Map") {
-                        showing3DMapDemo = true
-                    }
-                    .accessibilityIdentifier("demo.map3D")
                 }
 #endif
                 ToolbarItemGroup(
@@ -220,11 +232,28 @@ private struct MainOrbNavigationView: View {
         .sheet(isPresented: $showingLiveActivityTest) {
             DemoLiveActivityDiagnosticView()
         }
+#endif
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
         .sheet(isPresented: $showing3DMapDemo) {
             RunningMapModesDemoView()
         }
 #endif
         .background(WakColor.background)
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
+        .safeAreaInset(edge: .top) {
+            Button {
+                showing3DMapDemo = true
+            } label: {
+                Label("3D Map Demo · 4 Modes", systemImage: "map.fill")
+                    .font(.system(size: 15, weight: .bold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.horizontal, 16)
+            .accessibilityIdentifier("demo.map3D")
+        }
+#endif
 #if WAKTRAINER_DEVICE_TEST
         .safeAreaInset(edge: .top) {
             HStack(spacing: 8) {
@@ -307,7 +336,7 @@ private enum MainRoute: Hashable {
     )
 }
 
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 /// A self-contained visual prototype. All locations below are synthetic samples;
 /// the demo never starts, records, or uploads a real workout.
 private struct RunningMapModesDemoView: View {
