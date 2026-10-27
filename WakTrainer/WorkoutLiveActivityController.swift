@@ -14,6 +14,13 @@ final class WorkoutLiveActivityController: ObservableObject {
     }
 
     @Published var failure: Failure?
+    @Published private(set) var resumeRequestID: UUID?
+
+    func handleActivityURL(_ url: URL) {
+        guard ["waktrainer", "waktrainer-demo", "waktrainer-device-test"].contains(url.scheme ?? ""),
+              url.host == "workout", url.path == "/resume" else { return }
+        resumeRequestID = UUID()
+    }
 
     static let shared = WorkoutLiveActivityController()
 

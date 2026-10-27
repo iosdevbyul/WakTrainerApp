@@ -1173,6 +1173,7 @@
 				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Production-Info.plist";
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
@@ -1337,6 +1338,7 @@
 				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Demo-Info.plist";
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
@@ -1379,6 +1381,7 @@
 				DEVELOPMENT_TEAM = NXY923MCN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Demo-Info.plist";
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
@@ -1676,7 +1679,7 @@
 			repositoryURL = "https://github.com/iosdevbyul/WakTrainerFeatureWorkout";
 			requirement = {
 				kind = revision;
-				revision = 416828767c845d48b49f13c1c036f6e71b7e7b4e;
+				revision = 34ab902bd34882e2b43b12b976961c39b3db0cc6;
 			};
 		};
 		A30000000000000000000002 /* XCRemoteSwiftPackageReference "UserProfileFeature" */ = {

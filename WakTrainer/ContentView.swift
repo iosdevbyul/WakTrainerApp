@@ -126,6 +126,7 @@ struct ContentView: View {
 
 private struct MainOrbNavigationView: View {
     @ObservedObject var environment: AppEnvironment
+    @ObservedObject private var liveActivityController = WorkoutLiveActivityController.shared
     let ownerUserID: UUID?
 
     @State
@@ -219,6 +220,7 @@ private struct MainOrbNavigationView: View {
         .wakTrainerWorkoutLauncher(
             bottomPadding: 16,
             ownerUserID: ownerUserID,
+            resumeRequestID: liveActivityController.resumeRequestID,
             onFinished: { _ in
                 WorkoutLiveActivityController.shared.finish()
                 Task {

@@ -44,6 +44,9 @@ struct WakTrainerApp: App {
             )
 #endif
             }
+            .onOpenURL { url in
+                WorkoutLiveActivityController.shared.handleActivityURL(url)
+            }
         }
     }
 }
