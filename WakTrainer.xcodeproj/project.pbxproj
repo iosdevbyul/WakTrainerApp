@@ -990,6 +990,7 @@
 				INFOPLIST_KEY_API_BASE_URL = "http://127.0.0.1:8080";
 				INFOPLIST_KEY_WORKOUT_API_BASE_URL = "http://127.0.0.1:8081";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -1029,6 +1030,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -1193,6 +1195,7 @@
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -1234,6 +1237,7 @@
 				INFOPLIST_KEY_API_BASE_URL = "https://waktrainerserver-production.up.railway.app";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDemo;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -1315,6 +1319,7 @@
 				INFOPLIST_FILE = "Config/DeviceTest-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDeviceTest;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -1357,6 +1362,7 @@
 				INFOPLIST_FILE = "Config/DeviceTest-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WakTrainerDeviceTest;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "WakTrainer reads heart rate, steps, active energy, and distance to create workout reports.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "WakTrainer saves workouts to HealthKit when you use supported heart rate sensors.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "WakTrainer uses your location to detect arrivals at and departures from registered gyms in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WakTrainer uses your location to record workout routes and identify registered gym locations.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
