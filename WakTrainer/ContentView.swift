@@ -1,4 +1,7 @@
 import SwiftUI
+#if WAKTRAINER_DEMO
+import MapKit
+#endif
 import UserProfileFeature
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
@@ -133,6 +136,7 @@ private struct MainOrbNavigationView: View {
     private var path: [MainRoute] = []
 #if WAKTRAINER_DEMO
     @State private var showingLiveActivityTest = false
+    @State private var showing3DMapDemo = false
 #endif
 
     var body: some View {
@@ -153,11 +157,16 @@ private struct MainOrbNavigationView: View {
             )
             .toolbar {
 #if WAKTRAINER_DEMO
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Activity Test") {
                         showingLiveActivityTest = true
                     }
                     .accessibilityIdentifier("demo.liveActivityTest")
+
+                    Button("3D Map") {
+                        showing3DMapDemo = true
+                    }
+                    .accessibilityIdentifier("demo.map3D")
                 }
 #endif
                 ToolbarItemGroup(
@@ -210,6 +219,9 @@ private struct MainOrbNavigationView: View {
 #if WAKTRAINER_DEMO
         .sheet(isPresented: $showingLiveActivityTest) {
             DemoLiveActivityDiagnosticView()
+        }
+        .sheet(isPresented: $showing3DMapDemo) {
+            RunningMapModesDemoView()
         }
 #endif
         .background(WakColor.background)
@@ -294,3 +306,177 @@ private enum MainRoute: Hashable {
         environment: AppEnvironment()
     )
 }
+
+#if WAKTRAINER_DEMO
+/// A self-contained visual prototype. All locations below are synthetic samples;
+/// the demo never starts, records, or uploads a real workout.
+private struct RunningMapModesDemoView: View {
+    private enum Mode: String, CaseIterable, Identifiable {
+        case classic = "2D"
+        case follow = "3D Follow"
+        case aerial = "3D Aerial"
+        case runner = "Runner View"
+
+        var id: String { rawValue }
+    }
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var mode: Mode = .follow
+    @State private var position: MapCameraPosition = .automatic
+    @State private var sampleIndex = 0
+    @State private var playing = false
+
+    // A fixed example near central Seoul. Never tied to the user's location.
+    private let sampleRoute: [CLLocationCoordinate2D] = [
+        .init(latitude: 37.56650, longitude: 126.97800),
+        .init(latitude: 37.56672, longitude: 126.97837),
+        .init(latitude: 37.56696, longitude: 126.97877),
+        .init(latitude: 37.56721, longitude: 126.97910),
+        .init(latitude: 37.56747, longitude: 126.97943),
+        .init(latitude: 37.56777, longitude: 126.97978),
+        .init(latitude: 37.56802, longitude: 126.98008),
+        .init(latitude: 37.56828, longitude: 126.98042),
+        .init(latitude: 37.56858, longitude: 126.98068),
+        .init(latitude: 37.56886, longitude: 126.98095)
+    ]
+
+    private var routePosition: CLLocationCoordinate2D {
+        sampleRoute[min(sampleIndex, sampleRoute.count - 1)]
+    }
+
+    private var currentHeading: Double {
+        let a = sampleRoute[max(0, min(sampleIndex, sampleRoute.count - 2))]
+        let b = sampleRoute[min(sampleRoute.count - 1, max(1, sampleIndex + 1))]
+        let radians = atan2(b.longitude - a.longitude, b.latitude - a.latitude)
+        return radians * 180 / .pi
+    }
+
+    private var mapStyle: MapStyle {
+        switch mode {
+        case .classic: .standard(elevation: .flat)
+        case .follow, .runner: .standard(elevation: .realistic)
+        case .aerial: .imagery(elevation: .realistic)
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 12) {
+                Picker("Map mode", selection: $mode) {
+                    ForEach(Mode.allCases) { item in
+                        Text(item.rawValue).tag(item)
+                    }
+                }
+                .pickerStyle(.menu)
+                .padding(.horizontal)
+                .accessibilityIdentifier("demo.map3D.mode")
+
+                ZStack(alignment: .bottom) {
+                    Map(position: $position) {
+                        MapPolyline(coordinates: Array(sampleRoute.prefix(sampleIndex + 1)))
+                            .stroke(WakColor.primary, lineWidth: 6)
+
+                        Annotation("Runner", coordinate: routePosition, anchor: .center) {
+                            Image(systemName: "figure.run.circle.fill")
+                                .font(.system(size: mode == .runner ? 42 : 30))
+                                .foregroundStyle(WakColor.primary)
+                                .background(Circle().fill(.black.opacity(0.8)))
+                        }
+                    }
+                    .mapStyle(mapStyle)
+                    .mapControls {
+                        MapCompass()
+                        MapPitchToggle()
+                        MapScaleView()
+                    }
+
+                    if mode == .runner {
+                        VStack {
+                            Spacer()
+                            Image(systemName: "figure.run")
+                                .font(.system(size: 72, weight: .medium))
+                                .foregroundStyle(WakColor.primary)
+                                .shadow(color: .black, radius: 6)
+                                .padding(.bottom, 86)
+                        }
+                        .allowsHitTesting(false)
+                        .accessibilityLabel("Runner viewpoint overlay")
+                    }
+
+                    HStack(spacing: 12) {
+                        Button {
+                            playing.toggle()
+                        } label: {
+                            Label(playing ? "Pause" : "Play", systemImage: playing ? "pause.fill" : "play.fill")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .accessibilityIdentifier("demo.map3D.play")
+
+                        Button("Reset") {
+                            playing = false
+                            sampleIndex = 0
+                            updateCamera()
+                        }
+                        .buttonStyle(.bordered)
+
+                        Spacer()
+                        Text("\(sampleIndex + 1)/\(sampleRoute.count)")
+                            .monospacedDigit()
+                    }
+                    .padding(12)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+                    .padding()
+                }
+
+                Text("Simulation only · No GPS or workout is recorded. Aerial 3D detail depends on Apple Maps coverage.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal)
+            }
+            .navigationTitle("3D Running Map Demo")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") { dismiss() }
+                }
+            }
+            .onAppear { updateCamera() }
+            .onChange(of: mode) { _, _ in updateCamera() }
+            .onChange(of: sampleIndex) { _, _ in updateCamera() }
+            .task(id: playing) {
+                guard playing else { return }
+                while !Task.isCancelled && sampleIndex < sampleRoute.count - 1 {
+                    do {
+                        try await Task.sleep(for: .milliseconds(700))
+                    } catch {
+                        break
+                    }
+                    guard !Task.isCancelled else { break }
+                    sampleIndex += 1
+                }
+                if !Task.isCancelled { playing = false }
+            }
+        }
+    }
+
+    private func updateCamera() {
+        let distance: Double
+        let pitch: Double
+        let heading: Double
+        switch mode {
+        case .classic: (distance, pitch, heading) = (900, 0, 0)
+        case .follow: (distance, pitch, heading) = (220, 65, currentHeading)
+        case .aerial: (distance, pitch, heading) = (660, 60, currentHeading)
+        case .runner: (distance, pitch, heading) = (100, 78, currentHeading)
+        }
+        withAnimation(.easeInOut(duration: 0.45)) {
+            position = .camera(MapCamera(
+                centerCoordinate: routePosition,
+                distance: distance,
+                heading: heading,
+                pitch: pitch
+            ))
+        }
+    }
+}
+#endif
