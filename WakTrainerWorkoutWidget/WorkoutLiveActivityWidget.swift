@@ -14,6 +14,13 @@ private enum WorkoutActivityPalette {
 }
 
 struct WorkoutLiveActivityWidget: Widget {
+    private var workoutURL: URL? {
+        let bundleID = Bundle.main.bundleIdentifier ?? ""
+        let scheme = bundleID.contains("DeviceTest") ? "waktrainer-device-test"
+            : (bundleID.contains("Demo") ? "waktrainer-demo" : "waktrainer")
+        return URL(string: "\(scheme)://workout/resume")
+    }
+
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
             GeometryReader { proxy in
@@ -57,7 +64,7 @@ struct WorkoutLiveActivityWidget: Widget {
             }
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
-            .widgetURL(URL(string: "waktrainer://workout/resume"))
+            .widgetURL(workoutURL)
             .activityBackgroundTint(WorkoutActivityPalette.background)
             .activitySystemActionForegroundColor(WorkoutActivityPalette.primary)
         } dynamicIsland: { context in
