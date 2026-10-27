@@ -6,7 +6,7 @@
     <array>
         <dict>
             <key>CFBundleURLSchemes</key>
-            <array><string>waktrainer</string></array>
+            <array><string>waktrainer-device-test</string></array>
         </dict>
     </array>
     <key>API_BASE_URL</key>
