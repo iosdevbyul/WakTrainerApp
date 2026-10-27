@@ -1,5 +1,5 @@
 import SwiftUI
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 import MapKit
 #endif
 import UserProfileFeature
@@ -136,6 +136,8 @@ private struct MainOrbNavigationView: View {
     private var path: [MainRoute] = []
 #if WAKTRAINER_DEMO
     @State private var showingLiveActivityTest = false
+#endif
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
     @State private var showing3DMapDemo = false
 #endif
 
@@ -156,13 +158,15 @@ private struct MainOrbNavigationView: View {
                 }
             )
             .toolbar {
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
                 ToolbarItemGroup(placement: .topBarLeading) {
+#if WAKTRAINER_DEMO
                     Button("Activity Test") {
                         showingLiveActivityTest = true
                     }
                     .accessibilityIdentifier("demo.liveActivityTest")
-
+#endif
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
                     Button("3D Map") {
                         showing3DMapDemo = true
                     }
@@ -220,6 +224,8 @@ private struct MainOrbNavigationView: View {
         .sheet(isPresented: $showingLiveActivityTest) {
             DemoLiveActivityDiagnosticView()
         }
+#endif
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
         .sheet(isPresented: $showing3DMapDemo) {
             RunningMapModesDemoView()
         }
@@ -307,7 +313,7 @@ private enum MainRoute: Hashable {
     )
 }
 
-#if WAKTRAINER_DEMO
+#if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 /// A self-contained visual prototype. All locations below are synthetic samples;
 /// the demo never starts, records, or uploads a real workout.
 private struct RunningMapModesDemoView: View {
