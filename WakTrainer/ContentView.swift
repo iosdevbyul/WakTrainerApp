@@ -213,6 +213,22 @@ private struct MainOrbNavigationView: View {
         }
 #endif
         .background(WakColor.background)
+#if WAKTRAINER_DEVICE_TEST
+        .safeAreaInset(edge: .top) {
+            HStack(spacing: 8) {
+                Text("DEVICE TEST · WT-20261027-B")
+                    .font(.system(size: 11, weight: .bold, design: .monospaced))
+                Spacer()
+                Text("Feature 8c03ae0")
+                    .font(.system(size: 10, design: .monospaced))
+            }
+            .foregroundStyle(WakColor.primary)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 5)
+            .background(WakColor.background)
+            .accessibilityIdentifier("diagnostics.deviceTestBuild")
+        }
+#endif
         .safeAreaInset(edge: .bottom) {
             Color.clear
                 .frame(height: 92)
