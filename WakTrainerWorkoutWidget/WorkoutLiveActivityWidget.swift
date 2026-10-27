@@ -23,45 +23,43 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            GeometryReader { proxy in
-                let scale = min(1.0, max(0.55, proxy.size.height / 205.0))
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 6) {
-                        Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                            .foregroundStyle(WorkoutActivityPalette.primary)
-                        Text(context.attributes.name)
-                            .lineLimit(1)
-                        Spacer(minLength: 4)
-                        Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
-                            .foregroundStyle(WorkoutActivityPalette.primary)
-                    }
-                    .font(.system(size: 12 * scale, weight: .bold))
-
-                    elapsed(context.state)
-                        .font(.system(size: 86 * scale, weight: .heavy, design: .rounded))
-                        .monospacedDigit()
-                        .foregroundStyle(WorkoutActivityPalette.text)
+            VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                    Text(context.attributes.name)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.6)
+                    Spacer(minLength: 4)
+                    Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                }
+                .font(.system(size: 13, weight: .bold))
+
+                HStack(alignment: .center, spacing: 12) {
+                    elapsed(context.state)
+                        .font(.system(size: 50, weight: .heavy, design: .rounded))
+                        .monospacedDigit()
+                        .minimumScaleFactor(0.65)
+                        .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    HStack(alignment: .firstTextBaseline, spacing: 10 * scale) {
-                        largeMetric("HR",
+                    VStack(alignment: .leading, spacing: 3) {
+                        compactMetric("HEART RATE",
                             value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
-                            unit: "bpm", scale: scale)
+                            unit: "bpm")
                         if context.attributes.kind == .strength {
-                            largeMetric("SETS", value: "\(context.state.completedSets)", unit: "sets", scale: scale)
+                            compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
                         } else {
-                            largeMetric("DISTANCE",
+                            compactMetric("DISTANCE",
                                 value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                                unit: "km", scale: scale)
+                                unit: "km")
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 3)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
@@ -114,6 +112,23 @@ struct WorkoutLiveActivityWidget: Widget {
         } else {
             Text(Duration.seconds(state.elapsedSeconds).formatted(.time(pattern: .hourMinuteSecond)))
         }
+    }
+
+    private func compactMetric(_ title: String, value: String, unit: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Text(title)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(WorkoutActivityPalette.secondary)
+            Spacer(minLength: 1)
+            Text(value)
+                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                .monospacedDigit()
+                .foregroundStyle(WorkoutActivityPalette.primary)
+                .minimumScaleFactor(0.6)
+            Text(unit)
+                .font(.system(size: 10, weight: .medium))
+        }
+        .lineLimit(1)
     }
 
     private func largeMetric(_ title: String, value: String, unit: String, scale: CGFloat) -> some View {
