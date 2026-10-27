@@ -1,6 +1,7 @@
 import Combine
 import AuthenticationKit
 import Foundation
+import HealthKit
 import Network
 import WakTrainerServiceHealthKit
 import TrisLocationKit
@@ -209,12 +210,23 @@ final class AppEnvironment: ObservableObject {
 
     func requestHealthKitAuthorizationIfNeeded() async {
         guard !didRequestHealthKitAuthorization else { return }
-        didRequestHealthKitAuthorization = true
-
         do {
+            // iOS 26 AirPods heart-rate collection starts an HKWorkoutSession,
+            // which requires workout-sharing consent. Request that consent
+            // alongside heart-rate reading on home entry, never after Start.
+            if #available(iOS 26.0, *), HKHealthStore.isHealthDataAvailable() {
+                let heartRate = HKObjectType.quantityType(forIdentifier: .heartRate)!
+                let workout = HKObjectType.workoutType()
+                try await HKHealthStore().requestAuthorization(
+                    toShare: [workout],
+                    read: [heartRate, workout]
+                )
+            }
             _ = try await healthKitManager.requestAuthorization()
+            didRequestHealthKitAuthorization = true
         } catch {
-            // HealthKit is optional: permission errors must not block workouts.
+            // A failed request can be retried on the next home entry.
+            // HealthKit is optional: never block a workout.
             print("HealthKit authorization request failed: \(error)")
         }
     }
