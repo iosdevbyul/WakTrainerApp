@@ -3,77 +3,127 @@ import SwiftUI
 import WidgetKit
 import WakTrainerLiveActivityModels
 
+// Matches WakTrainerDesignSystem's semantic dark palette without pulling
+// the full UI package into the widget extension.
+private enum WorkoutActivityPalette {
+    static let background = Color(red: 11 / 255, green: 14 / 255, blue: 17 / 255)
+    static let surface = Color(red: 23 / 255, green: 27 / 255, blue: 32 / 255)
+    static let primary = Color(red: 140 / 255, green: 246 / 255, blue: 108 / 255)
+    static let text = Color(red: 247 / 255, green: 248 / 255, blue: 249 / 255)
+    static let secondary = Color(red: 154 / 255, green: 163 / 255, blue: 173 / 255)
+}
+
 struct WorkoutLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Label(context.attributes.name, systemImage: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                        .font(.headline)
-                    Spacer()
-                    Text(context.state.phase == .paused ? "Paused" : "In Progress")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 11) {
+                HStack(spacing: 8) {
+                    Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                    Text(context.attributes.name)
+                        .font(.system(size: 16, weight: .bold))
+                        .lineLimit(1)
+                    Spacer(minLength: 6)
+                    Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .tracking(0.6)
+                        .foregroundStyle(context.state.phase == .paused ? WorkoutActivityPalette.text : WorkoutActivityPalette.background)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(context.state.phase == .paused ? WorkoutActivityPalette.surface : WorkoutActivityPalette.primary, in: Capsule())
                 }
-                HStack(alignment: .firstTextBaseline) {
-                    elapsed(context.state)
-                        .font(.system(size: 34, weight: .bold, design: .rounded))
-                        .monospacedDigit()
-                    Spacer()
+
+                elapsed(context.state)
+                    .font(.system(size: 43, weight: .heavy, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(WorkoutActivityPalette.text)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+
+                Rectangle()
+                    .fill(WorkoutActivityPalette.primary.opacity(0.6))
+                    .frame(height: 2)
+
+                HStack(alignment: .top, spacing: 18) {
+                    prominentMetric(
+                        "HEART RATE",
+                        value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--",
+                        unit: "bpm",
+                        symbol: "heart.fill"
+                    )
                     if context.attributes.kind == .strength {
-                        Text("\(context.state.completedSets) sets")
-                            .font(.subheadline.weight(.semibold))
+                        prominentMetric(
+                            "SETS DONE",
+                            value: "\(context.state.completedSets)",
+                            unit: "sets",
+                            symbol: "checkmark.circle.fill"
+                        )
+                    } else {
+                        prominentMetric(
+                            "DISTANCE",
+                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                            unit: "km",
+                            symbol: "location.fill"
+                        )
                     }
                 }
-                HStack(spacing: 16) {
-                    metric("Heart Rate", "\(context.state.heartRate) bpm")
-                    metric("Calories", "\(context.state.calories) kcal")
-                }
-                if context.attributes.kind == .strength {
-                    HStack(spacing: 16) {
-                        metric("Current Exercise", context.state.exercise ?? "Choose exercise")
-                        metric("Sets Done", "\(context.state.completedSets)")
-                    }
-                } else {
-                    HStack(spacing: 16) {
-                        metric("Distance", String(format: "%.2f km", context.state.distanceMeters / 1000))
-                        metric("Steps", context.state.steps.formatted())
+
+                HStack(spacing: 8) {
+                    secondaryMetric("flame.fill", "\(context.state.calories) kcal")
+                    Spacer(minLength: 6)
+                    if context.attributes.kind == .strength {
+                        Text(context.state.exercise ?? "Choose exercise")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(WorkoutActivityPalette.secondary)
+                            .lineLimit(1)
+                    } else {
+                        secondaryMetric("figure.walk", "\(context.state.steps.formatted()) steps")
                     }
                 }
             }
-            .padding()
-            // The Live Activity uses a fixed dark surface even in light appearance.
-            // Explicitly pair it with light foreground colors for legibility.
-            .foregroundStyle(.white)
+            .padding(.horizontal, 17)
+            .padding(.vertical, 14)
+            .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
-            .activityBackgroundTint(Color(red: 0.09, green: 0.10, blue: 0.14))
-            .activitySystemActionForegroundColor(.white)
+            .activityBackgroundTint(WorkoutActivityPalette.background)
+            .activitySystemActionForegroundColor(WorkoutActivityPalette.primary)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label(context.state.exercise ?? context.attributes.name, systemImage: context.attributes.kind == .strength ? "dumbbell" : "figure.run")
+                    Label(context.attributes.name, systemImage: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    elapsed(context.state).monospacedDigit()
+                    elapsed(context.state)
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .monospacedDigit()
+                        .foregroundStyle(WorkoutActivityPalette.text)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HStack {
-                        metric("Heart Rate", "\(context.state.heartRate) bpm")
-                        metric("Calories", "\(context.state.calories) kcal")
+                    HStack(spacing: 14) {
+                        prominentMetric("HEART RATE", value: context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--", unit: "bpm", symbol: "heart.fill")
                         if context.attributes.kind == .strength {
-                            metric("Sets", "\(context.state.completedSets)")
+                            prominentMetric("SETS DONE", value: "\(context.state.completedSets)", unit: "sets", symbol: "checkmark.circle.fill")
                         } else {
-                            metric("Distance", String(format: "%.2f km", context.state.distanceMeters / 1000))
+                            prominentMetric("DISTANCE", value: String(format: "%.2f", context.state.distanceMeters / 1000), unit: "km", symbol: "location.fill")
                         }
                     }
+                    .padding(.top, 6)
                 }
             } compactLeading: {
-                Image(systemName: context.attributes.kind == .strength ? "dumbbell" : "figure.run")
+                Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                    .foregroundStyle(WorkoutActivityPalette.primary)
             } compactTrailing: {
-                elapsed(context.state).font(.caption2.monospacedDigit())
+                elapsed(context.state)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(WorkoutActivityPalette.text)
             } minimal: {
                 Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                    .foregroundStyle(WorkoutActivityPalette.primary)
             }
         }
     }
@@ -87,12 +137,35 @@ struct WorkoutLiveActivityWidget: Widget {
         }
     }
 
-    private func metric(_ label: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(label).font(.caption2).foregroundStyle(.secondary)
-            Text(value).font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.7)
+    private func prominentMetric(_ title: String, value: String, unit: String, symbol: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Label(title, systemImage: symbol)
+                .font(.system(size: 10, weight: .bold))
+                .tracking(0.3)
+                .foregroundStyle(WorkoutActivityPalette.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text(value)
+                    .font(.system(size: 27, weight: .heavy, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(WorkoutActivityPalette.primary)
+                    .minimumScaleFactor(0.7)
+                Text(unit)
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(WorkoutActivityPalette.text)
+            }
+            .lineLimit(1)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func secondaryMetric(_ symbol: String, _ value: String) -> some View {
+        Label(value, systemImage: symbol)
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(WorkoutActivityPalette.secondary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
     }
 }
 
