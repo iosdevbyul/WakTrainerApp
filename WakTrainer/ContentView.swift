@@ -179,6 +179,26 @@ private struct MainOrbNavigationView: View {
                     path.append(.places)
                 }
             )
+            .safeAreaInset(edge: .bottom) {
+                Color.clear
+                    .frame(height: 92)
+            }
+            .wakTrainerWorkoutLauncher(
+                maximumHeartRate: estimatedMaximumHeartRate,
+                bottomPadding: 16,
+                ownerUserID: ownerUserID,
+                resumeRequestID: liveActivityController.resumeRequestID,
+                onFinished: { _ in
+                    WorkoutLiveActivityController.shared.finish()
+                    Task {
+                        await environment.refreshWorkoutHistory()
+                        await environment.syncPendingWorkouts()
+                    }
+                },
+                onWorkoutUpdate: { snapshot in
+                    WorkoutLiveActivityController.shared.receive(snapshot)
+                }
+            )
             .toolbar {
 #if WAKTRAINER_DEMO
                 ToolbarItemGroup(placement: .topBarLeading) {
@@ -248,6 +268,7 @@ private struct MainOrbNavigationView: View {
         .background(WakColor.background)
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
         .safeAreaInset(edge: .top) {
+            if path.isEmpty {
             Button {
                 showing3DMapDemo = true
             } label: {
@@ -259,6 +280,7 @@ private struct MainOrbNavigationView: View {
             .buttonStyle(.borderedProminent)
             .padding(.horizontal, 16)
             .accessibilityIdentifier("demo.map3D")
+            }
         }
 #endif
 #if WAKTRAINER_DEVICE_TEST
@@ -277,26 +299,7 @@ private struct MainOrbNavigationView: View {
             .accessibilityIdentifier("diagnostics.deviceTestBuild")
         }
 #endif
-        .safeAreaInset(edge: .bottom) {
-            Color.clear
-                .frame(height: 92)
-        }
-        .wakTrainerWorkoutLauncher(
-            maximumHeartRate: estimatedMaximumHeartRate,
-            bottomPadding: 16,
-            ownerUserID: ownerUserID,
-            resumeRequestID: liveActivityController.resumeRequestID,
-            onFinished: { _ in
-                WorkoutLiveActivityController.shared.finish()
-                Task {
-                    await environment.refreshWorkoutHistory()
-                    await environment.syncPendingWorkouts()
-                }
-            },
-            onWorkoutUpdate: { snapshot in
-                WorkoutLiveActivityController.shared.receive(snapshot)
-            }
-        )
+
     }
 
     private func toolbarButton(
