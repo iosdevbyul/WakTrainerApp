@@ -1,5 +1,6 @@
 import SwiftUI
 import UserProfileFeature
+import WakTrainerCoreModels
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
