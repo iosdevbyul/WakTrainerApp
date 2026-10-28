@@ -3,6 +3,7 @@ import SwiftUI
 import MapKit
 #endif
 import UserProfileFeature
+import WakTrainerCoreModels
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
@@ -156,6 +157,12 @@ private struct MainOrbNavigationView: View {
     @State private var showing3DMapDemo = false
 #endif
 
+    private var estimatedMaximumHeartRate: Double? {
+        guard let profile = DefaultUserProfileManager.shared.profile,
+              (1...100).contains(profile.age) else { return nil }
+        return Double(220 - profile.age)
+    }
+
     var body: some View {
         NavigationStack(path: $path) {
             HomeView(
@@ -275,6 +282,7 @@ private struct MainOrbNavigationView: View {
                 .frame(height: 92)
         }
         .wakTrainerWorkoutLauncher(
+            maximumHeartRate: estimatedMaximumHeartRate,
             bottomPadding: 16,
             ownerUserID: ownerUserID,
             resumeRequestID: liveActivityController.resumeRequestID,

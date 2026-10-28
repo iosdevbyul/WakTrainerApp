@@ -1,12 +1,20 @@
 import SwiftUI
+import UserProfileFeature
+import WakTrainerCoreModels
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
 struct ReportsView: View {
     let ownerUserID: UUID?
 
+    private var estimatedMaximumHeartRate: Double? {
+        guard let profile = DefaultUserProfileManager.shared.profile,
+              (1...100).contains(profile.age) else { return nil }
+        return Double(220 - profile.age)
+    }
+
     var body: some View {
-        WorkoutHistoryView(ownerUserID: ownerUserID)
+        WorkoutHistoryView(maximumHeartRate: estimatedMaximumHeartRate, ownerUserID: ownerUserID)
             .scrollContentBackground(.hidden)
             .background(
                 WakColor.background
