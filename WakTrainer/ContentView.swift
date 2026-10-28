@@ -158,7 +158,7 @@ private struct MainOrbNavigationView: View {
 #endif
 
     private var estimatedMaximumHeartRate: Double? {
-        guard let profile = DefaultUserProfileManager.shared.profile,
+        guard let profile = DefaultUserProfileManager.shared.loadProfile() ?? DefaultUserProfileManager.shared.profile,
               (1...100).contains(profile.age) else { return nil }
         return Double(220 - profile.age)
     }
