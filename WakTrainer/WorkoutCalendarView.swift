@@ -1,4 +1,6 @@
 import SwiftUI
+import UserProfileFeature
+import WakTrainerCoreModels
 import TrisCalendarKit
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
@@ -16,6 +18,12 @@ struct WorkoutCalendarView: View {
 
     @State
     private var selectedDate: Date?
+
+    private var estimatedMaximumHeartRate: Double? {
+        guard let profile = DefaultUserProfileManager.shared.loadProfile() ?? DefaultUserProfileManager.shared.profile,
+              (1...100).contains(profile.age) else { return nil }
+        return Double(220 - profile.age)
+    }
 
     private var highlightedDates: Set<Date> {
         workoutHistoryStore
@@ -106,6 +114,7 @@ struct WorkoutCalendarView: View {
 
                 WorkoutHistoryView(
                     selectedDate: selectedDate,
+                    maximumHeartRate: estimatedMaximumHeartRate,
                     ownerUserID: ownerUserID
                 )
                 .scrollContentBackground(.hidden)
@@ -115,7 +124,7 @@ struct WorkoutCalendarView: View {
                 Text("Workout History")
                     .font(WakTypography.sectionTitle)
                     .foregroundStyle(WakColor.textPrimary)
-                WorkoutHistoryView(ownerUserID: ownerUserID)
+                WorkoutHistoryView(maximumHeartRate: estimatedMaximumHeartRate, ownerUserID: ownerUserID)
                     .scrollContentBackground(.hidden)
             }
         }
