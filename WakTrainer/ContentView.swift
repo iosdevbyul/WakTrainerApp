@@ -3,6 +3,7 @@ import SwiftUI
 import MapKit
 #endif
 import UserProfileFeature
+import WakTrainerCoreModels
 import WakTrainerDesignSystem
 import WakTrainerFeatureWorkout
 
