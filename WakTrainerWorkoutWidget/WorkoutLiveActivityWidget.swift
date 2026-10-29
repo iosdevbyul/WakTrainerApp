@@ -39,11 +39,19 @@ struct WorkoutLiveActivityWidget: Widget {
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .padding(.top, 5)
 
+#if WAKTRAINER_DEVICE_TEST_WIDGET
+                    Text("WakTrainer DT119")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.secondary)
+                        .lineLimit(1)
+                        .padding(.top, 5)
+#else
                     Text("WakTrainer")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
                         .padding(.top, 5)
+#endif
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
