@@ -24,7 +24,7 @@ struct WorkoutLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
             VStack(alignment: .leading, spacing: 4) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                HStack(alignment: .top, spacing: 8) {
                     elapsed(context.state)
                         .font(.system(size: 64, weight: .heavy, design: .rounded))
                         .monospacedDigit()
@@ -38,11 +38,12 @@ struct WorkoutLiveActivityWidget: Widget {
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
+                        .padding(.top, 5)
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
                     Image(systemName: "heart.fill")
-                        .font(.system(size: 17))
+                        .font(.system(size: 22))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                     Text(context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--")
                         .font(.system(size: 42, weight: .heavy, design: .rounded))
@@ -50,29 +51,29 @@ struct WorkoutLiveActivityWidget: Widget {
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
                     Text("bpm")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                     Spacer(minLength: 0)
                     Text(context.state.heartRateZone.map { "Zone \($0)" } ?? "Zone --")
-                        .font(.system(size: 15, weight: .bold))
+                        .font(.system(size: 19, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
                 }
 
                 HStack(spacing: 8) {
                     Text(context.state.exercise ?? context.attributes.name)
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .layoutPriority(1)
                     Spacer(minLength: 0)
                     Text("\(context.state.calories) Active")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .monospacedDigit()
                         .lineLimit(1)
                     if let totalCalories = context.state.totalCalories {
                         Text("\(totalCalories) Total")
-                            .font(.system(size: 12, weight: .medium))
+                            .font(.system(size: 14, weight: .medium))
                             .monospacedDigit()
                             .lineLimit(1)
                     }
