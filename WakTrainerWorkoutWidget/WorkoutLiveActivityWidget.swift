@@ -23,25 +23,18 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 5) {
-                    Spacer(minLength: 0)
-                    Image(systemName: "figure.strengthtraining.traditional")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                    Text("WakTrainer")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.secondary)
-                        .lineLimit(1)
-                }
-                .accessibilityElement(children: .combine)
-
+            VStack(alignment: .leading, spacing: 7) {
+                // The brand is an overlay, not a fifth vertically stacked row.
+                // This avoids pushing the workout label beneath the lock-screen crop.
                 elapsed(context.state)
                     .font(.system(size: 64, weight: .heavy, design: .rounded))
                     .monospacedDigit()
                     .minimumScaleFactor(0.65)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.trailing, 100)
+
+                Spacer(minLength: 0)
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
                     Image(systemName: "heart.fill")
@@ -62,8 +55,6 @@ struct WorkoutLiveActivityWidget: Widget {
                         .minimumScaleFactor(0.75)
                 }
 
-                // Keep the current exercise in the final visible row rather than
-                // pushing it below the lock-screen Live Activity height limit.
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text(context.state.exercise ?? context.attributes.name)
                         .font(.system(size: 15, weight: .semibold))
@@ -71,15 +62,12 @@ struct WorkoutLiveActivityWidget: Widget {
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .layoutPriority(1)
-
                     Spacer(minLength: 2)
-
                     Text("\(context.state.calories) Active")
                         .font(.system(size: 15, weight: .semibold))
                         .monospacedDigit()
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
-
                     if let totalCalories = context.state.totalCalories {
                         Text("\(totalCalories) Total")
                             .font(.system(size: 14, weight: .medium))
@@ -90,9 +78,22 @@ struct WorkoutLiveActivityWidget: Widget {
                 }
                 .foregroundStyle(WorkoutActivityPalette.text)
             }
-            .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: 0, alignment: .topLeading)
+            .overlay(alignment: .topTrailing) {
+                HStack(spacing: 5) {
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                    Text("WakTrainer")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.secondary)
+                        .lineLimit(1)
+                }
+                .accessibilityElement(children: .combine)
+                .padding(.top, 5)
+            }
             .padding(.horizontal, 16)
-            .padding(.vertical, 5)
+            .padding(.vertical, 8)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
