@@ -5,6 +5,8 @@ import SwiftUI
 import TrisLiveActivityKit
 import WakTrainerFeatureWorkout
 import WakTrainerLiveActivityModels
+import UserProfileFeature
+import WakTrainerCoreModels
 
 @MainActor
 final class WorkoutLiveActivityController: ObservableObject {
@@ -68,12 +70,29 @@ final class WorkoutLiveActivityController: ObservableObject {
         }
 
         let now = Date()
+        let maximumHeartRate: Double? = {
+            guard let profile = DefaultUserProfileManager.shared.loadProfile() ?? DefaultUserProfileManager.shared.profile,
+                  (1...100).contains(profile.age) else { return nil }
+            return Double(220 - profile.age)
+        }()
+        let zone: Int? = {
+            guard let maximumHeartRate, snapshot.heartRateBPM > 0 else { return nil }
+            let proportion = snapshot.heartRateBPM / maximumHeartRate
+            if proportion < 0.5 { return nil }
+            if proportion < 0.6 { return 1 }
+            if proportion < 0.7 { return 2 }
+            if proportion < 0.8 { return 3 }
+            if proportion < 0.9 { return 4 }
+            return 5
+        }()
         let state = WorkoutActivityAttributes.ContentState(
             phase: snapshot.phase == .running ? .running : .paused,
             elapsedSeconds: max(0, snapshot.elapsedSeconds),
             runningSince: snapshot.phase == .running ? now.addingTimeInterval(-max(0, snapshot.elapsedSeconds)) : nil,
             heartRate: Int(max(0, snapshot.heartRateBPM)),
             calories: Int(max(0, snapshot.activeCalories)),
+            heartRateZone: zone,
+            totalCalories: nil,
             distanceMeters: max(0, snapshot.distanceMeters),
             steps: Int(max(0, snapshot.steps)),
             exercise: snapshot.currentExerciseName,
