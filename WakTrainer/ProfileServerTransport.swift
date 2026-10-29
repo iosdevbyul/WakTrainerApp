@@ -7,20 +7,42 @@ import WakTrainerCoreModels
 struct ProfileServerTransport: UserProfileRemoteTransport {
     let baseURL: URL
     let ownerUserID: UUID
+    let session: URLSession
+    let accessToken: @Sendable () async -> (userID: UUID, token: String)?
+
+    init(
+        baseURL: URL,
+        ownerUserID: UUID,
+        session: URLSession = .shared,
+        accessToken: @escaping @Sendable () async -> (userID: UUID, token: String)? = {
+            await MainActor.run {
+                guard let current = AuthenticationService.shared.currentSession,
+                      let userID = UUID(uuidString: current.user.id) else {
+                    return nil
+                }
+                return (userID, current.accessToken)
+            }
+        }
+    ) {
+        self.baseURL = baseURL
+        self.ownerUserID = ownerUserID
+        self.session = session
+        self.accessToken = accessToken
+    }
 
     func fetchProfile() async throws -> UserProfile? {
-        guard let session = await MainActor.run(body: { AuthenticationService.shared.currentSession }),
-              UUID(uuidString: session.user.id) == ownerUserID else {
+        guard let credential = await accessToken(),
+              credential.userID == ownerUserID else {
             throw ProfileServerError.authenticationRequired
         }
 
         let url = baseURL.appending(path: "v1/profile")
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(session.accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(credential.token)", forHTTPHeaderField: "Authorization")
         request.timeoutInterval = 10
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw ProfileServerError.invalidResponse
         }
