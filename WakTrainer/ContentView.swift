@@ -15,6 +15,7 @@ struct ContentView: View {
     var ownerUserID: UUID? = nil
 
     @State private var isShowingProfileSetup = false
+    @State private var conflictReview: ProfileConflictSnapshot?
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
     @State private var showingProfileMapDemo = false
 #endif
@@ -58,6 +59,20 @@ struct ContentView: View {
             Task {
                 await environment.handleSceneBecameActive()
                 await environment.syncPendingWorkouts()
+            }
+        }
+        .onChange(of: environment.profileSyncDecision) { _, decision in
+            guard decision == .conflict,
+                  let snapshot = environment.profileConflictSnapshot,
+                  snapshot.ownerUserID == ownerUserID else { return }
+            conflictReview = snapshot
+        }
+        .onChange(of: ownerUserID) { _, _ in
+            conflictReview = nil
+        }
+        .sheet(item: $conflictReview) { snapshot in
+            ProfileConflictReviewView(snapshot: snapshot) {
+                conflictReview = nil
             }
         }
         .sheet(
