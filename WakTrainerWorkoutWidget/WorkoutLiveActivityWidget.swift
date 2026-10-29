@@ -26,7 +26,7 @@ struct WorkoutLiveActivityWidget: Widget {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     elapsed(context.state)
-                        .font(.system(size: 48, weight: .heavy, design: .rounded))
+                        .font(.system(size: 64, weight: .heavy, design: .rounded))
                         .monospacedDigit()
                         .minimumScaleFactor(0.8)
                         .lineLimit(1)
@@ -45,7 +45,7 @@ struct WorkoutLiveActivityWidget: Widget {
                         .font(.system(size: 17))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                     Text(context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--")
-                        .font(.system(size: 34, weight: .heavy, design: .rounded))
+                        .font(.system(size: 42, weight: .heavy, design: .rounded))
                         .monospacedDigit()
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
