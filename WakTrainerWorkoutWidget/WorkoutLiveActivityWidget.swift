@@ -23,7 +23,7 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 5) {
                     Spacer(minLength: 0)
                     Image(systemName: "figure.strengthtraining.traditional")
@@ -43,7 +43,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                HStack(alignment: .firstTextBaseline, spacing: 5) {
                     Image(systemName: "heart.fill")
                         .font(.system(size: 22))
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -54,7 +54,7 @@ struct WorkoutLiveActivityWidget: Widget {
                         .lineLimit(1)
                     Text("bpm")
                         .font(.system(size: 17, weight: .semibold))
-                    Spacer(minLength: 4)
+                    Spacer(minLength: 1)
                     Text(context.state.heartRateZone.map { "Zone \($0)" } ?? "Zone --")
                         .font(.system(size: 19, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -62,10 +62,14 @@ struct WorkoutLiveActivityWidget: Widget {
                         .minimumScaleFactor(0.75)
                 }
 
-                HStack(spacing: 20) {
+                HStack(spacing: 8) {
                     Text("\(context.state.calories) Active")
-                    Spacer(minLength: 4)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    Spacer(minLength: 0)
                     Text(context.state.totalCalories.map { "\($0) Total" } ?? "-- Total")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 }
                 .font(.system(size: 17, weight: .semibold))
                 .monospacedDigit()
@@ -80,7 +84,7 @@ struct WorkoutLiveActivityWidget: Widget {
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
-            .padding(.vertical, 10)
+            .padding(.vertical, 5)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
