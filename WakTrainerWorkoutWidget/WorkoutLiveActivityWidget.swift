@@ -23,7 +23,7 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
                     Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -68,7 +68,7 @@ struct WorkoutLiveActivityWidget: Widget {
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
-            .padding(.vertical, 10)
+            .padding(.vertical, 5)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
