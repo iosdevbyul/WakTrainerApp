@@ -62,25 +62,33 @@ struct WorkoutLiveActivityWidget: Widget {
                         .minimumScaleFactor(0.75)
                 }
 
-                HStack(spacing: 8) {
-                    Text("\(context.state.calories) Active")
+                // Keep the current exercise in the final visible row rather than
+                // pushing it below the lock-screen Live Activity height limit.
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Text(context.state.exercise ?? context.attributes.name)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                    Spacer(minLength: 0)
-                    Text(context.state.totalCalories.map { "\($0) Total" } ?? "-- Total")
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                }
-                .font(.system(size: 17, weight: .semibold))
-                .monospacedDigit()
-                .foregroundStyle(WorkoutActivityPalette.text)
+                        .truncationMode(.tail)
+                        .layoutPriority(1)
 
-                Text(context.state.exercise ?? context.attributes.name)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(WorkoutActivityPalette.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer(minLength: 2)
+
+                    Text("\(context.state.calories) Active")
+                        .font(.system(size: 15, weight: .semibold))
+                        .monospacedDigit()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+
+                    if let totalCalories = context.state.totalCalories {
+                        Text("\(totalCalories) Total")
+                            .font(.system(size: 14, weight: .medium))
+                            .monospacedDigit()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                    }
+                }
+                .foregroundStyle(WorkoutActivityPalette.text)
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
