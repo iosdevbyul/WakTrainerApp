@@ -99,11 +99,17 @@ final class WorkoutLiveActivityController: ObservableObject {
             completedSets: snapshot.completedSets
         )
 
-        // Avoid a new ActivityKit update every second. Always propagate state transitions.
+        // A changed heart rate needs faster updates, but avoid sending an ActivityKit
+        // update on every incoming sample. Phase and exercise changes remain immediate.
+        let heartRateChanged = state.heartRate > 0 &&
+            state.heartRate != lastState?.heartRate
+        let heartRateUpdateDue = heartRateChanged &&
+            now.timeIntervalSince(lastUpdateDate) >= 3
         guard state.phase != lastState?.phase ||
               state.exercise != lastState?.exercise ||
               state.completedSets != lastState?.completedSets ||
               activityID == nil ||
+              heartRateUpdateDue ||
               now.timeIntervalSince(lastUpdateDate) >= 10 else { return }
 
         guard !isProcessing else {
