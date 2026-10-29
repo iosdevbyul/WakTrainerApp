@@ -23,7 +23,7 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 6) {
                     Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -36,7 +36,7 @@ struct WorkoutLiveActivityWidget: Widget {
                 .font(.system(size: 13, weight: .bold))
 
                 elapsed(context.state)
-                    .font(.system(size: 44, weight: .heavy, design: .rounded))
+                    .font(.system(size: 64, weight: .heavy, design: .rounded))
                     .monospacedDigit()
                     .minimumScaleFactor(0.65)
                     .lineLimit(1)
@@ -44,10 +44,10 @@ struct WorkoutLiveActivityWidget: Widget {
 
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Image(systemName: "heart.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                     Text(context.state.heartRate > 0 ? "\(context.state.heartRate)" : "--")
-                        .font(.system(size: 32, weight: .heavy, design: .rounded))
+                        .font(.system(size: 42, weight: .heavy, design: .rounded))
                         .monospacedDigit()
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .minimumScaleFactor(0.8)
@@ -66,9 +66,9 @@ struct WorkoutLiveActivityWidget: Widget {
                         unit: "km")
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 10)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
