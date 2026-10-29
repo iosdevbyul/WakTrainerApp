@@ -23,18 +23,23 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 7) {
-                // The brand is an overlay, not a fifth vertically stacked row.
-                // This avoids pushing the workout label beneath the lock-screen crop.
-                elapsed(context.state)
-                    .font(.system(size: 64, weight: .heavy, design: .rounded))
-                    .monospacedDigit()
-                    .minimumScaleFactor(0.65)
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.trailing, 100)
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .top, spacing: 8) {
+                    elapsed(context.state)
+                        .font(.system(size: 64, weight: .heavy, design: .rounded))
+                        .monospacedDigit()
+                        .minimumScaleFactor(0.8)
+                        .lineLimit(1)
+                        .layoutPriority(1)
 
-                Spacer(minLength: 0)
+                    Spacer(minLength: 0)
+
+                    Text("WakTrainer")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.secondary)
+                        .lineLimit(1)
+                        .padding(.top, 5)
+                }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
                     Image(systemName: "heart.fill")
@@ -47,53 +52,37 @@ struct WorkoutLiveActivityWidget: Widget {
                         .lineLimit(1)
                     Text("bpm")
                         .font(.system(size: 17, weight: .semibold))
-                    Spacer(minLength: 1)
+                    Spacer(minLength: 0)
                     Text(context.state.heartRateZone.map { "Zone \($0)" } ?? "Zone --")
                         .font(.system(size: 19, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.75)
                 }
 
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                HStack(spacing: 8) {
                     Text(context.state.exercise ?? context.attributes.name)
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .layoutPriority(1)
-                    Spacer(minLength: 2)
+                    Spacer(minLength: 0)
                     Text("\(context.state.calories) Active")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .monospacedDigit()
                         .lineLimit(1)
-                        .minimumScaleFactor(0.75)
                     if let totalCalories = context.state.totalCalories {
                         Text("\(totalCalories) Total")
                             .font(.system(size: 14, weight: .medium))
                             .monospacedDigit()
                             .lineLimit(1)
-                            .minimumScaleFactor(0.75)
                     }
                 }
                 .foregroundStyle(WorkoutActivityPalette.text)
             }
-            .frame(maxWidth: .infinity, minHeight: 0, alignment: .topLeading)
-            .overlay(alignment: .topTrailing) {
-                HStack(spacing: 5) {
-                    Image(systemName: "figure.strengthtraining.traditional")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                    Text("WakTrainer")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.secondary)
-                        .lineLimit(1)
-                }
-                .accessibilityElement(children: .combine)
-                .padding(.top, 5)
-            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 5)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
