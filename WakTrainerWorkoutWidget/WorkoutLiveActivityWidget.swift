@@ -23,7 +23,7 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
                     Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -55,20 +55,19 @@ struct WorkoutLiveActivityWidget: Widget {
                     Text("bpm")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
-                    Spacer(minLength: 0)
-                }
-
-                if context.attributes.kind == .strength {
-                    compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
-                } else {
-                    compactMetric("DISTANCE",
-                        value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                        unit: "km")
+                    Spacer(minLength: 4)
+                    if context.attributes.kind == .strength {
+                        compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
+                    } else {
+                        compactMetric("DISTANCE",
+                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                            unit: "km")
+                    }
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
-            .padding(.vertical, 10)
+            .padding(.vertical, 5)
             .foregroundStyle(WorkoutActivityPalette.text)
             .environment(\.colorScheme, .dark)
             .widgetURL(workoutURL)
