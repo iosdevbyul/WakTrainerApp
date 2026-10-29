@@ -131,9 +131,12 @@ struct WorkoutLiveActivityWidget: Widget {
                 Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
                     .foregroundStyle(WorkoutActivityPalette.primary)
             } compactTrailing: {
-                elapsed(context.state)
+                compactElapsed(context.state)
                     .font(.system(size: 13, weight: .bold, design: .rounded))
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: 48, alignment: .trailing)
                     .foregroundStyle(WorkoutActivityPalette.text)
             } minimal: {
                 Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
@@ -156,6 +159,22 @@ struct WorkoutLiveActivityWidget: Widget {
             Text(
                 Duration.seconds(max(0, state.elapsedSeconds))
                     .formatted(.time(pattern: .hourMinuteSecond))
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func compactElapsed(_ state: WorkoutActivityAttributes.ContentState) -> some View {
+        if let runningSince = state.runningSince, state.phase == .running {
+            Text(
+                timerInterval: runningSince...Date.distantFuture,
+                countsDown: false,
+                showsHours: false
+            )
+        } else {
+            Text(
+                Duration.seconds(max(0, state.elapsedSeconds))
+                    .formatted(.time(pattern: .minuteSecond))
             )
         }
     }
