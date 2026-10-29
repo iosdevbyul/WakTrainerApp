@@ -45,13 +45,20 @@ struct ProfileConflictReviewView: View {
         }
     }
 
+    private static var birthDateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)!
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }
+
     private func profileSection(_ title: String, profile: UserProfile) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.headline)
             LabeledContent("성별", value: profile.gender.rawValue)
-            LabeledContent("생년월일", value: profile.birthDate.formatted(
-                .dateTime.year().month(.twoDigits).day(.twoDigits)
-            ))
+            LabeledContent("생년월일", value: Self.birthDateFormatter.string(from: profile.birthDate))
             LabeledContent("키", value: String(format: "%.1f cm", profile.heightCm))
             LabeledContent("몸무게", value: String(format: "%.1f kg", profile.weightKg))
         }
