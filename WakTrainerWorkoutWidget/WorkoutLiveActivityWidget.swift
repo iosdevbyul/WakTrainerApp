@@ -55,15 +55,14 @@ struct WorkoutLiveActivityWidget: Widget {
                     Text("bpm")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
-                    Spacer(minLength: 0)
-                }
-
-                if context.attributes.kind == .strength {
-                    compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
-                } else {
-                    compactMetric("DISTANCE",
-                        value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                        unit: "km")
+                    Spacer(minLength: 4)
+                    if context.attributes.kind == .strength {
+                        compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
+                    } else {
+                        compactMetric("DISTANCE",
+                            value: String(format: "%.2f", context.state.distanceMeters / 1000),
+                            unit: "km")
+                    }
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
