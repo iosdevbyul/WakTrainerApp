@@ -23,18 +23,7 @@ struct WorkoutLiveActivityWidget: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 6) {
-                    Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                    Text(context.attributes.name)
-                        .lineLimit(1)
-                    Spacer(minLength: 4)
-                    Text(context.state.phase == .paused ? "PAUSED" : "LIVE")
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                }
-                .font(.system(size: 13, weight: .bold))
-
+            VStack(alignment: .leading, spacing: 6) {
                 elapsed(context.state)
                     .font(.system(size: 64, weight: .heavy, design: .rounded))
                     .monospacedDigit()
@@ -42,7 +31,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Image(systemName: "heart.fill")
                         .font(.system(size: 22))
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -50,21 +39,32 @@ struct WorkoutLiveActivityWidget: Widget {
                         .font(.system(size: 42, weight: .heavy, design: .rounded))
                         .monospacedDigit()
                         .foregroundStyle(WorkoutActivityPalette.primary)
-                        .minimumScaleFactor(0.8)
                         .lineLimit(1)
                     Text("bpm")
                         .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.text)
-                    Spacer(minLength: 0)
+                    Spacer(minLength: 4)
+                    Text(context.state.heartRateZone.map { "Zone \($0)" } ?? "Zone --")
+                        .font(.system(size: 19, weight: .bold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                 }
 
-                if context.attributes.kind == .strength {
-                    compactMetric("SETS", value: "\(context.state.completedSets)", unit: "sets")
-                } else {
-                    compactMetric("DISTANCE",
-                        value: String(format: "%.2f", context.state.distanceMeters / 1000),
-                        unit: "km")
+                HStack(spacing: 20) {
+                    Text("\(context.state.calories) Active")
+                    Spacer(minLength: 4)
+                    Text(context.state.totalCalories.map { "\($0) Total" } ?? "-- Total")
                 }
+                .font(.system(size: 17, weight: .semibold))
+                .monospacedDigit()
+                .foregroundStyle(WorkoutActivityPalette.text)
+
+                Text(context.state.exercise ?? context.attributes.name)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(WorkoutActivityPalette.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(maxWidth: .infinity, minHeight: 195, alignment: .center)
             .padding(.horizontal, 16)
