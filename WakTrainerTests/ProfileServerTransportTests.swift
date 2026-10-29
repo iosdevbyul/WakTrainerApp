@@ -9,6 +9,20 @@ private final class ProfileURLProtocol: URLProtocol, @unchecked Sendable {
     static var responseData = Data()
     static var lastRequest: URLRequest?
 
+    static func configure(code: Int, data: Data) {
+        lock.lock()
+        responseCode = code
+        responseData = data
+        lastRequest = nil
+        lock.unlock()
+    }
+
+    static func capturedRequest() -> URLRequest? {
+        lock.lock()
+        defer { lock.unlock() }
+        return lastRequest
+    }
+
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
@@ -39,43 +53,30 @@ struct ProfileServerTransportTests {
 
     @Test("Successful fetch decodes the server profile and carries bearer token")
     func success() async throws {
-        ProfileURLProtocol.lock.lock()
-        ProfileURLProtocol.responseCode = 200
-        ProfileURLProtocol.responseData = Data(#"{"gender":"남성","birthDate":"2005-10-24","heightCm":175,"weightKg":70}"#.utf8)
-        ProfileURLProtocol.lastRequest = nil
-        ProfileURLProtocol.lock.unlock()
+        ProfileURLProtocol.configure(code: 200, data: Data(#"{"gender":"남성","birthDate":"2005-10-24","heightCm":175,"weightKg":70}"#.utf8))
         let user = UUID()
         let profile = try #require(try await makeTransport(owner: user, tokenOwner: user).fetchProfile())
         #expect(profile.gender == .male)
         #expect(profile.heightCm == 175)
-        ProfileURLProtocol.lock.lock()
-        let request = ProfileURLProtocol.lastRequest
-        ProfileURLProtocol.lock.unlock()
+        let request = ProfileURLProtocol.capturedRequest()
         #expect(request?.value(forHTTPHeaderField: "Authorization") == "Bearer test-token")
         #expect(request?.url?.path == "/v1/profile")
     }
 
     @Test("Missing profile does not invent local data")
     func notFound() async throws {
-        ProfileURLProtocol.lock.lock()
-        ProfileURLProtocol.responseCode = 404
-        ProfileURLProtocol.responseData = Data()
-        ProfileURLProtocol.lock.unlock()
+        ProfileURLProtocol.configure(code: 404, data: Data())
         let user = UUID()
         #expect(try await makeTransport(owner: user, tokenOwner: user).fetchProfile() == nil)
     }
 
     @Test("Mismatched identity is rejected without sending a request")
     func identityMismatch() async {
-        ProfileURLProtocol.lock.lock()
-        ProfileURLProtocol.lastRequest = nil
-        ProfileURLProtocol.lock.unlock()
+        ProfileURLProtocol.configure(code: 200, data: Data())
         await #expect(throws: ProfileServerError.self) {
             _ = try await makeTransport(owner: UUID(), tokenOwner: UUID()).fetchProfile()
         }
-        ProfileURLProtocol.lock.lock()
-        let request = ProfileURLProtocol.lastRequest
-        ProfileURLProtocol.lock.unlock()
+        let request = ProfileURLProtocol.capturedRequest()
         #expect(request == nil)
     }
 
