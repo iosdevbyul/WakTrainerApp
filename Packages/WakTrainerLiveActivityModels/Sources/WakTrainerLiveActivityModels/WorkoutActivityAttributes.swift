@@ -18,6 +18,8 @@ public struct WorkoutActivityAttributes: ActivityAttributes {
         public var runningSince: Date?
         public var heartRate: Int
         public var calories: Int
+        public var heartRateZone: Int?
+        public var totalCalories: Int?
         public var distanceMeters: Double
         public var steps: Int
         public var exercise: String?
@@ -29,6 +31,8 @@ public struct WorkoutActivityAttributes: ActivityAttributes {
             runningSince: Date?,
             heartRate: Int,
             calories: Int,
+            heartRateZone: Int? = nil,
+            totalCalories: Int? = nil,
             distanceMeters: Double,
             steps: Int,
             exercise: String?,
@@ -39,6 +43,8 @@ public struct WorkoutActivityAttributes: ActivityAttributes {
             self.runningSince = runningSince
             self.heartRate = heartRate
             self.calories = calories
+            self.heartRateZone = heartRateZone
+            self.totalCalories = totalCalories
             self.distanceMeters = distanceMeters
             self.steps = steps
             self.exercise = exercise
