@@ -24,6 +24,18 @@ struct WorkoutLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: WorkoutActivityAttributes.self) { context in
             VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 5) {
+                    Spacer(minLength: 0)
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                    Text("WakTrainer")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.secondary)
+                        .lineLimit(1)
+                }
+                .accessibilityElement(children: .combine)
+
                 elapsed(context.state)
                     .font(.system(size: 64, weight: .heavy, design: .rounded))
                     .monospacedDigit()
