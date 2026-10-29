@@ -50,6 +50,7 @@ final class AppEnvironment: ObservableObject {
     private var didRequestHealthKitAuthorization = false
     private let profileManager: DefaultUserProfileManager
     @Published private(set) var remoteProfileCheck: RemoteProfileCheck = .notChecked
+    @Published private(set) var profileSyncDecision: ProfileSyncDecision?
     private var remoteProfileCheckTask: Task<Void, Never>?
     private var remoteProfileCheckGeneration = 0
 
@@ -250,6 +251,7 @@ final class AppEnvironment: ObservableObject {
         remoteProfileCheckTask?.cancel()
         remoteProfileCheckTask = nil
         remoteProfileCheck = .notChecked
+        profileSyncDecision = nil
         if let ownerUserID {
             checkRemoteProfile(ownerUserID: ownerUserID)
         }
@@ -293,20 +295,25 @@ final class AppEnvironment: ObservableObject {
         remoteProfileCheck = .checking
         remoteProfileCheckTask = Task { [weak self] in
             let result: RemoteProfileCheck
+            let decision: ProfileSyncDecision
             do {
                 let remote = try await ProfileServerTransport(
                     baseURL: url, ownerUserID: ownerUserID
                 ).fetchProfile()
                 result = remote == nil ? .notFound : .available
+                let local = self?.profileManager.loadProfile()
+                decision = ProfileSyncDecision.evaluate(local: local, remote: remote, remoteReachable: true)
             } catch is CancellationError {
                 return
             } catch {
                 result = .unavailable
+                decision = .remoteUnavailable
             }
             guard !Task.isCancelled, let self,
                   generation == self.remoteProfileCheckGeneration,
                   self.workoutOwnerUserID == ownerUserID else { return }
             self.remoteProfileCheck = result
+            self.profileSyncDecision = decision
             self.remoteProfileCheckTask = nil
         }
     }
