@@ -223,6 +223,12 @@ final class AppEnvironment: ObservableObject {
 
     func requestHealthKitAuthorizationIfNeeded() async {
         guard !didRequestHealthKitAuthorization else { return }
+
+        // Request Motion & Fitness access during the same initial
+        // authorization flow as HealthKit, before workout navigation.
+        // The sensor is optional and its denial must not block HealthKit.
+        await WorkoutMotionAuthorization.prepareIfAvailable()
+
         do {
             // iOS 26 AirPods heart-rate collection starts an HKWorkoutSession,
             // which requires workout-sharing consent. Request that consent
