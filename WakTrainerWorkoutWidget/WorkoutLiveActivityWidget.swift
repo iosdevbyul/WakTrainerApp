@@ -34,25 +34,27 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-                    Image("WakTrainerAppLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 22, height: 22)
-                        .accessibilityHidden(true)
+                    Group {
+                        if let logo = UIImage(named: "WakTrainerAppLogo", in: Bundle.main, compatibleWith: nil) {
+                            Image(uiImage: logo)
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Image(systemName: "figure.strengthtraining.traditional")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundStyle(WorkoutActivityPalette.primary)
+                        }
+                    }
+                    .frame(width: 22, height: 22)
+                    .accessibilityHidden(true)
 
-#if WAKTRAINER_DEVICE_TEST_WIDGET
-                    Text("WakTrainer DT119")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.text)
-                        .fixedSize(horizontal: true, vertical: false)
-                        .layoutPriority(2)
-#else
                     Text("WakTrainer")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
                         .fixedSize(horizontal: true, vertical: false)
                         .layoutPriority(2)
-#endif
+
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
