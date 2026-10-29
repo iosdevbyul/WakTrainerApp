@@ -34,6 +34,11 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.primary)
+                        .padding(.top, 5)
+
                     Text("WakTrainer")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
