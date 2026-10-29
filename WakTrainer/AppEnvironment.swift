@@ -10,6 +10,14 @@ import TrisPlaceRecognitionKit
 import UserProfileFeature
 import WakTrainerFeatureWorkout
 
+enum RemoteProfileCheck: Equatable {
+    case notChecked
+    case checking
+    case available
+    case notFound
+    case unavailable
+}
+
 enum WorkoutDataMode: String, CaseIterable {
     case server
     case localOnly
@@ -41,6 +49,9 @@ final class AppEnvironment: ObservableObject {
     private let healthKitManager = HealthKitManager()
     private var didRequestHealthKitAuthorization = false
     private let profileManager: DefaultUserProfileManager
+    @Published private(set) var remoteProfileCheck: RemoteProfileCheck = .notChecked
+    private var remoteProfileCheckTask: Task<Void, Never>?
+    private var remoteProfileCheckGeneration = 0
 
     private let backgroundRecognitionPreferenceKey =
         "WakTrainer.backgroundPlaceRecognitionEnabled"
@@ -235,6 +246,13 @@ final class AppEnvironment: ObservableObject {
         guard workoutOwnerUserID != ownerUserID else { return }
         cancelWorkoutSync()
         workoutOwnerUserID = ownerUserID
+        remoteProfileCheckGeneration += 1
+        remoteProfileCheckTask?.cancel()
+        remoteProfileCheckTask = nil
+        remoteProfileCheck = .notChecked
+        if let ownerUserID {
+            checkRemoteProfile(ownerUserID: ownerUserID)
+        }
         // Replace the published store immediately so old-account rows
         // cannot remain visible during the next asynchronous reload.
         workoutHistoryStore = WorkoutHistoryStore(ownerUserID: ownerUserID)
@@ -261,6 +279,36 @@ final class AppEnvironment: ObservableObject {
             }
         )
         startWorkoutNetworkMonitoringIfNeeded()
+    }
+
+    /// A read-only server probe: it must never replace or remove the persisted local profile.
+    private func checkRemoteProfile(ownerUserID: UUID) {
+        guard let string = Bundle.main.object(forInfoDictionaryKey: "WORKOUT_API_BASE_URL") as? String,
+              let url = URL(string: string),
+              ["http", "https"].contains(url.scheme?.lowercased() ?? "") else {
+            return
+        }
+
+        let generation = remoteProfileCheckGeneration
+        remoteProfileCheck = .checking
+        remoteProfileCheckTask = Task { [weak self] in
+            let result: RemoteProfileCheck
+            do {
+                let remote = try await ProfileServerTransport(
+                    baseURL: url, ownerUserID: ownerUserID
+                ).fetchProfile()
+                result = remote == nil ? .notFound : .available
+            } catch is CancellationError {
+                return
+            } catch {
+                result = .unavailable
+            }
+            guard !Task.isCancelled, let self,
+                  generation == self.remoteProfileCheckGeneration,
+                  self.workoutOwnerUserID == ownerUserID else { return }
+            self.remoteProfileCheck = result
+            self.remoteProfileCheckTask = nil
+        }
     }
 
     private func startWorkoutNetworkMonitoringIfNeeded() {
