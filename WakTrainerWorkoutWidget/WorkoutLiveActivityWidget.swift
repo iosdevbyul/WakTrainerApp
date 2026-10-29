@@ -34,16 +34,17 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-                    Image(systemName: "figure.strengthtraining.traditional")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.primary)
-                        .padding(.top, 5)
+                    Image("WakTrainerAppLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 22, height: 22)
+                        .accessibilityHidden(true)
 
                     Text("WakTrainer")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(WorkoutActivityPalette.secondary)
-                        .lineLimit(1)
-                        .padding(.top, 5)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(WorkoutActivityPalette.text)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .layoutPriority(2)
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
