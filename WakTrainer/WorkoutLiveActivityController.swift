@@ -6,6 +6,7 @@ import TrisLiveActivityKit
 import WakTrainerFeatureWorkout
 import WakTrainerLiveActivityModels
 import UserProfileFeature
+import WakTrainerCoreModels
 
 @MainActor
 final class WorkoutLiveActivityController: ObservableObject {
