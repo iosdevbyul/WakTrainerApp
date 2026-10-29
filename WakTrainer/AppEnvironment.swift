@@ -51,6 +51,7 @@ final class AppEnvironment: ObservableObject {
     private let profileManager: DefaultUserProfileManager
     @Published private(set) var remoteProfileCheck: RemoteProfileCheck = .notChecked
     @Published private(set) var profileSyncDecision: ProfileSyncDecision?
+    @Published private(set) var profileConflictSnapshot: ProfileConflictSnapshot?
     private var remoteProfileCheckTask: Task<Void, Never>?
     private var remoteProfileCheckGeneration = 0
 
@@ -252,6 +253,7 @@ final class AppEnvironment: ObservableObject {
         remoteProfileCheckTask = nil
         remoteProfileCheck = .notChecked
         profileSyncDecision = nil
+        profileConflictSnapshot = nil
         if let ownerUserID {
             checkRemoteProfile(ownerUserID: ownerUserID)
         }
@@ -296,6 +298,7 @@ final class AppEnvironment: ObservableObject {
         remoteProfileCheckTask = Task { [weak self] in
             let result: RemoteProfileCheck
             let decision: ProfileSyncDecision
+            var snapshot: ProfileConflictSnapshot?
             do {
                 let remote = try await ProfileServerTransport(
                     baseURL: url, ownerUserID: ownerUserID
@@ -303,6 +306,9 @@ final class AppEnvironment: ObservableObject {
                 result = remote == nil ? .notFound : .available
                 let local = self?.profileManager.loadProfile()
                 decision = ProfileSyncDecision.evaluate(local: local, remote: remote, remoteReachable: true)
+                if decision == .conflict, let local, let remote {
+                    snapshot = ProfileConflictSnapshot(ownerUserID: ownerUserID, local: local, remote: remote)
+                }
             } catch is CancellationError {
                 return
             } catch {
@@ -314,6 +320,7 @@ final class AppEnvironment: ObservableObject {
                   self.workoutOwnerUserID == ownerUserID else { return }
             self.remoteProfileCheck = result
             self.profileSyncDecision = decision
+            self.profileConflictSnapshot = snapshot
             self.remoteProfileCheckTask = nil
         }
     }
