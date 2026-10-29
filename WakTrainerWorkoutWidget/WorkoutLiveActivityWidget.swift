@@ -39,7 +39,11 @@ struct WorkoutLiveActivityWidget: Widget {
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .padding(.top, 5)
 
+#if WAKTRAINER_DEVICE_TEST_WIDGET
+                    Text("WakTrainer DT119")
+#else
                     Text("WakTrainer")
+#endif
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.secondary)
                         .lineLimit(1)
