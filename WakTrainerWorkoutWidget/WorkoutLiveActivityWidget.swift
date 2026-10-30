@@ -34,20 +34,6 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-                    Group {
-                        if let logo = UIImage(named: "WakTrainerAppLogo", in: Bundle.main, compatibleWith: nil) {
-                            Image(uiImage: logo)
-                                .resizable()
-                                .scaledToFit()
-                        } else {
-                            Image(systemName: "figure.strengthtraining.traditional")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundStyle(WorkoutActivityPalette.primary)
-                        }
-                    }
-                    .frame(width: 22, height: 22)
-                    .accessibilityHidden(true)
 
                     Text("WakTrainer")
                         .font(.system(size: 13, weight: .semibold))
