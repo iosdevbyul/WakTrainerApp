@@ -14,6 +14,7 @@ struct ContentView: View {
     @ObservedObject private var liveActivityController = WorkoutLiveActivityController.shared
     var ownerUserID: UUID? = nil
 
+    @State private var showAppleHealthStorageChoice = false
     @State private var isShowingProfileSetup = false
     @State private var conflictReview: ProfileConflictSnapshot?
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
@@ -43,13 +44,29 @@ struct ContentView: View {
             RunningMapModesDemoView()
         }
 #endif
+        .alert("Save workouts to Apple Fitness?", isPresented: $showAppleHealthStorageChoice) {
+            Button("Save to Apple Fitness") {
+                environment.setSaveWorkoutsToAppleHealth(true)
+                Task { await environment.requestHealthKitAuthorizationIfNeeded() }
+            }
+            Button("WakTrainer Only") {
+                environment.setSaveWorkoutsToAppleHealth(false)
+                Task { await environment.requestHealthKitAuthorizationIfNeeded() }
+            }
+        } message: {
+            Text("Heart-rate and activity measurements work with either choice. You can change this later in Profile settings.")
+        }
         .preferredColorScheme(.dark)
         .tint(WakColor.primary)
         .task {
             environment.configureWorkoutSync(ownerUserID: ownerUserID)
             await environment.handleSceneBecameActive()
             await environment.syncPendingWorkouts()
-            await environment.requestHealthKitAuthorizationIfNeeded()
+            if environment.hasChosenAppleHealthStorage {
+                await environment.requestHealthKitAuthorizationIfNeeded()
+            } else {
+                showAppleHealthStorageChoice = true
+            }
         }
         .onChange(of: scenePhase) { _, newPhase in
             guard newPhase == .active else {

@@ -1687,7 +1687,7 @@
 			repositoryURL = "https://github.com/iosdevbyul/WakTrainerFeatureWorkout";
 			requirement = {
 				kind = revision;
-				revision = 22b84218a1206d39340acc49f83c21075164455e;
+				revision = 89a25336871fcc3a0dce248482f8a6f9fe447ed7;
 			};
 		};
 		A30000000000000000000002 /* XCRemoteSwiftPackageReference "UserProfileFeature" */ = {
@@ -1766,7 +1766,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iosdevbyul/WakTrainerServiceHealthKit";
 			requirement = {
-				branch = main;
+				branch = "feat/optional-healthkit-workout-storage";
 				kind = branch;
 			};
 		};
