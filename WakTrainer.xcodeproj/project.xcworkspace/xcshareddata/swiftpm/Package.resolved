@@ -111,7 +111,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/WakTrainerFeatureWorkout",
       "state": {
-        "revision": "22b84218a1206d39340acc49f83c21075164455e"
+        "revision": "89a25336871fcc3a0dce248482f8a6f9fe447ed7"
       }
     },
     {
@@ -119,8 +119,8 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/WakTrainerServiceHealthKit",
       "state": {
-        "branch": "main",
-        "revision": "ac843c9f9e4896d7eeec3dc18d6631e626537a63"
+        "branch": "feat/optional-healthkit-workout-storage",
+        "revision": "9d5116b07040a3229889af96e8171aed0b192325"
       }
     },
     {
