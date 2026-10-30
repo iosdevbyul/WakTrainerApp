@@ -27,6 +27,9 @@ jobs:
           swift --version
           xcodebuild -version
 
+      - name: Validate Live Activity branding configuration
+        run: python3 scripts/validate-live-activity-branding.py
+
       - name: Resolve Swift packages
         run: |
           xcodebuild \
