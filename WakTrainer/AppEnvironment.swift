@@ -48,6 +48,16 @@ final class AppEnvironment: ObservableObject {
     private let notificationService: LocalNotificationService
     private let healthKitManager = HealthKitManager()
     private var didRequestHealthKitAuthorization = false
+    @Published private(set) var saveWorkoutsToAppleHealth: Bool
+    @Published private(set) var hasChosenAppleHealthStorage: Bool
+    private let appleHealthStorageKey = "WakTrainer.saveWorkoutsToAppleHealth"
+
+    func setSaveWorkoutsToAppleHealth(_ enabled: Bool) {
+        saveWorkoutsToAppleHealth = enabled
+        hasChosenAppleHealthStorage = true
+        UserDefaults.standard.set(enabled, forKey: appleHealthStorageKey)
+    }
+
     private let profileManager: DefaultUserProfileManager
     @Published private(set) var remoteProfileCheck: RemoteProfileCheck = .notChecked
     @Published private(set) var profileSyncDecision: ProfileSyncDecision?
@@ -64,6 +74,8 @@ final class AppEnvironment: ObservableObject {
         self.workoutDataMode = WorkoutDataMode(
             rawValue: UserDefaults.standard.string(forKey: "WakTrainer.workoutDataMode") ?? ""
         ) ?? .server
+        self.saveWorkoutsToAppleHealth = UserDefaults.standard.bool(forKey: "WakTrainer.saveWorkoutsToAppleHealth")
+        self.hasChosenAppleHealthStorage = UserDefaults.standard.object(forKey: "WakTrainer.saveWorkoutsToAppleHealth") != nil
         self.workoutHistoryStore = WorkoutHistoryStore()
         self.locationProvider = CoreLocationProvider()
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
