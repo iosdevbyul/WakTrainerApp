@@ -95,7 +95,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     Label {
                         Text(context.attributes.name)
                     } icon: {
-                        brandLogo(size: 30)
+                        brandLogo(size: 20)
                     }
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -119,7 +119,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .padding(.top, 6)
                 }
             } compactLeading: {
-                brandLogo(size: 30)
+                brandLogo(size: 20)
             } compactTrailing: {
                 compactElapsed(context.state)
                     .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -129,7 +129,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .frame(width: 48, alignment: .trailing)
                     .foregroundStyle(WorkoutActivityPalette.text)
             } minimal: {
-                brandLogo(size: 30)
+                brandLogo(size: 20)
             }
         }
     }
