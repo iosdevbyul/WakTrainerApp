@@ -1,6 +1,7 @@
 import SwiftUI
 import TrisPlaceRecognitionKit
 import UserProfileFeature
+import WakTrainerServiceHealthKit
 import WakTrainerDesignSystem
 
 struct PlacesView: View {
@@ -86,6 +87,9 @@ struct ProfileView: View {
     @State private var developerTapCount = 0
     @State private var showDeveloperSettings = false
     @State private var showServerResumeConfirmation = false
+    @State private var showFitnessHistoryDeletionConfirmation = false
+    @State private var deletingFitnessHistory = false
+    @State private var fitnessHistoryDeletionResult: String?
 
     var body: some View {
         ZStack {
@@ -196,6 +200,53 @@ struct ProfileView: View {
                         }
                     } message: {
                         Text("Pending workouts will be eligible for upload when the server is reachable. Local workout records remain on this device.")
+                    }
+
+                    WakCard {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle("Save workouts to Apple Fitness", isOn: Binding(
+                                get: { environment.saveWorkoutsToAppleHealth },
+                                set: { environment.setSaveWorkoutsToAppleHealth($0) }
+                            ))
+                            .tint(WakColor.primary)
+
+                            Text("Your workouts are always saved in WakTrainer. Turn this off to stop saving new workout sessions to Apple Health and Fitness; heart-rate collection stays available.")
+                                .font(.footnote)
+                                .foregroundStyle(WakColor.textSecondary)
+
+                            Button("Delete workouts WakTrainer saved to Apple Health", role: .destructive) {
+                                showFitnessHistoryDeletionConfirmation = true
+                            }
+                            .disabled(deletingFitnessHistory)
+                        }
+                    }
+                    .confirmationDialog(
+                        "Delete WakTrainer workouts from Apple Health?",
+                        isPresented: $showFitnessHistoryDeletionConfirmation,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Delete Apple Health workout records", role: .destructive) {
+                            deletingFitnessHistory = true
+                            Task {
+                                do {
+                                    let count = try await WakTrainerWorkoutHealthHistory().deleteSavedWorkouts()
+                                    fitnessHistoryDeletionResult = "Deleted \\(count) WakTrainer workout record(s) from Apple Health."
+                                } catch {
+                                    fitnessHistoryDeletionResult = "Could not delete workout records: \\(error.localizedDescription)"
+                                }
+                                deletingFitnessHistory = false
+                            }
+                        }
+                    } message: {
+                        Text("Only workouts created by WakTrainer will be deleted from Apple Health and Fitness. This cannot be undone. Local WakTrainer workout history will not be removed.")
+                    }
+                    .alert("Apple Health Workout Records", isPresented: Binding(
+                        get: { fitnessHistoryDeletionResult != nil },
+                        set: { if !$0 { fitnessHistoryDeletionResult = nil } }
+                    )) {
+                        Button("OK") { fitnessHistoryDeletionResult = nil }
+                    } message: {
+                        Text(fitnessHistoryDeletionResult ?? "")
                     }
 
                     Button {
