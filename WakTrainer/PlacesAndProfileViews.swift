@@ -230,9 +230,9 @@ struct ProfileView: View {
                             Task {
                                 do {
                                     let count = try await WakTrainerWorkoutHealthHistory().deleteSavedWorkouts()
-                                    fitnessHistoryDeletionResult = "Deleted \\(count) WakTrainer workout record(s) from Apple Health."
+                                    fitnessHistoryDeletionResult = "Deleted \(count) WakTrainer workout record(s) from Apple Health."
                                 } catch {
-                                    fitnessHistoryDeletionResult = "Could not delete workout records: \\(error.localizedDescription)"
+                                    fitnessHistoryDeletionResult = "Could not delete workout records: \(error.localizedDescription)"
                                 }
                                 deletingFitnessHistory = false
                             }
