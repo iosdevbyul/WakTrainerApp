@@ -34,12 +34,12 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-                    brandLogo(size: 22)
                     Text("WakTrainer")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
                         .fixedSize(horizontal: true, vertical: false)
                         .layoutPriority(2)
+                    brandLogo(size: 33)
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
@@ -95,7 +95,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     Label {
                         Text(context.attributes.name)
                     } icon: {
-                        brandLogo(size: 20)
+                        brandLogo(size: 30)
                     }
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
@@ -119,7 +119,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .padding(.top, 6)
                 }
             } compactLeading: {
-                brandLogo(size: 20)
+                brandLogo(size: 30)
             } compactTrailing: {
                 compactElapsed(context.state)
                     .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -129,7 +129,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .frame(width: 48, alignment: .trailing)
                     .foregroundStyle(WorkoutActivityPalette.text)
             } minimal: {
-                brandLogo(size: 20)
+                brandLogo(size: 30)
             }
         }
     }
