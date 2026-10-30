@@ -34,13 +34,12 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-
+                    brandLogo(size: 22)
                     Text("WakTrainer")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
                         .fixedSize(horizontal: true, vertical: false)
                         .layoutPriority(2)
-
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
@@ -93,7 +92,11 @@ struct WorkoutLiveActivityWidget: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label(context.attributes.name, systemImage: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
+                    Label {
+                        Text(context.attributes.name)
+                    } icon: {
+                        brandLogo(size: 20)
+                    }
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(WorkoutActivityPalette.primary)
                         .lineLimit(1)
@@ -116,8 +119,7 @@ struct WorkoutLiveActivityWidget: Widget {
                     .padding(.top, 6)
                 }
             } compactLeading: {
-                Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                    .foregroundStyle(WorkoutActivityPalette.primary)
+                brandLogo(size: 20)
             } compactTrailing: {
                 compactElapsed(context.state)
                     .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -127,10 +129,22 @@ struct WorkoutLiveActivityWidget: Widget {
                     .frame(width: 48, alignment: .trailing)
                     .foregroundStyle(WorkoutActivityPalette.text)
             } minimal: {
-                Image(systemName: context.attributes.kind == .strength ? "dumbbell.fill" : "figure.run")
-                    .foregroundStyle(WorkoutActivityPalette.primary)
+                brandLogo(size: 20)
             }
         }
+    }
+
+    // Bundle.main is the widget extension, not the containing app. Keep the
+    // source asset at 24 pt (1x/2x/3x); a frame alone does not downsample the
+    // image archived by ActivityKit. Preserve the existing brand colors on
+    // both the fixed dark Lock Screen surface and the black Dynamic Island.
+    private func brandLogo(size: CGFloat) -> some View {
+        Image("WakTrainerAppLogo", bundle: .main)
+            .renderingMode(.original)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size, height: size)
+            .accessibilityLabel("WakTrainer")
     }
 
     @ViewBuilder
