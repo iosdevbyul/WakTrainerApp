@@ -34,12 +34,12 @@ struct WorkoutLiveActivityWidget: Widget {
 
                     Spacer(minLength: 0)
 
-                    brandLogo(size: 22)
                     Text("WakTrainer")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(WorkoutActivityPalette.text)
                         .fixedSize(horizontal: true, vertical: false)
                         .layoutPriority(2)
+                    brandLogo(size: 33)
                 }
 
                 HStack(alignment: .firstTextBaseline, spacing: 5) {
