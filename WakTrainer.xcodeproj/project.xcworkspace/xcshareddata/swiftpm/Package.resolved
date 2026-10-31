@@ -111,7 +111,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/iosdevbyul/WakTrainerFeatureWorkout",
       "state": {
-        "revision": "0cb7dcf8f49bb9a4d9d677881baba80d104a18fa"
+        "revision": "42a8581aece36be61c6c8295933a6de9a66dd1f0"
       }
     },
     {
@@ -129,7 +129,7 @@
       "location": "https://github.com/iosdevbyul/WakTrainerServiceLocation",
       "state": {
         "branch": "main",
-        "revision": "dcb8ad07ed874587c94a99a549e6879edc080042"
+        "revision": "1a97f7d65d33a93acfe922056d6b83aa8edd7905"
       }
     },
     {
