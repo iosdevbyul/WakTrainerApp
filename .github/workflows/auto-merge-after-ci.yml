@@ -1,0 +1,110 @@
+name: Auto Merge After CI
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+# The workflow uses only trusted GitHub metadata. Never check out or run
+# pull-request code in a workflow with a write-capable token.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: waktrainer-auto-merge
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Merge successful user-authored PR
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          CI_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          # A workflow_run event may contain an empty pull_requests array.
+          # Discover its PR using the exact head commit that passed CI.
+          if [[ ! "$CI_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Skip: no valid CI head SHA."
+            exit 0
+          fi
+
+          gh api "repos/$REPO/commits/$CI_SHA/pulls" \
+            > "$RUNNER_TEMP/related-prs.json"
+
+          jq --arg sha "$CI_SHA" '
+            [.[] | select(
+              .state == "open" and
+              .base.ref == "main" and
+              .head.sha == $sha
+            )]
+          ' "$RUNNER_TEMP/related-prs.json" > "$RUNNER_TEMP/candidates.json"
+
+          count=$(jq 'length' "$RUNNER_TEMP/candidates.json")
+          if [[ "$count" != "1" ]]; then
+            echo "Skip: CI commit does not identify exactly one open PR targeting main."
+            exit 0
+          fi
+
+          pr=$(jq -r '.[0].number' "$RUNNER_TEMP/candidates.json")
+          gh api "repos/$REPO/pulls/$pr" > "$RUNNER_TEMP/pr.json"
+
+          # The user initiates changes. Never auto-merge forks, bots,
+          # drafts, or PRs authored by someone other than the repo owner.
+          if ! jq -e --arg repo "$REPO" --arg sha "$CI_SHA" '
+            .state == "open" and
+            .draft == false and
+            .base.ref == "main" and
+            .base.repo.full_name == $repo and
+            .head.repo.full_name == $repo and
+            .head.sha == $sha and
+            .user.login == "iosdevbyul"
+          ' "$RUNNER_TEMP/pr.json" >/dev/null; then
+            echo "Skip: untrusted, draft, updated, or incorrectly targeted PR."
+            exit 0
+          fi
+
+          gh api "repos/$REPO/issues/$pr" > "$RUNNER_TEMP/issue.json"
+          if jq -e '[.labels[].name] | index("manual-qa") != null' \
+              "$RUNNER_TEMP/issue.json" >/dev/null; then
+            echo "Skip: manual-qa label requires user validation and manual merge."
+            exit 0
+          fi
+
+          gh api --paginate "repos/$REPO/pulls/$pr/files?per_page=100" \
+            --jq '.[].filename' > "$RUNNER_TEMP/changed-files.txt"
+
+          if [[ ! -s "$RUNNER_TEMP/changed-files.txt" ]]; then
+            echo "Skip: changed-file list unavailable or empty."
+            exit 0
+          fi
+
+          # Protect the automation itself and other privileged workflows.
+          # All normal app code, including UI, uses CI-based auto-merge.
+          while IFS= read -r path; do
+            case "$path" in
+              .github/workflows/*|.github/actions/*)
+                echo "Skip: workflow-related change requires manual review: $path"
+                exit 0
+                ;;
+            esac
+          done < "$RUNNER_TEMP/changed-files.txt"
+
+          echo "PR #$pr passed CI at $CI_SHA. Attempting SHA-locked squash merge."
+          # Never bypass branch protection. GitHub rejects stale heads,
+          # non-mergeable branches, or unmet required checks.
+          gh pr merge "$pr" \
+            --repo "$REPO" \
+            --squash \
+            --match-head-commit "$CI_SHA"
