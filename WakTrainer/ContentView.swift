@@ -204,6 +204,9 @@ private struct MainOrbNavigationView: View {
                 onShowReports: {
                     path.append(.reports)
                 },
+                onShowWorkoutReport: { sessionID in
+                    path.append(.workoutReport(sessionID))
+                },
                 onShowCalendar: {
                     path.append(.calendar)
                 },
@@ -267,6 +270,13 @@ private struct MainOrbNavigationView: View {
                 switch route {
                 case .reports:
                     ReportsView(ownerUserID: ownerUserID)
+
+                case .workoutReport(let sessionID):
+                    WorkoutHistoryView(
+                        selectedSessionID: sessionID,
+                        maximumHeartRate: estimatedMaximumHeartRate,
+                        ownerUserID: ownerUserID
+                    )
 
                 case .calendar:
                     WorkoutCalendarView(
@@ -368,6 +378,7 @@ private struct MainOrbNavigationView: View {
 
 private enum MainRoute: Hashable {
     case reports
+    case workoutReport(UUID)
     case calendar
     case places
     case profile

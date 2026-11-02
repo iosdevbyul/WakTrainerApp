@@ -10,6 +10,7 @@ struct HomeView: View {
         WorkoutHistoryStore
 
     let onShowReports: () -> Void
+    let onShowWorkoutReport: (UUID) -> Void
     let onShowCalendar: () -> Void
     let onShowPlaces: () -> Void
 
@@ -322,7 +323,7 @@ struct HomeView: View {
                 workoutHistoryStore.latestSession
             {
                 Button {
-                    onShowReports()
+                    onShowWorkoutReport(latest.id)
                 } label: {
                     WakCard {
                         HStack(
