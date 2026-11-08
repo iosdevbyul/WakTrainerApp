@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
 import MapKit
 #endif
@@ -182,6 +183,12 @@ private struct MainOrbNavigationView: View {
 
     @State
     private var path: [MainRoute] = []
+
+    @State private var exportedWorkoutFile: WorkoutDashboardSharedFile?
+    @State private var exportFileForCleanup: URL?
+    @State private var isExportingWorkouts = false
+    @State private var showingWorkoutExportError = false
+    @State private var workoutExportError = ""
 #if WAKTRAINER_DEMO
     @State private var showingLiveActivityTest = false
 #endif
@@ -246,6 +253,19 @@ private struct MainOrbNavigationView: View {
                 ToolbarItemGroup(
                     placement: .topBarTrailing
                 ) {
+                    Button {
+                        Task { @MainActor in
+                            await exportCompletedWorkouts()
+                        }
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(WakColor.textPrimary)
+                    }
+                    .disabled(isExportingWorkouts)
+                    .accessibilityLabel("Export workout history as JSON")
+                    .accessibilityIdentifier("workout.exportDashboardJSON")
+
                     toolbarButton(
                         systemImage: "calendar",
                         accessibilityKey:
@@ -307,6 +327,19 @@ private struct MainOrbNavigationView: View {
             RunningMapModesDemoView()
         }
 #endif
+        .sheet(item: $exportedWorkoutFile, onDismiss: {
+            if let file = exportFileForCleanup {
+                try? FileManager.default.removeItem(at: file)
+                exportFileForCleanup = nil
+            }
+        }) { file in
+            WorkoutDashboardShareSheet(url: file.url)
+        }
+        .alert("Workout Export Failed", isPresented: $showingWorkoutExportError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(workoutExportError)
+        }
         .background(WakColor.background)
 #if WAKTRAINER_DEMO || WAKTRAINER_DEVICE_TEST
         .safeAreaInset(edge: .top) {
@@ -344,6 +377,31 @@ private struct MainOrbNavigationView: View {
 
     }
 
+    @MainActor
+    private func exportCompletedWorkouts() async {
+        guard !isExportingWorkouts else { return }
+        isExportingWorkouts = true
+        defer { isExportingWorkouts = false }
+
+        await environment.workoutHistoryStore.reload()
+        if let error = environment.workoutHistoryStore.errorMessage {
+            workoutExportError = error
+            showingWorkoutExportError = true
+            return
+        }
+        do {
+            let data = try environment.workoutHistoryStore.dashboardExportV2()
+            let file = FileManager.default.temporaryDirectory
+                .appendingPathComponent("waktrainer-dashboard-\(UUID().uuidString).json")
+            try data.write(to: file, options: .atomic)
+            exportFileForCleanup = file
+            exportedWorkoutFile = WorkoutDashboardSharedFile(url: file)
+        } catch {
+            workoutExportError = error.localizedDescription
+            showingWorkoutExportError = true
+        }
+    }
+
     private func toolbarButton(
         systemImage: String,
         accessibilityKey: String,
@@ -374,6 +432,21 @@ private struct MainOrbNavigationView: View {
             )
         )
     }
+}
+
+private struct WorkoutDashboardSharedFile: Identifiable {
+    let id = UUID()
+    let url: URL
+}
+
+private struct WorkoutDashboardShareSheet: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ viewController: UIActivityViewController, context: Context) {}
 }
 
 private enum MainRoute: Hashable {
